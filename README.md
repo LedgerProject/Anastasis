@@ -5,8 +5,8 @@ Password-less key recovery via multi-factor multi-party authenticationa
 
 Run
 
-$ git submodule init
-$ git submodule update
+  $ git submodule init
+  $ git submodule update
 
 and then follow the build instructions in the
 

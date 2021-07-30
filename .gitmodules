@@ -1,0 +1,6 @@
+[submodule "anastasis"]
+	path = anastasis
+	url = git://git.taler.net/anastasis
+[submodule "anastasis-gtk"]
+	path = anastasis-gtk
+	url = git://git.taler.net/anastasis-gtk

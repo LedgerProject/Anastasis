@@ -1,7 +1,14 @@
 # Anastasis
-Password-less key recovery via multi-factor multi-party authenticationa
+Password-less key recovery via multi-factor multi-party authentication
 
-# Instructions
+# Documentation
+
+Documentation about the system and for installing the Anastasis binaries 
+can be found at
+https://docs.anastasis.lu/
+
+
+# Getting the source code
 
 Run
 

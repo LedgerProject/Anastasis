@@ -60,14 +60,7 @@ sudo apt install anastasis-gtk
 
 ### Building GNU Anastasis from source
 
-After checking out this repository, run
-
-```sh
-git submodule init
-git submodule update
-```
-
-in the resulting directory and then follow the build instructions in the
+Follow the build instructions in the
 
 * anastasis/
 * anastasis-gtk/

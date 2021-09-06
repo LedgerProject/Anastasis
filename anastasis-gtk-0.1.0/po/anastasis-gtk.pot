@@ -1,0 +1,981 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Anastasis SARL
+# This file is distributed under the same license as the anastasis-gtk package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: anastasis-gtk 0.1.0\n"
+"Report-Msgid-Bugs-To: bug-anastasis@gnu.org\n"
+"POT-Creation-Date: 2021-09-06 15:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/anastasis/anastasis-gtk_action.c:1140
+msgid "gratis"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:1512
+#: src/anastasis/anastasis-gtk_action.c:1596
+#: src/anastasis/anastasis-gtk_action.c:2612
+#, c-format
+msgid "Failed to initialize QR-code pixbuf for `%s'\n"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:1838
+msgid "challenge solved"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:1840
+msgid "make payment"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:1842
+msgid "unexpected reply"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:1844
+msgid "read hint"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:1846
+msgid "read feedback"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:1848
+msgid "open link"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:1850
+msgid "wait, provider failed"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:1852
+msgid "challenge unknown"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:1854
+msgid "wait, tries exceeded"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:1856
+msgid "awaiting completion of authentication process"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:1858
+msgid "challenge-specific action required"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:2195
+msgid "<not set>"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:2387
+msgid "new"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:2730
+msgid "INTERNAL ERROR: could not parse state"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:2739
+#, c-format
+msgid "Hint (#%u): %s"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:2773
+msgid "ERROR: failed to parse server JSON instructions"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:3063
+msgid "question"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:3065
+msgid "sms"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:3067
+msgid "post"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:3069
+msgid "email"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:3071
+msgid "iban"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_action.c:3181
+msgid "You did not name this secret"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_handle-auth-edit-provider-clicked.c:213
+msgid "available"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_handle-auth-edit-provider-clicked.c:219
+#, c-format
+msgid "Network failure: %s (#%u)"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_handle-auth-edit-provider-clicked.c:227
+#, c-format
+msgid "HTTP %s (%u): %s (#%u)"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_handle-method-email.c:182
+#, c-format
+msgid "e-mail address %s"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_handle-method-iban.c:86
+#, c-format
+msgid "IBAN %s"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_handle-method-post.c:83
+#, c-format
+msgid "postal address %s"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_handle-method-sms.c:162
+#, c-format
+msgid "phone number %s"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_handle-policy-meta.c:244
+msgid "_Edit policy..."
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_handle-policy-meta.c:261
+msgid "Delete challenge"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_handle-policy-meta.c:263
+msgid "Delete policy"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_handle-policy-meta.c:293
+msgid "_Add policy..."
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_handle-policy-version-changed.c:98
+msgid "This action will reset all of your challenge solving progress!"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_io.c:173
+msgid "This will write your secret to disk in cleartext!"
+msgstr ""
+
+#: src/anastasis/anastasis-gtk_pe-edit-policy.c:243
+#: src/anastasis/anastasis-gtk_pe-edit-policy.c:323
+msgid "<off>"
+msgstr ""
+
+#: contrib/anastasis_gtk_about_window.glade:10
+msgid "(C) 2020-@ANASTASIS_YEARTO@ Anastasis SARL"
+msgstr ""
+
+#: contrib/anastasis_gtk_about_window.glade:12
+msgid "Anastasis"
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_email.glade:95
+msgid ""
+"For email authentication, you need to\n"
+"provide an email address. When recovering\n"
+"your secret, you will be asked to enter the\n"
+"code you will receive by email."
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_email.glade:120
+msgid "Email address"
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_email.glade:176
+msgid "Configure email"
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_iban.glade:94
+msgid ""
+"For bank transfer authentication, you need \n"
+"to provide the IBAN of one of your bank accounts.\n"
+"When recovering your secret, you will be\n"
+"asked to pay the recovery fee via bank\n"
+"transfer from the account you provided here."
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_iban.glade:125
+#: contrib/anastasis_gtk_main_window.glade:1946
+msgid "IBAN"
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_iban.glade:145
+msgid "DE67830625024024853256"
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_iban.glade:182
+msgid "Configure bank transfer"
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_post.glade:95
+msgid ""
+"For postal letter authentication, you need to\n"
+"provide a postal address. When recovering\n"
+"your secret, you will be asked to enter the\n"
+"code you will receive in a letter to that\n"
+"address."
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_post.glade:134
+msgid "_Name"
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_post.glade:180
+msgid "_Street and number"
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_post.glade:225
+msgid "_City or town"
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_post.glade:270
+msgid "_Postcode"
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_post.glade:316
+msgid "Countr_y"
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_post.glade:366
+msgid "Configure postal letter"
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_question.glade:91
+msgid ""
+"For security question authentication, you need to provide a question and its "
+"answer. \n"
+"When recovering your secret, you will be shown the question and you will "
+"need to type \n"
+"the answer exactly as you typed it here."
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_question.glade:138
+msgid "Security _question"
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_question.glade:183
+#: contrib/anastasis_gtk_auth_add_question.glade:307
+#: contrib/anastasis_gtk_main_window.glade:947
+#: contrib/anastasis_gtk_main_window.glade:1056
+#: contrib/anastasis_gtk_main_window.glade:1164
+#: contrib/anastasis_gtk_main_window.glade:1275
+#: contrib/anastasis_gtk_main_window.glade:1385
+#: contrib/anastasis_gtk_main_window.glade:1497
+#: contrib/anastasis_gtk_main_window.glade:1607
+#: contrib/anastasis_gtk_main_window.glade:1682
+#: contrib/this_stays_private.glade:43
+msgid "This stays private"
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_question.glade:262
+msgid "_Answer"
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_question.glade:359
+msgid "Configure security question"
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_sms.glade:99
+msgid ""
+"For SMS authentication, you need to\n"
+"provide a mobile number. When recovering\n"
+"your secret, you will be asked to enter the\n"
+"code you will receive by SMS."
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_sms.glade:128
+msgid "Mobile number:"
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_sms.glade:145
+msgid "+41123456789"
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_sms.glade:181
+msgid "Configure SMS"
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_video.glade:101
+msgid ""
+"For video identification, you need to provide\n"
+"a passport-style photograph. When\n"
+"recovering your secret, you will be asked to\n"
+"join a video call. During that call, a human\n"
+"will use the photograph to verify your \n"
+"identity."
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_video.glade:132
+#: contrib/anastasis_gtk_auth_add_video.glade:146
+msgid "Choose photograph"
+msgstr ""
+
+#: contrib/anastasis_gtk_auth_add_video.glade:191
+msgid "Configure video authentication"
+msgstr ""
+
+#: contrib/anastasis_gtk_challenge_code.glade:106
+msgid "Challenge:"
+msgstr ""
+
+#: contrib/anastasis_gtk_challenge_code.glade:161
+msgid "Code sent to:"
+msgstr ""
+
+#: contrib/anastasis_gtk_challenge_code.glade:219
+msgid "Enter the code:"
+msgstr ""
+
+#: contrib/anastasis_gtk_challenge_code.glade:236
+msgid "A-"
+msgstr ""
+
+#: contrib/anastasis_gtk_challenge_code.glade:264
+msgid "Security token challenge"
+msgstr ""
+
+#: contrib/anastasis_gtk_challenge_iban.glade:97
+msgid ""
+"To satisfy the IBAN challenge, you must\n"
+" pay the indicated amount from the \n"
+"specified bank account to the Anastasis\n"
+"provider. This serves both to authenticate\n"
+"you as the bank account holder as well as\n"
+"to pay the Anastasis provider for its service."
+msgstr ""
+
+#: contrib/anastasis_gtk_challenge_iban.glade:155
+msgid "You must use your bank account identified by the following IBAN:"
+msgstr ""
+
+#: contrib/anastasis_gtk_challenge_iban.glade:218
+msgid "You must wire the funds to the provider's bank account at the IBAN:"
+msgstr ""
+
+#: contrib/anastasis_gtk_challenge_iban.glade:270
+msgid "The name of the provider's business is:"
+msgstr ""
+
+#: contrib/anastasis_gtk_challenge_iban.glade:322
+msgid ""
+"You must use the following wire transfer subject to identify the secret "
+"share to recover:"
+msgstr ""
+
+#: contrib/anastasis_gtk_challenge_iban.glade:373
+msgid "The amount to be paid is:"
+msgstr ""
+
+#: contrib/anastasis_gtk_challenge_iban.glade:394
+msgid ""
+"The provider will enable you to recover \n"
+"this secret share for a month using this\n"
+"program once the amount has\n"
+"arrived. \"Save\" the recovery state and\n"
+"open the resulting file later to continue."
+msgstr ""
+
+#: contrib/anastasis_gtk_challenge_iban.glade:426
+msgid "Instructions for IBAN challenge"
+msgstr ""
+
+#: contrib/anastasis_gtk_challenge_question.glade:124
+msgid "Security question:"
+msgstr ""
+
+#: contrib/anastasis_gtk_challenge_question.glade:182
+msgid "Answer:"
+msgstr ""
+
+#: contrib/anastasis_gtk_challenge_question.glade:226
+msgid "Solve secuity question challenge"
+msgstr ""
+
+#: contrib/anastasis_gtk_edit_policy.glade:44
+msgid "Edit policy"
+msgstr ""
+
+#: contrib/anastasis_gtk_edit_policy.glade:108
+msgid "Map challenges to providers to select them!"
+msgstr ""
+
+#: contrib/anastasis_gtk_edit_policy.glade:152
+msgid "Authentication method"
+msgstr ""
+
+#: contrib/anastasis_gtk_edit_policy.glade:166
+msgid "Anastasis provider"
+msgstr ""
+
+#: contrib/anastasis_gtk_edit_providers.glade:108
+msgid "Provider URL:"
+msgstr ""
+
+#: contrib/anastasis_gtk_edit_providers.glade:128
+#: contrib/anastasis_gtk_main_window.glade:309
+#: contrib/anastasis_gtk_main_window.glade:3636
+msgid "https://"
+msgstr ""
+
+#: contrib/anastasis_gtk_edit_providers.glade:198
+msgid "URL"
+msgstr ""
+
+#: contrib/anastasis_gtk_edit_providers.glade:209
+#: contrib/anastasis_gtk_main_window.glade:2351
+msgid "Status"
+msgstr ""
+
+#: contrib/anastasis_gtk_edit_providers.glade:229
+msgid "Known providers"
+msgstr ""
+
+#: contrib/anastasis_gtk_edit_providers.glade:267
+msgid "Add Anastasis provider"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:47
+#: contrib/anastasis_gtk_main_window.glade:94
+msgid "1. Location & currency"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:49
+#: contrib/anastasis_gtk_main_window.glade:96
+msgid ""
+"Where you live will determine which personal information can be used to "
+"identify your backup."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:52
+#: contrib/anastasis_gtk_main_window.glade:99
+msgid "2. Personal information"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:54
+msgid ""
+"Your personal information will not be shared with anyone. But you must "
+"provide the same information during recovery.\\"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:57
+msgid "3. Authorization methods"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:59
+msgid ""
+"Specify which methods could be used to authenticate you during recovery."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:62
+msgid "4. Recovery policies"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:64
+msgid ""
+"These are possible ways how the secret could be recovered. Please review and "
+"possibly edit the policies."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:67
+msgid "5. Enter secret"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:69
+msgid "Please specify the secret to be backed up."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:72
+msgid "6. Payment (optional)"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:74
+msgid "Some Anastasis providers require payment for their service. Please pay."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:77
+msgid "7. Backup completed"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:79
+msgid "Your backup is complete. Please do test the recovery on occasion."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:101
+msgid ""
+"Your personal information will not be shared with anyone. But you must "
+"provide the same information during recovery."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:104
+msgid "3. Select secret"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:106
+msgid ""
+"Please select which secret to recover. You may switch to a different version "
+"or provider."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:109
+msgid "4. Solve challenges"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:111
+msgid ""
+"Please select an authentication challenge to pass to recover the secret."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:114
+msgid "5. Secret recovered"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:116
+msgid "Your secret was successfully recovered."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:390
+msgid "_File"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:414
+msgid "_Help"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:489
+msgid "Back up a secret"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:539
+msgid "Recover a secret"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:631
+msgid "What do you want to do?"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:647
+msgid "_Back up a secret"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:651
+msgid "Begin fresh backup process"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:666
+msgid "_Recover a secret"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:670
+msgid "Begin secret recovery process"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:689
+msgid "Continue from file with saved Anastasis state"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:745
+msgid "Continent"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:784
+msgid "Country"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:821
+msgid "Currencies"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:849
+msgid ""
+"These questions determine which personal attributes we can ask you for, and "
+"which backup providers could be used."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:854
+msgid "Where do you live? In which currencies do you want to pay?"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:905
+msgid "Full name:"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:919
+msgid "Max Mustermann"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1012
+msgid "Birthdate:"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1123
+msgid "Birthplace:"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1137
+msgid "Earth"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1230
+msgid "AHV number:"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1247
+msgid "756.1222.3425.89"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1341
+msgid "Steuerliche Identifikationsnummer:"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1357
+msgid "12345678912"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1447
+msgid ""
+"Falls vorhanden sollte diese Nummer auf jeden Fall angegeben werden. Nur "
+"Beamte, Selbstständige und andere Personen die keine "
+"Rentenversicherungsnummer haben sollten dieses Feld leer lassen."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1452
+msgid "Sozialversicherungsnummer (optional):"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1468
+msgid "14230460S534"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1563
+msgid "Social security number:"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1579
+msgid "000-00-0000"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1723
+msgid ""
+"The information you have entered here:\n"
+"• Will be hashed, and therefore unreadable\n"
+"• The non-hashed version is not shared"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1738
+msgid ""
+"<a href=\"https://taler.net/papers/thesis-anastasis-2020.pdf\">How Anastasis "
+"encrypts your data</a>"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1751
+msgid ""
+"Anastasis is <a href=\"https://www.gnu.org/philosophy/free-sw.html\">Free "
+"Software</a>"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1765
+msgid ""
+"Anastasis is developed by <a href=\"https://anastasis.lu/en/about.html#team"
+"\">privacy advocates</a>\n"
+"with <a href=\"https://www.ngi.eu/ngi-projects/ledger/\">funding</a> from "
+"the European Commission."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1817
+msgid "Who are you?"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1865
+msgid "SMS"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1882
+msgid "Email"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1898
+msgid "Question"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1914
+msgid "Post"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1930
+msgid "_Video"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:1966
+msgid "Which authorization method should be added?"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2015
+#: contrib/anastasis_gtk_main_window.glade:2204
+#: contrib/anastasis_gtk_main_window.glade:2362
+#: contrib/anastasis_gtk_main_window.glade:2520
+msgid "Type"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2031
+#: contrib/anastasis_gtk_main_window.glade:2410
+msgid "Details"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2051
+msgid "Authorization methods configured so far:"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2072
+msgid "_Add provider"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2144
+msgid "Configure authorization methods!"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2190
+#: contrib/anastasis_gtk_main_window.glade:2507
+msgid "Policy"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2218
+#: contrib/anastasis_gtk_main_window.glade:2373
+#: contrib/anastasis_gtk_main_window.glade:2533
+msgid "Cost"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2232
+#: contrib/anastasis_gtk_main_window.glade:2399
+#: contrib/anastasis_gtk_main_window.glade:2547
+#: contrib/anastasis_gtk_main_window.glade:3326
+msgid "Provider"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2247
+msgid "Expiration"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2270
+msgid "Review recovery policies"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2319
+msgid ""
+"Here you can see your progress in satisfying authorization challenges and "
+"can select the next challenge to solve."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2329
+msgid "#"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2384
+msgid "Instructions"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2446
+msgid ""
+"Here you can see your progress in satisfying authorization challenges and "
+"possible next steps."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2451
+msgid "Select open challenge to solve:"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2481
+#: contrib/anastasis_gtk_main_window.glade:2566
+msgid ""
+"This table shows possible ways to recover the secret. For each policy, the "
+"challenges that must still be satisfied are listed."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2491
+msgid "Solved"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2571
+msgid "Recovery policies:"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2593
+msgid "Select challenge to recover secret:"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2652
+msgid "Secret's name"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2680
+msgid ""
+"Names should be unique, so that you can easily\n"
+"identify your secret later."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2712
+msgid "Provide secret as text"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2743
+msgid "Type or paste your secret here"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2795
+msgid "Or provide secret as a file:"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2838
+msgid "Your secret file:"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2914
+msgid "Your secret's recovery data expires on:"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:2992
+msgid "Backup fee:"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3030
+msgid ""
+"You pay this fee to back up your secret.\n"
+"The fee may increase with the expiry\n"
+"date of your secret's recovery data."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3063
+msgid "Provide secret to backup:"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3102
+msgid "Please pay with GNU Taler:"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3139
+msgid "Payment QR Code"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3152
+msgid "Taler Pay URI"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3197
+msgid "Payment required:"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3237
+msgid "Your backup is complete."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3260
+msgid "Your backup is valid until:"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3300
+msgid "Backups were made at the following providers:"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3339
+msgid "Version"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3352
+msgid "Expiration time"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3397
+msgid "Your secret was recovered."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3417
+msgid "Secret name:"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3457
+msgid ""
+"The secret is shown here. You can also copy it to the clipboard or save it "
+"to a file."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3477
+msgid "Copy secret to clipboard"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3495
+msgid "Save secret to file"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3568
+msgid "Success!"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3609
+msgid ""
+"This is the URL of the provider from which we downloaded the recovery "
+"document."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3611
+msgid "Select a provider"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3667
+msgid ""
+"This is the version of the backup at the provider. By default, the latest "
+"available backup version is obtained."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3669
+msgid "Select a backup version"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3683
+msgid "0"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3701
+msgid ""
+"To see other backup versions,\n"
+"choose a different provider."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3734
+msgid "The secret name associated with this backup version is:"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3763
+msgid ""
+"If this is not the secret you want to recover,\n"
+"select a different provider or backup version."
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3792
+msgid "Select secret to recover"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3965
+msgid "_Restart"
+msgstr ""
+
+#: contrib/anastasis_gtk_main_window.glade:3968
+msgid "Go back to the beginning."
+msgstr ""

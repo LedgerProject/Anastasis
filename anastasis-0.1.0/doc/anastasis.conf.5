@@ -1,0 +1,198 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "ANASTASIS.CONF" "5" "Aug 24, 2021" "0.0" "Anastasis"
+.SH NAME
+anastasis.conf \- anastasis configuration file
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.SH DESCRIPTION
+.sp
+The configuration file is line\-oriented.
+Blank lines and whitespace at the beginning and end of a line are ignored.
+Comments start with \fB#\fP or \fB%\fP in the first column
+(after any beginning\-of\-line whitespace) and go to the end of the line.
+.sp
+The file is split into sections.
+Every section begins with “[SECTIONNAME]” and
+contains a number of options of the form “OPTION=VALUE”.
+There may be whitespace around the \fB=\fP (equal sign).
+Section names and options are \fIcase\-insensitive\fP\&.
+.sp
+The values, however, are \fIcase\-sensitive\fP\&.
+In particular, boolean values are one of \fBYES\fP or \fBNO\fP\&.
+Values can include whitespace by surrounding
+the entire value with \fB"\fP (double quote).
+Note, however, that there are no escape characters in such strings;
+all characters between the double quotes (including other double quotes)
+are taken verbatim.
+.sp
+Values that represent filenames can begin with a \fB/bin/sh\fP\-like
+variable reference.
+This can be simple, such as \fB$TMPDIR/foo\fP, or complex,
+such as \fB${TMPDIR:\-${TMP:\-/tmp}}/foo\fP\&.
+See \fB[PATHS]\fP (below).
+.sp
+Values that represent a time duration are represented as a series of one or
+more \fBNUMBER UNIT\fP pairs, e.g. \fB60 s\fP, \fB4 weeks 1 day\fP, \fB5 years 2 minutes\fP\&.
+.sp
+Values that represent an amount are in the usual amount syntax:
+\fBCURRENCY:VALUE.FRACTION\fP, e.g. \fBEUR:1.50\fP\&.
+The \fBFRACTION\fP portion may extend up to 8 places.
+.sp
+Files containing default values for many of the options described below
+are installed under \fB$ANASTASIS_PREFIX/share/taler/config.d/\fP\&.
+The configuration file given with \fB\-c\fP to Anastasis binaries
+overrides these defaults.
+.sp
+A configuration file may include another, by using the \fB@INLINE@\fP directive,
+for example, in \fBmain.conf\fP, you could write \fB@INLINE@ sub.conf\fP to
+include the entirety of \fBsub.conf\fP at that point in \fBmain.conf\fP\&.
+\&.. TODO: Document ‘anastasis\-config \-V’ in light of ‘@INLINE@’ in taler\-config(1).
+.SS GLOBAL OPTIONS
+.sp
+The following options are from the \fB[anastasis]\fP section and used by
+the \fBanastasis\-httpd\fP service.
+.INDENT 0.0
+.TP
+.B ANNUAL_FEE
+Annual fee to be paid for policy uploads, i.e. "EUR:1.5".
+.TP
+.B TRUTH_UPLOAD_FEE
+Annual fee to be paid for truth uploads, i.e. "EUR:1.5".
+.TP
+.B DB
+Database backend to use, only \fBpostgres\fP is supported right now.
+.TP
+.B UPLOAD_LIMIT_MB
+Maximum upload size for policy uploads in megabytes. Default is 1.
+.TP
+.B ANNUAL_POLICY_UPLOAD_LIMIT
+Maximum number of policies uploaded per year of service. Default is 42.
+.TP
+.B BUSINESS_NAME
+Name of the business.
+.TP
+.B SERVER_SALT
+Must be set to a high\-entropy random server salt that the provider must never
+change after the initial configuration.
+.TP
+.B PORT
+TCP port on which the HTTP service should listen on.
+.UNINDENT
+.SS Backend options
+.sp
+The following options are from the \fB[anastasis\-merchant\-backend]\fP section and used by
+the \fBanastasis\-httpd\fP service.
+.INDENT 0.0
+.TP
+.B PAYMENT_BACKEND_URL
+Base\-URL of the Taler merchant backend instance to use for payments.
+.TP
+.B API_KEY
+API key to transmit to the merchant backend for authentication.
+.UNINDENT
+.SS Authorization options
+.sp
+For each active authorization plugin, options must be configured in a
+section called \fB[authorization\-$PLUGIN]\fP where \fB$PLUGIN\fP is the
+name of the authorization plugin.  Specific plugins may require
+additional options, which are described in the respective sections
+below.
+.INDENT 0.0
+.TP
+.B COST
+Fee the user has to pay to obtain a challenge from this
+authorization plugin during recovery.
+.TP
+.B ENABLED
+\fByes\fP to enable this plugin, \fBno\fP to disable.
+.UNINDENT
+.SS SMS Authorization options
+.INDENT 0.0
+.TP
+.B COMMAND
+Helper command to run to send SMS.
+.UNINDENT
+.SS Email Authorization options
+.INDENT 0.0
+.TP
+.B COMMAND
+Helper command to run to send E\-mail.
+.UNINDENT
+.SS Post Authorization options
+.INDENT 0.0
+.TP
+.B COMMAND
+Helper command to run to send physical mail.
+.UNINDENT
+.SS IBAN Authorization options
+.INDENT 0.0
+.TP
+.B CREDIT_IBAN
+IBAN number where the consumers must
+wire the money to for authentication.
+.TP
+.B BUSINESS_NAME
+Name of the account holder.
+.TP
+.B WIRE_GATEWAY_URL
+Base URL of the LibEuFin wire gateway (Anastasis facade).
+.TP
+.B WIRE_GATEWAY_AUTH_METHOD
+Authentication method used to talk to the LibEuFin wire gateway, i.e. \(aqbasic\(aq for HTTP basic authentication.
+.TP
+.B USERNAME
+Username to use when using HTTP basic authentication.
+.TP
+.B PASSWORD
+Password to use when using HTTP basic authentication.
+.UNINDENT
+.SS Postgres database configuration
+.sp
+The following options must be in the section \fB[statis\-postgres]\fP if
+\fBpostgres\fP was used for the database under \fBDB\fP in the
+\fB[anastasis]\fP section.
+.INDENT 0.0
+.TP
+.B CONFIG
+Path under which the Postgres database is that the service
+should use, i.e. \fBpostgres://anastasis\fP\&.
+.UNINDENT
+.SH SEE ALSO
+.sp
+anastasis\-httpd(1), anastasis\-config(1)
+.SH BUGS
+.sp
+Report bugs by using \fI\%https://bugs.anastasis.lu/\fP or by sending electronic
+mail to <\fI\%contact@anastasis.lu\fP>.
+.SH AUTHOR
+Anastasis SARL
+.SH COPYRIGHT
+2020-2021 Anastasis SARL (AGPLv3+ or GFDL 1.3+)
+.\" Generated by docutils manpage writer.
+.

@@ -1,0 +1,56 @@
+=============
+ANASTASIS-GTK
+=============
+
+This package includes GTK interfaces to GNU Anastasis.  Anastasis is a
+GNU package enabling distributed key backup and recovery. The code is
+released under the GNU General Public License (v3 or later).  See
+COPYING for details.
+
+
+Dependencies
+============
+
+libmagic
+libjansson   : MIT License
+libgcrypt    : LGPL
+postgresql   : PostgreSQL License
+libmicrohttpd: LGPLv3+
+libgnunet*   : GPLv3+,
+libgnunetgtk : GPLv3+,
+libtaler*    : GPLv3+
+libanastasis*: GPLv3+
+libgtk3      : LGPLv2+
+libgladeui   : GPLv2+
+
+
+Installation
+============
+
+For generic installation instructions, see INSTALL.
+
+In order to compile or run this code, you need to first install the
+main GNUnet, gnunet-gtk, GNU Taler and GNU Anastasis codebases.
+
+Then you may need to tell configure where the GNUnet installation is
+located.  The following command will install the GTK interfaces in the
+$GNUNET_PREFIX/.. directory.
+
+$ export GNUNET_PREFIX=/usr/local/lib # or other directory of your choice
+$ ./configure --prefix=$GNUNET_PREFIX/.. --with-gnunet=$GNUNET_PREFIX/..
+$ make install
+
+anastasis-gtk requires GTK 3.22.0 or higher and libgladeui-2 (i.e. 3.8
+or 3.10).  glade-3.8 should be used to edit the UI.
+
+
+After installation, you should have the following new programs:
+
+* anastasis-gtk --- a GUI to backup and restore secrets with Anastasis
+
+
+Stay tuned
+==========
+
+* https://anastasis.lu/
+* https://bugs.anastasis.lu/

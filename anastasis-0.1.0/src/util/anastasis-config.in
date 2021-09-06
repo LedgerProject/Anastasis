@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -eu
+
+if ! type gnunet-config >/dev/null; then
+  echo "$0 needs gnunet-config to be installed"
+  exit 1
+fi
+
+GC=`which gnunet-config`
+export LD_PRELOAD=${LD_PRELOAD:-}:%libdir%/libanastasisutil.so
+exec gnunet-config "$@"

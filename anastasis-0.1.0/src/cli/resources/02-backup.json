@@ -1,0 +1,83 @@
+{
+  "continents": [
+    "Europe",
+    "North America",
+    "Testcontinent"
+  ],
+  "backup_state": "USER_ATTRIBUTES_COLLECTING",
+  "selected_continent": "Testcontinent",
+  "countries": [
+    {
+      "code": "xx",
+      "name": "Testland",
+      "continent": "Testcontinent",
+      "continent_i18n": {
+        "xx": "Testkontinent"
+      },
+      "name_i18n": {
+        "de_DE": "Testlandt",
+        "de_CH": "Testlandi",
+        "fr": "Testpais",
+        "en": "Testland"
+      },
+      "currency": "TESTKUDOS"
+    },
+    {
+      "code": "xy",
+      "name": "Demoland",
+      "continent": "Testcontinent",
+      "continent_i18n": {
+        "xx": "Testkontinent"
+      },
+      "name_i18n": {
+        "de_DE": "Demolandt",
+        "de_CH": "Demolandi",
+        "fr": "Demopais",
+        "en": "Demoland"
+      },
+      "currency": "KUDOS"
+    }
+  ],
+  "authentication_providers": {
+    "http://localhost:8086/": {},
+    "http://localhost:8087/": {},
+    "http://localhost:8088/": {},
+    "http://localhost:8089/": {}
+  },
+  "selected_country": "xx",
+  "currencies": [ "TESTKUDOS" ],
+  "required_attributes": [
+    {
+      "type": "string",
+      "name": "full_name",
+      "label": "Full name",
+      "label_i18n": {
+        "de_DE": "Vollstaendiger Name",
+        "de_CH": "Vollstaendiger Name"
+      },
+      "widget": "anastasis_gtk_ia_full_name"
+    },
+    {
+      "type": "date",
+      "name": "birthdate",
+      "label": "Birthdate",
+      "label_i18n": {
+        "de_CH": "Geburtsdatum"
+      },
+      "widget": "anastasis_gtk_ia_birthdate"
+    },
+    {
+        "type": "string",
+        "name": "sq_number",
+	"label": "Square number",
+	"label_i18n":{
+	    "de_DE":"Quadratzahl",
+	    "de_CH":"Quadratzahl"
+	},
+	"widget": "anastasis_gtk_xx_square",
+        "uuid" : "ed790bca-89bf-11eb-96f2-233996cf644e",
+	"validation-regex": "^[0-9]+$",
+	"validation-logic": "XX_SQUARE_check"
+    }
+  ]
+}

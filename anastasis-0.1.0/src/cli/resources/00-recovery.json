@@ -1,0 +1,8 @@
+{
+  "continents": [
+    "Europe",
+    "North America",
+    "Testcontinent"
+  ],
+  "recovery_state": "CONTINENT_SELECTING"
+}

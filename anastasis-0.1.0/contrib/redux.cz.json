@@ -1,0 +1,33 @@
+{
+    "license": "GPLv3+",
+    "SPDX-License-Identifier": "GPL3.0-or-later",
+    "required_attributes": [
+	{
+	    "type": "string",
+	    "name": "full_name",
+	    "label": "Full name",
+	    "widget": "anastasis_gtk_ia_full_name",
+            "uuid" : "9e8f463f-575f-42cb-85f3-759559997331"
+	},
+	{
+	    "type": "string",
+	    "name": "birthplace",
+	    "label": "Birthplace",
+	    "widget": "anastasis_gtk_ia_birthplace",
+            "uuid" : "4c822e8e-89c6-11eb-95c4-8b077ad8489f"
+	},
+	{
+	    "type": "string",
+	    "name": "birth_number",
+	    "label": "Birth Number",
+	    "label_i18n":{
+		"en": "Birth Number",
+		"cz": "rodné číslo"
+	    },
+	    "widget": "anastasis_gtk_ia_birthnumber_cz",
+            "uuid": "03e3a05b-1192-44f1-ac36-7425512eee1a",
+	    "validation-regex": "^[0-9]{2}(((0|2|5|7)[0-9])|10|11|31|32|51|52|81|82)/[0-9]{3}[0-9]?$",
+	    "validation-logic": "CZ_BN_check"
+	}
+    ]
+}

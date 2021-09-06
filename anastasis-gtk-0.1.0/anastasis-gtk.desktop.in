@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=Anastasis
+GenericName=Anastasis
+Comment=Privacy-preserving Credential backup and recovery
+
+Type=Application
+Exec=anastasis-gtk
+Icon=anastasis-gtk
+Terminal=false
+Categories=GTK;Network;
+StartupNotify=true
+StartupWMClass=anastasis-gtk

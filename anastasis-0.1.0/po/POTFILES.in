@@ -1,0 +1,2 @@
+# List of source files which contain translatable strings.
+src/reducer/anastasis_api_recovery_redux.c

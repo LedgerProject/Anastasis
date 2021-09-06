@@ -1,0 +1,30 @@
+{
+    "license": "GPLv3+",
+    "SPDX-License-Identifier": "GPL3.0-or-later",
+    "anastasis_provider": [
+        {
+            "url" : "https://anastasis.demo.taler.net/",
+            "currency" : "KUDOS"
+        },
+        {
+            "url" : "https://kudos.demo.anastasis.lu/",
+            "currency" : "KUDOS"
+        },
+	{
+            "url" : "http://localhost:8086/",
+            "currency" : "TESTKUDOS"
+	},
+	{
+            "url" : "http://localhost:8087/",
+            "currency" : "TESTKUDOS"
+	},
+	{
+            "url" : "http://localhost:8088/",
+            "currency" : "TESTKUDOS"
+	},
+	{
+            "url" : "http://localhost:8089/",
+            "currency" : "TESTKUDOS"
+	}
+    ]
+}

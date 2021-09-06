@@ -31,8 +31,8 @@ https://docs.anastasis.lu/.
 
 ## Directory structure
 
-* anastasis: core logic and backend
-* anastasis-gtk: Gtk+ graphical user interface
+* anastasis-$VERSION: core logic and backend
+* anastasis-gtk-$VERSION: Gtk+ graphical user interface
 
 ## Installation instructions
 

@@ -1,0 +1,38 @@
+{
+    "license": "GPLv3+",
+    "SPDX-License-Identifier": "GPL3.0-or-later",
+    "required_attributes": [
+	{
+	    "type": "string",
+	    "name": "full_name",
+	    "label": "Full name",
+	    "widget": "anastasis_gtk_ia_full_name",
+            "uuid" : "9e8f463f-575f-42cb-85f3-759559997331"
+        },
+	{
+	    "type": "date",
+	    "name": "birthdate",
+	    "label": "Birthdate",
+	    "widget": "anastasis_gtk_ia_birthdate",
+            "uuid" : "83d655c7-bdb6-484d-904e-80c1058c8854"
+	},
+	{
+	    "type": "string",
+	    "name": "birthplace",
+	    "label": "Birthplace",
+	    "widget": "anastasis_gtk_ia_birthplace",
+            "uuid" : "4c822e8e-89c6-11eb-95c4-8b077ad8489f"
+	},
+	{
+	    "type": "string",
+	    "name": "social_security_number",
+	    "label": "Social security number",
+	    "label_i18n":{
+		"en": "US Social security number"
+	    },
+	    "widget": "anastasis_gtk_ia_ssn_us",
+            "uuid": "310a138c-b0b7-4985-b8b8-d00e765e9f9b",
+            "validation-regex": "^d{3}-d{2}-d{4}$"
+	}
+    ]
+}

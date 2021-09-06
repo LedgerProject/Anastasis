@@ -1,0 +1,41 @@
+{
+  "continents": [
+    "Europe",
+    "North America",
+    "Testcontinent"
+  ],
+  "recovery_state": "COUNTRY_SELECTING",
+  "selected_continent": "Testcontinent",
+  "countries": [
+    {
+      "code": "xx",
+      "name": "Testland",
+      "continent": "Testcontinent",
+      "continent_i18n": {
+        "xx": "Testkontinent"
+      },
+      "name_i18n": {
+        "de_DE": "Testlandt",
+        "de_CH": "Testlandi",
+        "fr": "Testpais",
+        "en": "Testland"
+      },
+      "currency": "TESTKUDOS"
+    },
+    {
+      "code": "xy",
+      "name": "Demoland",
+      "continent": "Testcontinent",
+      "continent_i18n": {
+        "xx": "Testkontinent"
+      },
+      "name_i18n": {
+        "de_DE": "Demolandt",
+        "de_CH": "Demolandi",
+        "fr": "Demopais",
+        "en": "Demoland"
+      },
+      "currency": "KUDOS"
+    }
+  ]
+}

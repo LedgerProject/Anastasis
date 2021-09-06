@@ -1,0 +1,29 @@
+{
+    "license": "GPLv3+",
+    "SPDX-License-Identifier": "GPL3.0-or-later",
+    "required_attributes": [
+	{
+	    "type": "string",
+	    "name": "full_name",
+	    "label": "Full name",
+	    "widget": "anastasis_gtk_ia_full_name",
+            "uuid" : "9e8f463f-575f-42cb-85f3-759559997331"
+	},
+	{
+	    "type": "date",
+	    "name": "birthdate",
+	    "label": "Birthdate",
+	    "widget": "anastasis_gtk_ia_birthdate",
+            "uuid" : "83d655c7-bdb6-484d-904e-80c1058c8854"
+	},
+	{
+	    "type": "string",
+	    "name": "prime_number",
+	    "label": "Prime number",
+	    "widget": "anastasis_gtk_xx_prime",
+            "uuid" : "39190a95-cacb-4412-8bae-1f7da3f980b4",
+	    "validation-regex": "^[0-9]+$",
+	    "validation-logic": "XY_PRIME_check"
+	}
+    ]
+}

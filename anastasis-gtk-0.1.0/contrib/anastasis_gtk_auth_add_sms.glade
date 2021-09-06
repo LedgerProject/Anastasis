@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.38.2 
+
+Copyright (C) 2019-2021 Anastasis SARL
+
+This file is part of anastasis-gtk.
+
+anastasis-gtk is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+anastasis-gtk is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with anastasis-gtk.  If not, see <http://www.gnu.org/licenses/>.
+
+Author: Christian Grothoff
+
+-->
+<interface>
+  <requires lib="gtk+" version="3.12"/>
+  <!-- interface-license-type gplv3 -->
+  <!-- interface-name anastasis-gtk -->
+  <!-- interface-description Key backup and recovery -->
+  <!-- interface-copyright 2019-2021 Anastasis SARL -->
+  <!-- interface-authors Christian Grothoff -->
+  <object class="GtkDialog" id="anastasis_gtk_b_sms_dialog">
+    <property name="can-focus">False</property>
+    <property name="icon">outline_stay_current_portrait_black_24dp.png</property>
+    <property name="type-hint">dialog</property>
+    <signal name="response" handler="anastasis_gtk_b_sms_dialog_response_cb" swapped="no"/>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="can-focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox">
+            <property name="can-focus">False</property>
+            <property name="layout-style">end</property>
+            <child>
+              <object class="GtkButton" id="anastasis_gtk_b_sms_dialog_btn_cancel">
+                <property name="label">gtk-cancel</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="receives-default">False</property>
+                <property name="use-stock">True</property>
+                <property name="always-show-image">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="padding">5</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="anastasis_gtk_b_sms_dialog_btn_ok">
+                <property name="label">gtk-ok</property>
+                <property name="visible">True</property>
+                <property name="sensitive">False</property>
+                <property name="can-focus">False</property>
+                <property name="can-default">True</property>
+                <property name="has-default">True</property>
+                <property name="receives-default">False</property>
+                <property name="use-stock">True</property>
+                <property name="always-show-image">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="padding">5</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="padding">5</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel" id="explainer_label">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="margin-start">20</property>
+                <property name="margin-end">20</property>
+                <property name="label" translatable="yes">For SMS authentication, you need to
+provide a mobile number. When recovering
+your secret, you will be asked to enter the
+code you will receive by SMS.</property>
+                <attributes>
+                  <attribute name="weight" value="medium"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="padding">20</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="halign">start</property>
+                <property name="margin-start">25</property>
+                <property name="margin-end">25</property>
+                <property name="margin-bottom">50</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="label" translatable="yes">Mobile number:</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="padding">5</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="anastasis_gtk_b_sms_dialog_phonenumber_entry">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="hexpand">True</property>
+                    <property name="activates-default">True</property>
+                    <property name="width-chars">24</property>
+                    <property name="primary-icon-stock">gtk-dialog-authentication</property>
+                    <property name="placeholder-text" translatable="yes">+41123456789</property>
+                    <property name="input-purpose">phone</property>
+                    <signal name="changed" handler="anastasis_gtk_b_sms_dialog_phonenumber_entry_changed_cb" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="padding">5</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="padding">5</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="-6">anastasis_gtk_b_sms_dialog_btn_cancel</action-widget>
+      <action-widget response="-5">anastasis_gtk_b_sms_dialog_btn_ok</action-widget>
+    </action-widgets>
+    <child type="titlebar">
+      <object class="GtkLabel">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="label" translatable="yes">Configure SMS</property>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="-6">anastasis_gtk_b_sms_dialog_btn_cancel</action-widget>
+      <action-widget response="-5">anastasis_gtk_b_sms_dialog_btn_ok</action-widget>
+    </action-widgets>
+  </object>
+</interface>

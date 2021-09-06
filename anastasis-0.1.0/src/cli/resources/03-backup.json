@@ -1,0 +1,159 @@
+{
+  "continents": [
+    "Europe",
+    "North America",
+    "Testcontinent"
+  ],
+  "backup_state": "AUTHENTICATIONS_EDITING",
+  "selected_continent": "Testcontinent",
+  "countries": [
+    {
+      "code": "xx",
+      "name": "Testland",
+      "continent": "Testcontinent",
+      "continent_i18n": {
+        "xx": "Testkontinent"
+      },
+      "name_i18n": {
+        "de_DE": "Testlandt",
+        "de_CH": "Testlandi",
+        "fr": "Testpais",
+        "en": "Testland"
+      },
+      "currency": "TESTKUDOS"
+    },
+    {
+      "code": "xy",
+      "name": "Demoland",
+      "continent": "Testcontinent",
+      "continent_i18n": {
+        "xx": "Testkontinent"
+      },
+      "name_i18n": {
+        "de_DE": "Demolandt",
+        "de_CH": "Demolandi",
+        "fr": "Demopais",
+        "en": "Demoland"
+      },
+      "currency": "KUDOS"
+    }
+  ],
+  "authentication_providers": {
+    "http://localhost:8086/": {
+      "methods": [
+        {
+          "type": "question",
+          "usage_fee": "TESTKUDOS:0"
+        }
+      ],
+      "annual_fee": "TESTKUDOS:4.99",
+      "truth_upload_fee": "TESTKUDOS:0.01",
+      "liability_limit": "TESTKUDOS:1",
+      "truth_lifetime": {
+        "d_ms": 63115200000
+      },
+      "currency": "TESTKUDOS",
+      "business_name": "Data loss #1 Inc.",
+      "storage_limit_in_megabytes": 1,
+      "salt": "F0HEYJQW81ZAZ3VYMZHFG8T1Z0",
+      "http_status": 200
+    },
+    "http://localhost:8087/": {
+      "methods": [
+        {
+          "type": "question",
+          "usage_fee": "TESTKUDOS:0"
+        }
+      ],
+      "annual_fee": "TESTKUDOS:4.99",
+      "truth_upload_fee": "TESTKUDOS:0.01",
+      "liability_limit": "TESTKUDOS:1",
+      "truth_lifetime": {
+        "d_ms": 63115200000
+      },
+      "currency": "TESTKUDOS",
+      "business_name": "Data loss #2 Inc.",
+      "storage_limit_in_megabytes": 1,
+      "salt": "D378FWXHJB8JHPQFQRZGGV9PWG",
+      "http_status": 200
+    },
+    "http://localhost:8088/": {
+      "methods": [
+        {
+          "type": "question",
+          "usage_fee": "TESTKUDOS:0"
+        }
+      ],
+      "annual_fee": "TESTKUDOS:4.99",
+      "truth_upload_fee": "TESTKUDOS:0.01",
+      "liability_limit": "TESTKUDOS:1",
+      "truth_lifetime": {
+        "d_ms": 63115200000
+      },
+      "currency": "TESTKUDOS",
+      "business_name": "Data loss #3 Inc.",
+      "storage_limit_in_megabytes": 1,
+      "salt": "7W9W4A4TTWSWRPJ76RNDPJHSPR",
+      "http_status": 200
+    },
+    "http://localhost:8089/": {
+      "methods": [
+        {
+          "type": "question",
+          "usage_fee": "TESTKUDOS:0"
+        }
+      ],
+      "annual_fee": "TESTKUDOS:4.99",
+      "truth_upload_fee": "TESTKUDOS:0.01",
+      "liability_limit": "TESTKUDOS:1",
+      "truth_lifetime": {
+        "d_ms": 63115200000
+      },
+      "currency": "TESTKUDOS",
+      "business_name": "Data loss #4 Inc.",
+      "storage_limit_in_megabytes": 1,
+      "salt": "PN0VJF6KDSBYN40SGRCEXPB07M",
+      "http_status": 200
+    }
+  },
+  "selected_country": "xx",
+  "currencies": ["TESTKUDOS"],
+  "required_attributes": [
+    {
+      "type": "string",
+      "name": "full_name",
+      "label": "Full name",
+      "label_i18n": {
+        "de_DE": "Vollstaendiger Name",
+        "de_CH": "Vollstaendiger Name"
+      },
+      "widget": "anastasis_gtk_ia_full_name"
+    },
+    {
+      "type": "date",
+      "name": "birthdate",
+      "label": "Birthdate",
+      "label_i18n": {
+        "de_CH": "Geburtsdatum"
+      },
+      "widget": "anastasis_gtk_ia_birthdate"
+    },
+    {
+      "type": "string",
+      "name": "ahv_number",
+      "label": "AHV number",
+      "label_i18n": {
+        "de_DE": "AHV-Nummer",
+        "de_CH": "AHV-Nummer"
+      },
+      "widget": "anastasis_gtk_ia_ahv",
+      "validation-regex": "^(756).[0-9]{4}.[0-9]{4}.[0-9]{2}|(756)[0-9]{10}$",
+      "validation-logic": "CH_AVH_check"
+    }
+  ],
+  "identity_attributes": {
+    "full_name": "Max Musterman",
+    "sq_number": 4,
+    "birthdate": "2000-01-01"
+  }
+}

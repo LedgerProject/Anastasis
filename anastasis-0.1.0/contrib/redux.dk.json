@@ -1,0 +1,32 @@
+{
+    "license": "GPLv3+",
+    "SPDX-License-Identifier": "GPL3.0-or-later",
+    "required_attributes": [
+	{
+	    "type": "string",
+	    "name": "full_name",
+	    "label": "Full name",
+	    "widget": "anastasis_gtk_ia_full_name",
+            "uuid" : "9e8f463f-575f-42cb-85f3-759559997331"
+	},
+	{
+	    "type": "string",
+	    "name": "birthplace",
+	    "label": "Birthplace",
+	    "widget": "anastasis_gtk_ia_birthplace",
+            "uuid" : "4c822e8e-89c6-11eb-95c4-8b077ad8489f"
+	},
+	{
+	    "type": "string",
+	    "name": "cpr_number",
+	    "label": "CPR-nummer",
+	    "label_i18n":{
+		"en": "CPR Number",
+		"dk": "CPR-nummer"
+	    },
+	    "widget": "anastasis_gtk_ia_cpr_dk",
+            "uuid": "38f13a4d-4302-4ada-ada1-c3ff4a8ff689",
+	    "validation-regex": "^(0[1-9]|[1-2][0-9]|30|31)((0[1-9]|10|11|12))[0-9]{2}-[0-9A-Z]{4}$"
+	}
+    ]
+}

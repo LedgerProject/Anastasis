@@ -1,0 +1,6 @@
+{
+    "instructions" : "To authorize recovery, wire %s to %s at %s using a wire transfer subject of 'Anastasis %llu' from your bank account",
+    "instructions_i18n" : {
+        "en_EN" : "To authorize recovery, wire %s to %s at %s using a wire transfer subject of 'Anastasis %llu' from your bank account"
+    }
+}

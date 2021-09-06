@@ -1,0 +1,98 @@
+/*
+     This file is part of anastasis-gtk.
+     Copyright (C) 2021 Anastasis SARL
+
+     Anastasis is free software; you can redistribute it and/or modify
+     it under the terms of the GNU General Public License as published
+     by the Free Software Foundation; either version 3, or (at your
+     option) any later version.
+
+     Anastasis is distributed in the hope that it will be useful, but
+     WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+     General Public License for more details.
+
+     You should have received a copy of the GNU General Public License
+     along with Anastasis; see the file COPYING.  If not, write to the
+     Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+     Boston, MA 02110-1301, USA.
+*/
+
+/**
+ * @file src/anastasis/anastasis-gtk_handle-challenge-question.c
+ * @brief Handle dialogs for secure question
+ * @author Christian Grothoff
+ */
+#include <gnunet/platform.h>
+#include <gnunet/gnunet_util_lib.h>
+#include "anastasis-gtk_action.h"
+#include "anastasis-gtk_helper.h"
+#include "anastasis-gtk_handle-identity-changed.h"
+#include <jansson.h>
+
+
+/**
+ * Function called from the secure question challenge dialog upon completion.
+ *
+ * @param dialog the pseudonym selection dialog
+ * @param response_id response code from the dialog
+ * @param user_data the builder of the dialog
+ */
+void
+anastasis_gtk_c_question_dialog_response_cb (GtkDialog *dialog,
+                                             gint response_id,
+                                             gpointer user_data)
+{
+  GtkBuilder *builder = GTK_BUILDER (user_data);
+  GtkEntry *q;
+  const char *qs;
+  json_t *args;
+
+  if (GTK_RESPONSE_OK != response_id)
+  {
+    gtk_widget_destroy (GTK_WIDGET (dialog));
+    g_object_unref (G_OBJECT (builder));
+    GNUNET_assert (NULL == AG_ra);
+    AG_ra = ANASTASIS_redux_action (AG_redux_state,
+                                    "back",
+                                    NULL,
+                                    &AG_action_cb,
+                                    NULL);
+    return;
+  }
+  q = GTK_ENTRY (gtk_builder_get_object (builder,
+                                         "anastasis_gtk_c_question_dialog_answer_entry"));
+  qs = gtk_entry_get_text (q);
+  args = GNUNET_JSON_PACK (
+    GNUNET_JSON_pack_string ("answer",
+                             qs));
+  gtk_widget_destroy (GTK_WIDGET (dialog));
+  g_object_unref (G_OBJECT (builder));
+  AG_freeze ();
+  GNUNET_assert (NULL == AG_ra);
+  AG_ra = ANASTASIS_redux_action (AG_redux_state,
+                                  "solve_challenge",
+                                  args,
+                                  &AG_action_cb,
+                                  NULL);
+  json_decref (args);
+}
+
+
+void
+anastasis_gtk_c_question_dialog_answer_entry_changed_cb (GtkEntry *entry,
+                                                         gpointer user_data)
+{
+  GtkBuilder *builder = GTK_BUILDER (user_data);
+  GtkEntry *a;
+  const char *as;
+
+  a = GTK_ENTRY (gtk_builder_get_object (builder,
+                                         "anastasis_gtk_c_question_dialog_answer_entry"));
+  as = gtk_entry_get_text (a);
+  gtk_widget_set_sensitive (
+    GTK_WIDGET (gtk_builder_get_object (builder,
+                                        "anastasis_gtk_c_question_dialog_btn_ok")),
+    (NULL != as) &&
+    (0 < strlen (as)));
+}

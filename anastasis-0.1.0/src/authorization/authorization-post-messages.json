@@ -1,0 +1,7 @@
+{
+    "instructions" : "Recovery message send to an address with ZIP code %s",
+    "instructions_i18n" : {
+        "de_DE" : "Ein Authorisierungscode wurde an eine Addresse mit der Postleitzahl %s geschickt"
+    },
+    "body" : "Dear Customer\n\nThe Anastasis recovery code you need to\nrecover your data is A-%llu.\nThis is for challenge %s.\n\nBest regards\n\nYour Anastasis provider"
+}

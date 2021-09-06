@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.38.2 
+
+Copyright (C) 2020-2021 Anastasis SARL
+
+This file is part of anastasis-gtk.
+
+anastasis-gtk is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+anastasis-gtk is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with anastasis-gtk.  If not, see <http://www.gnu.org/licenses/>.
+
+Author: Belen Pena
+
+-->
+<interface>
+  <requires lib="gtk+" version="3.20"/>
+  <!-- interface-license-type gplv3 -->
+  <!-- interface-name anastasis-gtk -->
+  <!-- interface-description Key backup and recovery -->
+  <!-- interface-copyright 2020-2021 Anastasis SARL -->
+  <!-- interface-authors Belen Pena -->
+  <object class="GtkWindow" id="private_dummy_window">
+    <property name="can-focus">False</property>
+    <child>
+      <object class="GtkBox" id="private_hbox">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="margin-left">10</property>
+        <property name="margin-right">10</property>
+        <child>
+          <object class="GtkLabel" id="privacy_label">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label" translatable="yes">This stays private</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="padding">10</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="blindfold_image">
+            <property name="width-request">24</property>
+            <property name="height-request">24</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">noun_blindfold_3574196.svg</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="padding">1</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

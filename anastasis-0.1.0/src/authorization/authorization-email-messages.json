@@ -1,0 +1,10 @@
+{
+    "instructions" : "Recovery TAN was sent to email %.*s@DOMAIN",
+    "instructions_i18n" : {
+        "de_DE" : "Ein Authorisierungscode wurde an %.*s@DOMAIN geschickt"
+    },
+    "body" : "Your Anastasis recovery code is:\nA-%llu\n\nThis is for challenge %s.\n",
+    "body_i18n" : {
+        "de_DE" : "Ihr Anastasis Autorisierungscode ist:\nA-%llu\n\nDies ist der Code für den Vorgang %s.\n"
+    }
+}

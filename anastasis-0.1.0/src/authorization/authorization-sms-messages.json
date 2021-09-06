@@ -1,0 +1,6 @@
+{
+    "instructions" : "Recovery TAN send to phone number ending with %s",
+    "instructions_i18n" : {
+        "de_DE" : "Ein Authorisierungscode wurde an die Telefonnummer mit der Endung %s geschickt"
+    }
+}

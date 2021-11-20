@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "lib": [
+      "es6",
+      "DOM"
+    ],
+    "jsx": "react", /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */
+    "jsxFactory": "h", /* Specify the JSX factory function to use when targeting react JSX emit, e.g. React.createElement or h. */
+    "jsxFragmentFactory": "Fragment", // https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-0.html#custom-jsx-factories
+    "moduleResolution": "Node",
+    "module": "ESNext",
+    "target": "ES6",
+    "noImplicitAny": true,
+    "outDir": "lib",
+    "noEmitOnError": true,
+    "strict": true,
+    "incremental": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "rootDir": "./src",
+    "typeRoots": [
+      "./node_modules/@types"
+    ]
+  },
+  "references": [
+    {
+      "path": "../taler-wallet-core/"
+    },
+    {
+      "path": "../taler-util/"
+    }
+  ],
+  "include": [
+    "src/**/*"
+  ]
+}

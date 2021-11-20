@@ -1,0 +1,9 @@
+
+
+};
+
+
+/**
+ * The length of @e code_hint_pairs.
+ */
+static const unsigned int code_hint_pairs_length = {{ECS_LENGTH}};

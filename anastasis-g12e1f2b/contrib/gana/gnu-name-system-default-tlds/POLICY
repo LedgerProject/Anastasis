@@ -1,0 +1,13 @@
+Each registry entry should contain three values: the "Key" of the
+authoritative zone of a TLD, the "Name" of the TLDS, an optional
+"Contact", and a "Reference" with links to further information about the
+authority.
+
+The "Name" must be unique in the entire registry.  The value must be a
+case insensitive UTF-8 string without dots.
+
+Adding records is possible after expert review by the maintainers of
+GNUnet who will define appropriate bribes on a case-by-case basis.
+
+The current contact(s) for expert review are reachable at
+gns-registry@gnunet.org.

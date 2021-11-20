@@ -1,0 +1,29 @@
+#!/bin/sh
+
+set -e
+
+if [ -f /usr/share/debconf/confmodule ]; then
+  . /usr/share/debconf/confmodule
+fi
+
+if [ -f /usr/share/dbconfig-common/dpkg/postrm.pgsql ]; then
+  . /usr/share/dbconfig-common/dpkg/postrm.pgsql
+  dbc_go anastasis-httpd "$@"
+fi
+
+case "${1}" in
+purge)
+  rm -rf /var/lib/anastasis/httpd/
+  ;;
+remove | upgrade | failed-upgrade | abort-install | abort-upgrade | disappear)
+  ;;
+
+  *)
+  echo "postrm called with unknown argument \`${1}'" >&2
+  exit 1
+  ;;
+esac
+
+#DEBHELPER#
+
+exit 0

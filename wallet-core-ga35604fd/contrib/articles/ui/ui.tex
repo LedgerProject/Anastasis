@@ -1,0 +1,1642 @@
+\documentclass{llncs}
+
+%\documentclass[twoside,letterpaper]{IEEEtran}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{url}
+\usepackage{tikz}
+\usepackage{eurosym}
+\usepackage{listings}
+\usepackage{graphicx}
+%\usepackage{wrapfig}
+\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+\usepackage{wrapfig}
+\usepackage{url}
+%\usepackage{stfloats}
+
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
+
+% CSS
+\lstdefinelanguage{CSS}{
+  keywords={color,background-image:,margin,padding,font,weight,display,position,top,left,right,bottom,list,style,border,size,white,space,min,width, transition:, transform:, transition-property, transition-duration, transition-timing-function},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]",
+  alsoletter={:},
+  alsodigit={-}
+}
+
+% JavaScript
+\lstdefinelanguage{JavaScript}{
+  morekeywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  morecomment=[s]{/*}{*/},
+  morecomment=[l]//,
+  morestring=[b]",
+  morestring=[b]'
+}
+
+\lstdefinelanguage{HTML5}{
+  language=html,
+  sensitive=true,
+  alsoletter={<>=-},
+  morecomment=[s]{<!-}{-->},
+  tag=[s],
+  otherkeywords={
+  % General
+  >,
+  % Standard tags
+	<!DOCTYPE,
+  </html, <html, <head, <title, </title, <style, </style, <link, </head, <meta, />,
+	% body
+	</body, <body,
+	% Divs
+	</div, <div, </div>,
+	% Paragraphs
+	</p, <p, </p>,
+	% scripts
+	</script, <script,
+  % More tags...
+  <canvas, /canvas>, <svg, <rect, <animateTransform, </rect>, </svg>, <video, <source, <iframe, </iframe>, </video>, <image, </image>
+  },
+  ndkeywords={
+  % General
+  =,
+  % HTML attributes
+  charset=, src=, id=, width=, height=, style=, type=, rel=, href=,
+  % SVG attributes
+  fill=, attributeName=, begin=, dur=, from=, to=, poster=, controls=, x=, y=, repeatCount=, xlink:href=,
+  % CSS properties
+  margin:, padding:, background-image:, border:, top:, left:, position:, width:, height:,
+	% CSS3 properties
+  transform:, -moz-transform:, -webkit-transform:,
+  animation:, -webkit-animation:,
+  transition:,  transition-duration:, transition-property:, transition-timing-function:,
+  }
+}
+
+\date{}
+\begin{document}
+\title{Enabling Secure Web Payments with GNU Taler}
+
+
+% Not sure how to do authors with the
+% IEEEtran template correctly ...
+\author{Jeffrey Burdges \and
+Florian Dold \and
+Christian Grothoff \and
+Marcello Stanisci}
+\institute{Inria Rennes - Bretagne Atlantique \\
+\email{FIRSTNAME.LASTNAME@inria.fr}
+}
+
+\maketitle
+
+
+\begin{abstract}
+GNU Taler is a new electronic online payment system which provides
+privacy for customers and accountability for merchants. It uses an
+exchange service to issue digital coins using blind signatures,
+and is thus not subject to the performance issues that plague
+Byzantine fault-tolerant consensus-based solutions.
+
+The focus of this paper is addressing the challenges payment systems
+face in the context of the Web.  We discuss how to address
+Web-specific challenges, such as handling bookmarks and sharing of
+links, as well as supporting users that have disabled JavaScript.  Web
+payment systems must also navigate various constraints imposed by
+modern Web browser security architecture, such as same-origin policies
+and the separation between browser extensions and Web pages.  While
+our analysis focuses on how Taler operates within the security
+infrastructure provided by the modern Web, the results partially
+generalize to other payment systems.
+
+We also include the perspective of merchants, as existing systems have
+often struggled with securing payment information at the merchant's
+side.  Here, challenges include avoiding database transactions for
+customers that do not actually go through with the purchase, as well
+as cleanly separating security-critical functions of the payment
+system from the rest of the Web service.
+\end{abstract}
+
+{\bf Errata:} Corrected statement about BOLT (see footnote).
+
+\section{Introduction}
+
+The Internet needs a secure, usable and privacy-preserving
+micropayment system, which is not backed by a ``crypto currency''.
+Payment systems involving state-issued currencies have been used for
+centuries to facilitate transactions, and the involvement of the state
+has been critical as state institutions can dampen fluctuations in the
+value of the currency~\cite{dominguez1993}. Controlling money supply
+is critical to ensure stable prices that facilitate
+trade~\cite{quantitytheory1997volckart} instead of speculation~\cite{lewis_btc_is_junk}.
+
+Internet transactions, such as sending an e-mail or reading a Web
+site, tend to be of smaller commercial value than traditional
+transactions involving the exchange of physical goods.  Consequently,
+if we want to associate payments with these types of transactions, we
+face the challenge of reducing the mental and technical overheads of
+existing payment systems.  For example, executing a 3-D Secure~\cite{3DSsucks} payment
+process (Figure~\ref{fig:cc3ds}) takes too long, is way too complex,
+and way too expensive to be used for payment for typical Web articles.
+
+Addressing this problem is urgent: ad-blocking technology is eroding
+advertising as a substitute for micropayments~\cite{adblockblocks},
+and the Big Data business model in which citizens pay with their
+private information~\cite{ehrenberg2014data} in combination with the
+deep state hastens our society's regression towards
+post-democracy~\cite{rms2013democracy}.
+
+
+The focus of this paper is GNU Taler, a new free software payment
+system designed to meet certain key ethical considerations from a
+social liberalism perspective. In Taler, the paying customer remains
+anonymous while the merchant is easily identified and thus taxable.
+Here, {\em anonymous} simply means that the payment process does not require
+any personal information from the customer, and that different
+transactions by the same customer are unlinkable.  Naturally, the
+specifics of the transaction---such as delivery of goods to a shipping
+address, or the use of non-anonymous IP-based communication---may
+still leak information about the customer's identity.  {\em Taxable}
+means that for any transaction the state can easily obtain the
+necessary information about the identity of the merchant and the
+respective contract in order to levy income, sales, or value-added
+taxes. Taler uses blind signatures~\cite{chaum1983blind} to create
+digital coins and a new {\em refresh} protocol~\cite{talercrypto} to
+allow giving change and refunds while maintaining unlinkability.
+
+This paper will not consider the details of Taler's cryptographic
+protocols.\footnote{Details of the protocol are documented at
+  \url{https://api.taler.net/}} The basic cryptography behind
+blind-signature based payment systems has been known for over 25
+years~\cite{chaum1990untraceable}.  However, it was not until 2015 that the W3C
+started the payments working group~\cite{w3cpig} to explore requirements
+for deploying payment systems that are more secure and easy to use for
+the Web.  Our work describes how a modern payment system using blind
+signatures could practically be integrated with the modern Web to
+improve usability, security, and privacy.  This includes the challenge
+of hiding the cryptography from the users, integrating with modern
+browsers, integrating with Web shops, providing proper cryptographic
+proofs for all operations, and handling network failures.  We explain
+our design using terms from existing {\em mental models} that users have
+from widespread payment systems.
+
+%\newpage
+Key contributions of this paper are:
+\begin{itemize}
+ \item A description of different payment systems using
+  common terminology, which allows us to analytically compare
+  these systems.
+ \item An introduction to the Taler payment system from the
+  perspective of users and merchants, with a focus on how
+  to achieve secure payments in a way that is intuitive and
+  has adequate fail-safes.
+ \item Detailed considerations for how to adapt Taler to
+  Web payments and the intricacies of securing payments
+  within the constraints of modern browsers.
+ \item A publicly available free software
+  reference implementation of the presented architecture.
+\end{itemize}
+
+
+\section{Existing payment workflows}
+
+Before we look at the payment workflow for Taler, we sketch the
+workflow of existing payment systems. This establishes a common
+terminology which we will use to compare different payment processes.
+We include interaction diagrams for some of the payment systems
+based on resources from the W3C payment interest group.
+
+\subsection{Cash}
+
+Cash has traditionally circulated by being passed directly from buyers
+to sellers with each seller then becoming a buyer. Thus, cash is
+inherently a {\em peer-to-peer} payment system, as participants all
+appear in both buyer and seller roles, just at different times.
+However, this view is both simplified and
+somewhat dated.
+
+In today's practice, cash is frequently first {\em withdrawn} from
+ATMs by customers who then {\em spend} it with merchants, who, in turn,
+{\em deposit} the cash with their respective {\em bank}.  In this
+flow, security is achieved as the customer {\em authenticates} to the
+ATM using {\em credentials} provided by the customer's bank, and the
+merchant specifies his {\em account} details when depositing the cash.
+The customer does not authenticate when spending the cash, but the
+merchant {\em validates} the authenticity of the {\em coins} or bills.
+Coins and bills are {\em minted} by state-licensed institutions, such
+as the US Mint.  These institutions also provide detailed instructions
+for how to validate the authenticity of the coins or
+bills~\cite{ezb2016ourmoney}, and are typically the final trusted
+authority on the authenticity of coins and bills.
+
+As customers need not authenticate, purchases remain {\em
+  anonymous}, modulo the limited tracking enabled in theory
+by serial numbers printed on bills~\cite{pets2004kuegler},
+which make each bill {\em unique}.
+% NOTE : Internet claims this does not happen, but no references.
+% https://rocketatm.com/notice-_recorded_serial_numbers_atm_decal
+
+Spending cash does not provide any inherent {\em proof of purchase}
+for the customer. Instead, the merchant provides paper
+{\em receipts}, which are generated independently and do not receive
+the same anti-forgery protections that are in place for cash.
+
+Against most attacks, customers and merchants {\em limit} their risk
+to the amount of cash that they carry or accept at a given
+time~\cite{Bankrate}.  Additionally, customers are advised to choose
+the ATMs they use carefully, as malicious ATMs may attempt to
+{\em steal} their customer's credentials~\cite{ECB:TRoCF2014}.  Authentication with an
+ATM can involve a special ATM card, or the use of credit or
+debit cards.  In all these cases, these physical security tokens are
+issued by the customer's bank.
+
+
+% \smallskip
+\subsection{Credit and debit cards}
+
+\begin{figure*}[h!]
+\begin{center}
+\includegraphics[width=0.95\textwidth]{figs/cc3ds.pdf}
+\end{center}
+\caption{Card payment processing with 3-D Secure (3DS). (From: W3C Web Payments WG \cite{w3cpig})}
+\label{fig:cc3ds}
+\end{figure*}
+%KG: I hope they can print this larger, because this is WAY too small to be of any use.
+
+Credit and debit card payments operate by the customer providing their
+credentials to the merchant.  Many different authentication and
+authorization schemes are in use in various combinations. Secure
+systems typically combine multiple forms of authentication including
+secret information, such as personal identification numbers (PINs),
+transaction numbers (TANs)~\cite{kobil2016tan} or credit card
+verification (CCV) codes, and physical security devices such cards
+with an EMV chip~\cite{emv}, TAN generators, or the customer's mobile
+phone~\cite{mtan}.  A typical modern Web payment process involves:
+{(1.)} the merchant offering a secure communication channel using TLS
+based on the X.509 public key infrastructure;\footnote{Given numerous
+  TLS protocol and implementation flaws as well as X.509 key
+  management incidents in recent years~\cite{holz2014}, one cannot
+  generally assume that the security provided by TLS is adequate under
+  all circumstances.}  {(2.)} selecting a {\em payment method}; {(3.)}
+entering the credit card details like the owner's name, card number,
+expiration time, CCV code, and billing address; and {(4.)}
+(optionally) authorizing the transaction via mobile TAN, or by
+authenticating against the customer's bank.  Due to the complexity
+of this, the data entry is often performed on a Web site that
+is operated by a third-party payment processor and {\em not} the merchant or
+the customer's bank.  Figure~\ref{fig:cc3ds} shows a typical card-based payment
+process on the Web using the UML style of the W3C payment interest
+group~\cite{w3cpig}.  Most of the details are not relevant to this
+paper, but the diagram nicely illustrates the complexity of the common
+3-D secure process.
+%KG: Define 3DS the FIRST time you use it.
+
+Given this process, there is an inherent risk of information leakage
+of customers' credentials.  {\em Fraud detection} systems attempt to detect
+misuse of stolen credentials, and payment system providers handle
+disputes between customers and merchants.  As a result, Web payment
+processes may finish with {(5.)} the payment being rejected for a
+variety of reasons, such as false positives in fraud detection or
+the merchant not accepting the particular card issuer.
+
+Traditionally, merchants bear most of the financial risk, and a key
+``feature'' of the 3DS process compared to traditional card payments
+is to shift dispute {\em liability} to the issuer of the card---who
+may then try to shift it to the customer \cite[\S2.4]{3DSsucks}.
+%
+% online vs offline vs swipe vs chip vs NFC ???
+% extended verification
+%
+Even in cases where the issuer or the merchant remain legally first in
+line for liabilities, there are still risks customers incur from the
+card dispute procedures, such as neither them nor the payment
+processor noticing fraudulent transactions, or them noticing
+fraudulent transactions past the {\em deadline} until which their bank
+would reimburse them.  The customer also typically only has a
+merchant-generated comment and the amount paid in his credit card
+statement as a proof for the transaction.  Thus, the use of credit
+cards online does not generate any cryptographically {\em verifiable}
+electronic receipts for the customer, which theoretically enables
+malicious merchants to later change the terms of the contract.
+
+Beyond these primary issues, customers face secondary risks of
+identity theft from the personal details exposed by the authentication
+procedures. In this case, even if the financial damages are ultimately
+covered by the bank, the customer always has to deal with the procedure
+of {\em notifying} the bank in the first place.  As a result,
+customers must remain wary about using their cards, which limits their
+online shopping~\cite[p. 50]{ibi2014}.
+% There is nevertheless a trend towards customers preferring cards
+% over cash even in face-to-face purchases \cite{} in part because
+% cash theft can be violent even if the amounts as stake are smaller
+% than with electronic theft.
+%
+%Merchants are exposed to these same risks because either laws and/or
+%contracts with the payment system providers require them to take care
+%in handling customer information.
+% 40 million stolen at target.  fine?
+
+%In cash payments, these risks do not exist because customers have
+%complete control over the authentication procedure with their bank
+%and the merchant is not involved.
+
+% pressure to shop with big merchants
+% merchants keep payment credentials on file
+% Just a few merchants like Apple demand credentials up front
+%  "this reversal of authentication vs shopping slows shopping"
+
+% \smallskip
+\subsection{Bitcoin}
+
+\begin{figure*}[b!]
+\includegraphics[width=\textwidth]{figs/bitcoin.pdf}
+\caption{Bitcoin payment processing. (From: W3C Web Payments WG \cite{w3cpig})}
+\label{fig:bitcoin}
+\end{figure*}
+
+Bitcoin operates by recording all transactions in a pseu\-do\-ny\-mous
+public {\em ledger}.  A Bitcoin account is identified by its public
+key, and the owner must know the corresponding private key to
+authorize the transfer of Bitcoins from the account to other accounts.
+The information in the global public ledger allows everybody to
+compute the balances in all accounts and to see all transactions.
+Transactions are denominated in a new currency labeled BTC, whose
+valuation depends upon {\em speculation}, as there is no authority
+that could act to stabilize exchange rates or force anyone to
+accept BTC as {\em legal tender} to settle obligations.  Adding transactions to
+the global public ledger involves broadcasting the transaction data,
+peers verifying and appending it to the public ledger, and some peer
+in the network solving a moderately hard computational proof-of-work
+puzzle, which is called {\em mining}.
+
+The mining process is incentivised by a combination of transaction
+fees and mining rewards~\cite{nakamoto2008bitcoin}. The latter
+process also provides primitive accumulation~\cite{primitiveacc} for BTC.
+Conversion to BTC from other currencies and vice versa incurs
+substantial fees~\cite{BTCfees}.  There is now an extreme diversity of
+Bitcoin-related payment technologies, but usability improvements are
+usually achieved by adding a trusted third party, and there have been
+many incidents where such parties then embezzled funds from their
+customers~\cite{BTC:demise}.
+
+The classical Bitcoin payment workflow consisted of entering payment
+details into a peer-to-peer application.  The user would access their
+Bitcoin {\em wallet} and instruct it to transfer a particular amount
+from one of his accounts to the account of the merchant. He could
+possibly include additional metadata to be associated with the
+transfer to be embedded into the global public ledger.  The wallet
+application would then transmit the request to the Bitcoin
+peer-to-peer overlay network.  The use of an external payment
+application makes payments significantly less
+browser-friendly than ordinary card payments, as illustrated in
+Figure~\ref{fig:bitcoin}. This has led to the development of
+browser-based
+wallets.\footnote{\url{https://github.com/frozeman/bitcoin-browser-wallet}}
+
+Bitcoin payments are only confirmed when they appear in the public
+ledger, which is updated at an average frequency of once every 10
+minutes.  Even then, it is possible that a fork in the so-called block
+chain may void durability of the transaction; as a result, it is
+recommended to wait for 6 blocks (on average one hour) before
+considering a transaction committed~\cite{nakamoto2008bitcoin}.  In
+cases where merchants are unable to accommodate this delay, they incur
+significant fraud risks.
+
+Bitcoin is considered to be secure against an adversary who cannot
+control around a fifth of the Bitcoin miner's computational
+resources~\cite{BTC:Bahack13,BTC:MajorityNotEnough,BTC:Eclipse}.  % 21percent?
+As a result, the network must expend considerable computational
+resources to keep this value high.
+According to~\cite{vice_btc_unsustainable}, a single Bitcoin transaction uses roughly enough
+electricity to power 1.57 American households for a day.
+These costs are largely hidden by speculation in BTC,
+but that speculation itself contributes to BTC's valuation being
+volatile.~\cite{jeffries_economists_v_btc,lehmann_btc_fools_gold,lewis_btc_is_junk}. % exacerbating risk
+
+% fees hit you 2-3 times with currency conversions
+% more on massive transaction fees from blockchain.info
+
+Bitcoin's pseudononymity applies equally to both customers and
+merchants, which makes Bitcoin amen\-able to tax evasion, money
+laundering, sales of contraband, and especially extorion
+ \cite{NYA:CyberExtortionRisk}.
+As a result, anonymity tools like mixnets do not enjoy widespread
+support in the Bitcoin community where many participants seek to make
+the currency appear more legitimate.  While Bitcoin's transactions
+are difficult to track, there are several examples of Bitcoin's
+pseudononymity being broken by investigators~\cite{BTC:Anonymity}.
+This has resulted in the development of new protocols with better
+privacy protections.
+
+\begin{figure*}[t!]
+\includegraphics[width=\textwidth]{figs/paypal.pdf}
+\caption{Payment processing with PayPal. (From: W3C Web Payments IG.)}
+\label{fig:paypal}
+\end{figure*}
+
+Zerocoin \cite{miers2013zerocoin} is such an extension of Bitcoin:
+It affords protection against linkability of transactions,
+but at non-trivial additional computational costs even for
+spending coins.  This currently makes using Zerocoin unattractive
+for payments, especially with mobile devices.
+
+Bitcoin also faces serious scalability limitations, with the classic
+implementation being limited to at most 7 transactions per second
+globally on
+average.\footnote{\url{http://hackingdistributed.com/2016/08/04/byzcoin/}}
+There are a variety of efforts to confront Bitcoin's scaling problems
+with off-blockchain techniques, like side-chains. % \cite{???}
+Amongst these, the blind off-chain lightweight transactions (BOLT)
+proposal~\cite{BOLT} provides anonymity by routing off-blockchain
+transfers through bank-like intermediaries.  Although interesting,
+there are seemingly fragile aspects of the BOLT protocol, including
+aborts deanonymizing customers and theft if a party fails to post a
+refute message in a timely fashion.  Intermediaries may be subject
+to legal risks as well. \footnote{Errata: We originally assesed the
+financial liabilities of BOLT intermediaries incorrectly.}
+% Of course, Taler itself could be used to provide a side-chain like technology
+% Assuming these issues can be addressed,
+% % and the relatively advanced crypto involved became production ready,
+% Taler might prove a better platform for deploying a BOLT-like scheme
+% than Zerocoin.
+
+
+% In addition, the Bitcoin protocol does not interact well with
+% conventional anonymity networks like Tor \cite{BTC:vsTor}
+% dark pools?
+
+% outdated ideas :
+%  mining suck0rs,
+%  DDoS : wired article?
+%  economic ideology
+
+\subsection{Walled garden payment systems}
+
+Walled garden payment systems offer ease of use by processing payments
+using a trusted payment service provider. Here, the customer
+authenticates to the trusted service, and instructs the payment
+provider to execute a transaction on his behalf
+(see Figure~\ref{fig:paypal}).  In these payment systems, the provider
+basically acts like a bank with accounts carrying balances for the
+various users.  In contrast to traditional banking systems, both
+customers and merchants are forced to have an account with the same
+provider.  Each user must take the effort to establish his identity
+with a service provider to create an account.  Merchants and customers
+obtain the best interoperability in return for their account creation
+efforts if they start with the biggest providers.  As a result, there
+are a few dominating walled garden providers, with AliPay, ApplePay,
+GooglePay, SamsungPay and PayPal being the current {\em oligopoly}.  In this
+paper, we will use PayPal as a representative example for our discussion
+of these payment systems.
+
+As with card payment systems, these oligopolies are politically
+dangerous~\cite{crinkey2011rundle}, and the lack of {\em competition}
+can result in excessive profit taking that may require political
+solutions~\cite{guardian2015cap} to the resulting {\em market
+  failure}.  The use of non-standard {\em proprietary} interfaces to
+the payment processing service of these providers serves to reinforce
+the customer {\em lock-in}.
+
+
+\section{Taler}
+
+Taler is a free software cryptographic payment system. It has an open
+protocol specification, which couples cash-like anonymity for customers
+with low transaction costs, signed digital
+receipts, and accurate income information to facilitate taxation and
+anti-corruption efforts.
+
+% FIXME: maybe say what blind signature are
+Taler achieves anonymity for buyers using {\em blind
+signatures}~\cite{chaum1983blind}.  Since their discovery thirty years
+ago, cryptographers have viewed blind signatures as the optimal
+cryptographic primitive for privacy-preserving consumer-level transaction systems.
+However, previous transaction systems based on blind signatures have
+failed to see widespread adoption.  This paper details strategies for
+hiding the complexity of the cryptography from users and integrating smoothly with the
+Web, thereby providing crucial steps to bridge the gap between good
+cryptography and real-world deployment.
+
+%\subsection{Design overview}
+
+\begin{figure}[b!]
+\centering
+\begin{tikzpicture}
+ \tikzstyle{def} = [node distance=3em and 5em, inner sep=1em, outer sep=.3em];
+ \node (origin) at (0,0) {};
+ \node (exchange) [def,above=of origin,draw]{Exchange};
+ \node (customer) [def, draw, below left=of origin] {Customer};
+ \node (merchant) [def, draw, below right=of origin] {Merchant};
+ \node (auditor) [def, draw, above right=of origin]{Auditor};
+
+ \tikzstyle{C} = [color=black, line width=1pt]
+
+ \draw [<-, C] (customer) -- (exchange) node [midway, above, sloped] (TextNode) {withdraw coins};
+ \draw [<-, C] (exchange) -- (merchant) node [midway, above, sloped] (TextNode) {deposit coins};
+ \draw [<-, C] (merchant) -- (customer) node [midway, above, sloped] (TextNode) {spend coins};
+ \draw [<-, C] (exchange) -- (auditor) node [midway, above, sloped] (TextNode) {verify};
+
+\end{tikzpicture}
+\caption{Taler system overview.}
+\label{fig:system}
+\end{figure}
+
+
+There are four key roles in the Taler system (Figure~\ref{fig:system}):
+
+\begin{figure*}[b!]
+\includegraphics[width=0.9\textwidth]{figs/taler-withdraw.pdf}
+\caption{Withdrawing coins with Taler.}
+\label{fig:taler-withdraw}
+\end{figure*}
+
+
+
+
+\begin{itemize}
+\item
+{\em Customers} use a digital wallet to withdraw,
+hold, and spend coins. Wallets manage the customer's accounts
+at the exchange, and keep receipts in a transaction history.  Wallets can be
+realized as browser extensions, mobile Apps or even in custom
+hardware.  If a user's digital wallet is compromised, the current
+balance may be lost, just as with an ordinary wallet containing cash.
+A wallet includes a list of trusted auditors, and will warn
+users against using an exchange that is not certified by a trusted
+auditor.
+
+\begin{figure}[b!]%[36]{R}{0.5\linewidth}
+\subfloat[Bank login. (Simplified for demonstration.)]{
+\includegraphics[width=0.4\linewidth]{figs/bank0a.png}
+\label{subfig:login}} \hfill
+\subfloat[Specify amount to withdraw. (Integrated bank support.)]{
+\includegraphics[width=0.4\linewidth]{figs/bank1a.png}
+\label{subfig:withdraw}} \\
+\subfloat[Select exchange provider. (Generated by wallet.)]{
+\includegraphics[width=0.4\linewidth]{figs/bank2a.png}
+\label{subfig:exchange}} \hfill
+\subfloat[Confirm transaction with a PIN. (Generated by bank.)]{
+\includegraphics[width=0.4\linewidth]{figs/bank3a.png}
+\label{subfig:pin}}
+\caption{Required steps in a Taler withdrawal process.}
+\label{fig:withdrawal}
+\end{figure}
+
+
+
+\item
+{\em Exchanges}, which are run by financial service providers, enable
+customers to withdraw anonymous digital coins,
+and merchants to deposit digital coins, in exchange for
+bank money.  Coins are signed by the exchange using
+a blind signature scheme~\cite{chaum1983blind}.  Thus, only
+an exchange can issue new coins, but coins cannot be traced back
+to the customer who withdrew them.
+Furthermore, exchanges learn the amounts withdrawn by customers
+and deposited by merchants, but they do not learn the relationship
+between customers and merchants.  Exchanges perform online detection
+of double spending, thus providing merchants instant feedback
+---including digital proofs---in case of misbehaving customers.
+
+\item
+{\em Merchants} provide goods or services in exchange for coins held
+by customers' wallets.  Merchants deposit these coins at the
+exchange used by the customer in return for a bank wire
+transfer of their value.  While the exchange is determined by
+the customer, the merchant's contract specifies the currency,
+a list of accepted auditors, and the maximum exchange deposit
+fee the merchant is willing to pay.  Merchants consist of a
+{\em frontend}, which interacts with the customer's wallet, and a {\em
+backend}, which interacts with the exchange.  Typical frontends include
+Web shops and point-of-sale systems.
+
+\item
+{\em Auditors} verify that exchanges operate correctly to limit the risk
+that customers and merchants incur by using a particular exchange.
+Auditors are typically operated by or on behalf of financial regulatory authorities.
+Depending on local legislation, auditors may mandate that exchanges
+have enough financial reserves before authorizing them to create a given
+volume of signed digital coins to provide a buffer against potential risks due to
+operational failures (such as data loss or theft of private keys) of the exchange.
+Auditors certify exchanges that they audit using digital signatures.  The
+respective signing keys of the auditors are distributed to customer and
+merchants.
+\end{itemize}
+
+
+The specific protocol between wallet and merchant depends on the
+setting.  For a traditional store, a near field communication (NFC)
+protocol might be used between a point-of-sale system and a mobile
+application.  In this paper, we focus on Web payments for an online
+shop and explain how the actors in the Taler system interact by way of
+a typical payment.
+
+Initially, the customer installs the Taler wallet extension for
+their browser.  This only needs to be done once per
+browser. Naturally, this step may become superfluous if Taler is
+integrated tightly with browsers in the future.  Regardless,
+installing the extension involves only one or two clicks to confirm the
+operation. Restarting the browser is not required.
+
+
+\begin{figure*}[b!]
+\includegraphics[width=0.9\textwidth]{figs/taler-pay.pdf}
+\caption{Payment processing with Taler.}
+\label{fig:taler-pay}
+\end{figure*}
+
+
+\subsection{Withdrawing coins}
+
+As with cash, the customer must first withdraw digital coins
+(Figure~\ref{fig:taler-withdraw}).  For this, the customer must first
+visit the bank's online portal.  Here, the bank will
+typically require some form of authentication; the specific method
+used depends on the bank (Figure~\ref{subfig:login}).
+
+The next step depends on the level of Taler support offered by the bank:
+\begin{itemize}
+\item If the bank does not offer integration with Taler, the
+  customer needs to use the menu of the wallet to create a {\em reserve}.
+  The wallet will ask which amount in which {\em currency} (e.g. EUR
+  or USD) the customer wants to withdraw, and allow the customer to
+  select an exchange.  Given this information, the wallet will
+  instruct the customer to transfer the respective amount to the
+  account of the exchange.  The customer will have to enter a
+  % FIXME it is not said that this crypto token is the reserve,
+  % or, more abstractly, that "identify" this operation
+  % CG: I don't think this has to be said.
+  54-character reserve key, which includes 256 bits of entropy and an
+  8-bit checksum into the transfer subject.  Naturally, the above is
+  exactly the kind of interaction we would like to avoid for
+  usability reasons.
+\item Otherwise, if the bank fully supports Taler, the
+  customer has a form in the online banking portal in which they can specify
+  an amount to withdraw (Figure~\ref{subfig:withdraw}).
+  The bank then triggers an interaction with
+  the wallet to allow the customer to select an exchange
+  (Figure~\ref{subfig:exchange}).  Afterwards,
+  the wallet instructs the bank about the details of the wire
+  transfer.  The bank asks the customer to authorize the transfer, and
+  finally confirms to the wallet that the transfer has been
+  successfully initiated.
+\end{itemize}
+
+In either case, the wallet can then withdraw the coins from the
+exchange, and does so in the background without further interaction
+with the customer.
+
+In principle, the exchange can be directly operated by the bank, in
+which case the step where the customer selects an exchange could be
+skipped by default.  However, we generally assume that the exchange is
+a separate entity, as this yields the largest anonymity set for
+customers, and may help create a competitive market.
+
+\subsection{Spending coins}
+% \tinyskip
+
+\begin{figure}[p!]
+  \subfloat[Select article][Select article. \\ Generated by Web shop.]{
+\includegraphics[width=0.30\textwidth]{figs/cart.png}
+\label{subfig:cart}} \hfill
+\subfloat[Confirm payment][Confirm payment. \\ Generated by Taler wallet.]{
+\includegraphics[width=0.30\textwidth]{figs/pay.png}
+\label{subfig:payment}} \hfill
+\subfloat[Receive article][Receive article. \\ Generated by Web shop.]{
+\includegraphics[width=0.30\textwidth]{figs/fulfillment.png}
+\label{subfig:fulfillment}}
+\caption{Required steps in a Taler checkout process.}
+\label{fig:shopping}
+\end{figure}
+
+
+At a later point in time, the customer can spend their coins by
+visiting a merchant that accepts digital coins in the respective
+currency issued by the respective exchange
+(Figure~\ref{fig:taler-pay}).  Merchants are generally configured to
+either accept a specific exchange, or to accept all the exchanges
+audited by a particular auditor.  Merchants can also set a ceiling for
+the maximum amount of transaction fees they are willing to cover.
+Usually these details do not matter for the customer, as we expect
+most merchants to accept most exchange providers accredited by the
+auditors that wallets include by default.  Similarly, we expect
+exchanges to operate with transaction fees acceptable to most
+merchants to avoid giving customers a reason to switch to another
+exchange.  If transaction fees are higher than what is covered by the
+merchant, the customer may choose to cover them.
+
+% \tinyskip
+\lstdefinelanguage{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break, for},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+
+\begin{figure*}[p!]
+ \lstset{language=HTML5}
+ \lstinputlisting{figs/taler-presence-js.html}
+ \caption{Sample code to detect the Taler wallet. Allowing the
+  Web site to detect the presence of the wallet leaks one bit
+  of information about the user. The above logic also works
+  if the wallet is installed while the page is open.}
+  \label{listing:presence}
+\end{figure*}
+
+
+\begin{figure*}[p!]
+  \lstset{language={}}
+\begin{lstlisting}
+HTTP/1.1 402 Payment Required
+Content-Type: text/html; charset=UTF-8
+X-Taler-Contract-Url: https://shop/generate-contract/42
+
+<!DOCTYPE html>
+<html>
+  <!-- fallback for browsers without the Taler extension -->
+  You do not seem to have Taler installed, here are other payment options ...
+</html>
+\end{lstlisting}
+ \caption{Sample HTTP response to prompt the wallet to show an offer.}
+  \label{listing:http-contract}
+\end{figure*}
+
+\begin{figure*}[p!]
+ \lstset{language=HTML5}
+ \lstinputlisting{figs/taler-contract.html}
+ \caption{Sample JavaScript code to prompt the wallet to show an offer.
+          Here, the contract is fetched on-demand from the server.
+          The {\tt taler\_pay()} function needs to be invoked
+          when the user triggers the checkout.}
+ \label{listing:contract}
+\end{figure*}
+
+
+As with traditional Web transactions, customers first select which
+items they wish to buy.  This can involve building a traditional
+shopping cart, or simply clicking on a particular link for the
+respective article (Figure~\ref{subfig:cart}).  Once the articles have
+been selected, the Web shop directs the user to the {\em offer} URL,
+where the payment details are negotiated.  The process usually starts
+by allowing the user to select a {\em payment method} from a set of
+methods supported by the Web shop.  Taler also allows the Web shop to
+detect the presence of a Taler wallet (Figure~\ref{listing:presence}),
+so that the selection of alternative payment methods can be skipped if
+a Taler wallet is installed (as it is in Figure~\ref{fig:shopping}).
+
+\begin{figure*}[t!]
+  \lstset{language=JavaScript}
+\begin{lstlisting}
+{
+  "H_wire":"YTH0C4QBCQ10VDNTJN0DCTTV2Z6JHT5NF43F0RQHZ8JYB5NG4W4G...",
+  "amount":{"currency":"EUR","fraction":1,"value":0},
+  "auditors":[{"auditor_pub":"42V6TH91Q83FB846DK1GW3JQ5E8DS273W4236AXC397892ESD0B0"}],
+  "exchanges":[{"master_pub":"1T5FA8VQHMMKBHDMYPRZA2ZFK2S63AKF0YTHJZWFKF45K2JGC8H0",
+                "url":"https://exchange/"}],
+  "expiry":"/Date(1480119270)/",
+  "fulfillment_url": "https://shop/article/42?tid=249960194066269&time=1471479270",
+  "max_fee":{"currency":"EUR","fraction":01,"value":0},
+  "merchant":{"address":"Mailbox 4242","jurisdiction":"Jersey","name":"Shop Inc."},
+  "merchant_pub":"Y1ZAR5346J3ZTEXJCHQY9NJN78EZ2HSKZK8M0MYTNRJG5N0HD520",
+  "products":[{
+    "description":"Essay: The GNU Project",
+    "price":{"currency":"EUR","fraction":1,"value":0},
+    "product_id":42,"quantity":1}],
+  "refund_deadline":"/Date(1471522470)/",
+  "timestamp":"/Date(1471479270)/",
+  "transaction_id":249960194066269
+}
+\end{lstlisting}
+  \caption{Minimal Taler contract over a digital article with a value of \EUR{0.10}. The merchant will pay transaction fees up to \EUR{0.01}.  The hash over the wire transfer information was truncated to make it fit to the page.}
+  \label{listing:json-contract}
+\end{figure*}
+
+\subsubsection{Offer}
+
+The offer URL of the Web shop can then initiate payments by sending a
+\emph{contract proposal} (Figure~\ref{listing:json-contract}) to the
+wallet, either via the HTTP status code {\tt 402 Payment Required}
+(Figure~\ref{listing:http-contract}), or via Taler's JavaScript API
+(Figure~\ref{listing:contract}).  The wallet then presents the
+contract to the user.  The format of the contract is in an extensible
+JSON-based format defined by Taler and not HTML, as the rendering of
+the contract is done by the wallet to ensure correct visual
+representation of the terms and prices.  In case that transaction fees
+need to be covered by the customer, these are shown together with the
+rest of the proposed contract.
+
+The Taler wallet operates from a securely isolated {\em background}
+context on the client side.  The user interface that displays the
+contract and allows the user to confirm the payment is displayed by
+this background context.  By running in the background context, the
+wallet can perform the cryptographic operations protected from the
+main process of the Web site.  In particular, this architecture is
+secure against a merchant that generates a page that looks like the
+wallet's payment page (Figure~\ref{subfig:payment}), as such a page
+would still not have access to the private keys of the coins that are
+exclusive to the background context.
+
+If the customer approves the contract by clicking the ``Confirm
+Payment'' button (Figure~\ref{subfig:payment}), their wallet signs the
+contract with enough coins to cover the contract's cost, stores all of
+the information in its local database, and redirects the browser to
+the {\em fulfillment} URL provided by the merchant in the contract
+(Figure~\ref{subfig:fulfillment}).
+
+\subsubsection{Fulfillment}
+
+\begin{figure*}[t!]
+  \lstset{language=HTML5}
+\begin{lstlisting}
+  taler.executePayment("2BAH2AT4GSG5JRM2W4YWTSYGY66EK4X8CX2V69D5VF7XV703AJMG",
+    "https://shop/pay", "https://shop/article/42",
+    (err) => { alert("Sending payment failed");  });
+\end{lstlisting}
+\caption{Sample JavaScript code to trigger transmission of a payment to the merchant.}
+  \label{listing:javascript-execute}
+\end{figure*}
+
+
+\begin{figure*}[t!]
+  \lstset{language={}}
+\begin{lstlisting}
+HTTP/1.1 402 Payment Required
+Content-Type: text/html; charset=UTF-8
+X-Taler-Contract-Hash: 2BAH2AT4GSG5JRM2W4YWTSYGY66EK4X8CX2V69D5VF7XV703AJMG...
+X-Taler-Pay-Url: https://shop/pay
+X-Taler-Offer-Url: https://shop/article/42
+
+<!DOCTYPE html>
+<html>
+  <!-- fallback for browsers without the Taler extension -->
+  You do not seem to have Taler installed, here are other payment options ...
+</html>
+\end{lstlisting}
+\caption{Sample HTTP response when the user agent navigates to a fulfillment
+  URL without the session state that indicates they have paid for the resource.
+  Note that unlike in Listing~\ref{listing:http-contract}, the response
+  references a contract that typically is already known to the wallet via its
+  hash code.}
+  \label{listing:http-execute}
+\end{figure*}
+
+The fulfillment URL uniquely identifies a purchase by some customer,
+while the offer URL identifies a generic offer that is not specific to
+a customer.  The purchase identified by a fulfillment URL may have
+been completed or still be in progress.  The information contained in
+the fulfillment URL must allow the merchant to restore the full
+contract (including a unique transaction identifier) that was
+associated with the purchase, either directly from the URL or
+indirectly from an identifier in a database.  Efficiently
+reconstructing the contract entirely from the URL instead of using
+costly database transactions can be important, as costly disk
+operations for incomplete purchases make merchants more susceptible to
+denial-of-service attacks from adversaries pretending to be customers.
+
+When a customer has completed a purchase, navigating to the
+fulfillment URL in a browser will show the resource associated with
+the purchase.  This resource can be a digital good such as a news
+article, or simply a confirmation for products that are delivered by
+other means.
+
+When a customer has not yet completed a purchase (this is always the
+case when a customer visits the fulfillment URL for the first time),
+or when the Web shop cannot confirm that this visitor has paid for the
+contract, for example because the session state was
+lost,\footnote{This can happen when when privacy conscious users
+  delete their cookies.  Also, some user agents (such as the TOR
+  browser) do not support persistent (non-session) cookies.} the Web
+store responds by (again) triggering a payment process (either via
+JavaScript or using {\tt 402 Payment Required}, see
+Figures~\ref{listing:javascript-execute} and~\ref{listing:http-execute}).  However, unlike the response from
+the offer URL, the 402 response from the fulfillment page includes the
+headers {\tt X-Taler-Contract-Hash}, {\tt X-Taler-Pay-Url} and {\tt
+  X-Taler-Offer-Url}.
+
+If the contract hash matches a payment which the user already
+previously approved, the wallet reacts to this by injecting the logic
+to transmit the payment to the {\em pay} URL of the Web shop into
+the page.  Then the wallet inspects the response as it may contain
+error reports about a failed payment which the wallet has to handle.
+By submitting the payment this way, we also ensure that this
+intermediate request does not require JavaScript and still does not
+interfer with navigation.  Once the Web shop confirms the payment, the
+wallet causes the fulfillment URL to be reloaded.
+
+If the contract hash does not match a payment which the user
+already approved, for example because the user obtained the link
+from another user, the wallet navigates to the offer URL included
+in the header.
+
+\subsubsection{Discussion}
+
+Various failure modes are considered in this design:
+
+\begin{itemize}
+\item If the payment fails on the network, the request is typically
+ retried.  How often the client retries automatically before informing
+ the user of the network issue is up to the merchant.  If the network
+ % FIXME this (above) could be ambiguous because the network failure
+ % can happen between the wallet and the merchant without the merchant
+ % getting any (failing) request, so the merchant cannot count how much
+ % times a payment has failed.
+ % CG: Well, the merchant can do that counting *client-side*. The retries
+ % will be controlled by the JS on the client side, which is provided
+ % by the merchant initially.
+ failure persists and is between the customer and the merchant, the wallet
+ will try to recover control over the coins at the exchange by
+ effectively spending the coins first using Taler's
+ refresh protocol.  In this case, later deposits by the merchant
+ will simply fail.  If the merchant already succeeded with the payment
+ before the network failure, the customer can either retry the
+ operation via the transaction history kept by the wallet, or demand a refund (see
+ below).  Handling these errors does not require the customer to give
+ up his privacy.
+\item If the payment fails due to the exchange
+ claiming that the request was invalid, the diagnostics created by the
+ exchange are passed to the wallet for inspection.  The wallet then
+ decides whether the exchange was correct, and can then inform the
+ user about a fraudulent or buggy exchange.  At this time, it allows
+ the user to export the relevant cryptographic data to be used in
+ court.  If the exchange's proofs were correct and coins were
+ double-spent, the wallet informs the user that its database must have
+ been out-of-date (e.g. because it was restored from backup),
+ updates the database and allows the user to retry
+ the transaction.
+\end{itemize}
+
+\noindent
+While our design requires a few extra roundtrips,
+it has the following key advantages:
+\begin{itemize}
+  \item It works in the confines of the WebExtensions API.
+  \item It supports restoring session state for bookmarked
+    Web resources even after the session state is lost by the user agent.
+  \item Sending deep links to fullfilment or offer pages to
+    other users has the expected behavior
+    of asking the other user to pay for the resource.
+  \item Asynchronously transmitting coins from injected JavaScript costs
+    one roundtrip, but does not interfer with navigation and allows
+    proper error handling.
+  \item The different pages of the merchant have clear
+    delineations: the shopping pages conclude by making an offer, and
+    the fulfillment page begins with processing an accepted contract.  It is thus
+    possible for these pages to be managed by separate parties. The
+    control of the fulfillment page over the transmission of the payment
+    data minimizes the need for exceptions to handle cross-origin
+    resource sharing~\cite{rfc6454,cors}.
+  \item The architecture supports security-conscious users that may have
+    disabled JavaScript, as it is not necessary to execute JavaScript
+    originating from Web pages to execute the payment process.
+\end{itemize}
+
+% \smallskip
+
+\subsection{Giving change and refunds}
+
+\begin{figure*}[b!]
+  \lstset{language={HTML5}}
+\begin{lstlisting}
+<script src="taler-wallet-lib.js"></script>
+<script>
+  // Obtain refund permissions from the merchant backend
+  // ...
+  let refundPermissions = /* ... */;
+  taler.acceptRefunds(refundPermissions, (err) => {
+    alert("An error occurred while attempting a refund");
+  });
+</script>
+\end{lstlisting}
+ \caption{Sample JavaScript code to trigger a refund from the merchant's web shop}
+  \label{listing:refund}
+\end{figure*}
+
+An important cryptographic difference between Taler and previous
+transaction systems based on blind signing is that Taler is able to
+provide unlinkable change and refunds.  From the user's point of view,
+obtaining change is automatic and handled by the wallet, i.e., if the
+user has a single coin worth \EUR{5} and wants to spend \EUR{2}, the
+wallet may request three \EUR{1} coins in change. Critically, the
+change giving process is completely hidden from the user.
+In fact, our graphical user
+interface does not offer a way to inspect the denominations of the
+various coins in the wallet, it only shows the total amount available
+in each denomination.  Expanding the views to show details may show
+the exchange providers and fee structure, but not the cryptographic
+coins.  Consequently, the major cryptographic advances of Taler are
+invisible to the user.
+
+Taler's refresh protocol~\cite{talercrypto} also allows merchants to give
+refunds to customers. To refund a purchase, the merchant obtains a signed refund permission
+from the exchange, which the customer's wallet processes
+(Figure~\ref{listing:refund}) to obtain new, unlinkable coins as refund.
+This process allows the customer to say anonymous when receiving refunds.
+
+Taler's refresh protocol ensures unlinkability for both change and
+refunds, thereby assuring that the user has key conveniences of other
+payment systems while maintaining the security standard of an
+anonymous payment system.
+
+% Alternative version:
+%An important technical difference between Taler and previous
+%transaction systems based on blind signing is that in Taler coins
+%consist of a public-private key pair with the blind signature on the
+%public key, so that coins themselves can be used to anonymously sign
+%the purchase contract.
+%
+%An important technical difference between Taler and previous
+%transaction systems based on blind signing is that Taler coins
+%consist of a public-private key pair with the blind signature on the
+%public key, so that coins themselves can be used to anonymously sign
+%the purchase contract.
+%
+%In general, these coins exceed the cost of the contract, so the wallet
+%may specify that only a fraction of a coin be spent, leaving some
+%residual value on the partially spent coin as ``change''.
+%
+%As the merchant received only a signature of the coin, not private
+%or symmetric key material, merchants can refund anonymous coins by
+%asking the mint to restore a part of the coin's original value,
+%and notifying the customer's wallet to refresh the coin.
+%
+%Spending Taler coins reveals nothing about a customer per se.
+%Yet, any coins that hold value after being involved in a purchase or
+%a refund operation cannot be considered anonymous anymore because a
+%merchant, and possibly the exchange, has now seen them and could
+%link them that previous transaction.  At best, these tainted coins
+%are only pseudonymous, similar to Bitcoin accounts.
+%
+%To maintain anonymity, a Taler wallet automatically performs a
+%{\em refresh} operation with the mint API to both replace tainted
+%coins with new freshly anonymized coins and to exchange old coins
+%before their denomination's expiration date.  We view refreshing
+%partially spent coins as analogous to giving change in cash
+%transactions, but refreshing refunded coins allows Taler merchants
+%to refund anonymous customers.  Cash transactions have these options,
+%but credit cards require customer identification for both operations.
+% Is this true?
+% no comment around randomizing the serial numbers on bills
+
+
+
+\subsection{Deployment considerations for merchants}
+
+Payment system security is not only a concern for
+customers, but also for merchants.  For consumers, existing schemes
+may be inconvenient and not provide privacy, but remembering to
+protect a physical token (e.g. the card) and to guard a secret
+(e.g. the PIN) is relatively straightforward.  In contrast, merchants
+are expected to securely handle sensitive customer payment data on
+networked computing devices.  However, securing computer systems---and
+especially payment systems that represent substantial value---is a
+hard challenge, as evidenced by large-scale break-ins with millions of
+consumer card records being illicitly copied~\cite{target}.
+
+Taler simplifies the deployment of a secure payment system for
+merchants. The high-level cryptographic design provides the first
+major advantage, as merchants never receive sensitive payment-related
+customer information.  Thus, they do not have to be subjected to
+costly audits or certified hardware, as is commonly the case for
+processing card payments~\cite{pcidss}. In fact, the exchange does not
+need to have a formal business relationship with the merchant at all.
+According to our design, the exchange's contract with the state
+regulator or auditor and the customers ought to state that it must
+honor all (legal and valid) deposits it receives.  Hence, a merchant
+supplying a valid deposit request should be able to enforce this in
+court without a prior direct business agreement with the exchange.
+This dramatically simplifies setting up a shop to the point that the
+respective software only needs to be provided with the merchant's wire
+transfer routing information to become operational.
+
+The payment process requires a
+few cryptographic operations on the side of the merchant, such as
+signing a contract and verifying the customer's and the exchange's
+signatures.  The merchant also needs to store transaction data, in
+particular so that the store can match sales with incoming wire
+transfers from the exchange.  We simplify this for merchants by
+providing a generic payment processing {\em backend} for the Web
+shops.
+
+\begin{figure*}[b!]
+\begin{center}
+\begin{tikzpicture}[
+  font=\sffamily,
+  every matrix/.style={ampersand replacement=\&,column sep=2cm,row sep=2cm},
+  source/.style={draw,thick,rounded corners,fill=green!20,inner sep=.3cm},
+  process/.style={draw,thick,circle,fill=blue!20},
+  sink/.style={source,fill=green!20},
+  datastore/.style={draw,very thick,shape=datastore,inner sep=.3cm},
+  dots/.style={gray,scale=2},
+  to/.style={->,>=stealth',shorten >=1pt,semithick,font=\sffamily\footnotesize},
+  every node/.style={align=center}]
+
+  % Position the nodes using a matrix layout
+  \matrix{
+    \node[source] (wallet) {Wallet};
+      \& \node[process] (browser) {Browser};
+      \& \node[process] (shop) {Web shop};
+      \& \node[sink] (backend) {Taler backend}; \\
+  };
+
+  % Draw the arrows between the nodes and label them.
+  \draw[to] (browser) to[bend right=50] node[midway,above] {(4) signed contract}
+      node[midway,below] {(signal)} (wallet);
+  \draw[to] (wallet) to[bend right=50] node[midway,above] {(signal)}
+      node[midway,below] {(5) signed coins} (browser);
+  \draw[<->] (browser) -- node[midway,above] {(3,6) custom}
+      node[midway,below] {(HTTP(S))} (shop);
+  \draw[to] (shop) to[bend right=50] node[midway,above] {(HTTP(S))}
+      node[midway,below] {(1) proposed contract / (7) signed coins} (backend);
+  \draw[to] (backend) to[bend right=50] node[midway,above] {(2) signed contract / (8) confirmation}
+      node[midway,below] {(HTTP(S))} (shop);
+\end{tikzpicture}
+\end{center}
+ \caption{Both the customer's client and the merchant's server
+          execute sensitive cryptographic operations in a
+          secured background/backend that is protected against direct access.
+          Interactions with the Taler exchange from the wallet background
+          to withdraw coins and the Taler backend
+          to deposit coins are not shown.
+          Existing system security mechanisms
+          are used to isolate the cryptographic components (boxes) from
+          the complex rendering logic (circles), hence the communication
+          is restricted to JavaScript signals or HTTP(S), respectively.}
+ \label{fig:frobearch}
+\end{figure*}
+
+Figure~\ref{fig:frobearch} shows how the secure payment components
+interact with the existing Web shop logic.  First, the Web shop
+frontend is responsible for constructing the shopping cart.  For this,
+the shop frontend generates the customary Web shop pages, which are transmitted
+to the customer's browser.  Once the order has been constructed, the
+shop frontend provides a {\em proposed contract} in JSON format to the
+payment backend, which signs it and returns it to the frontend.  The
+frontend then transfers the signed contract over the network, and
+passes it to the wallet (sample code for this is shown in
+Figure~\ref{listing:contract}).
+
+Instead of adding any cryptographic logic to the merchant frontend,
+the Taler merchant backend allows the implementor to delegate
+coin handling to the payment backend, which validates the coins,
+deposits them at the exchange, and finally validates and persists the
+receipt from the exchange.  The merchant backend then communicates the
+result of the transaction to the front\-end, which is then responsible
+for executing the business logic to fulfill the order.  As a result of
+this setup (Figure~\ref{fig:frobearch}), the cryptographic details
+of the Taler protocol do not have to be re-implemented by each
+merchant.  Instead, existing Web shops implemented in a multitude of
+programming languages can add support for Taler by:
+{\bf (0)} detecting in the browser that Taler is available; {\bf (1)}
+upon request, generating a contract in JSON based on the shopping
+cart; {\bf (2)} allowing the backend to sign the contract before
+sending it to the client; {\bf (7)} passing coins received in payment
+for a contract to the backend; and, {\bf (8)} executing fulfillment
+business logic if the backend confirms the validity of the payment.
+
+To setup a Taler backend, the merchant only needs to configure the
+wire transfer routing details, such as the merchant's IBAN number, as
+well as a list of acceptable auditors and limits for transaction fees.
+Ideally, the merchant might also want to obtain a certificate for the
+public key generated by the backend for improved authentication.
+Otherwise, the customer's authentication of the Web shop simply
+continues to rely upon HTTPS/X.509.
+
+
+\section{Discussion}
+
+We will now discuss how customer's may experience relevant operational
+risks and failure modes of Taler, and relate them to failure modes
+in existing systems.
+
+% \smallskip
+\subsection{Security risks}
+
+In Taler, customers incur the risk of wallet loss or theft.  We
+believe customers can manage this risk effectively because they manage
+similar risks of losing cash in a physical wallet.  Unlike physical
+wallets, Taler's wallet could be backed up to secure against loss of a
+device.  We note that managing the risk does not imply that customers
+will never suffer from such a loss.  We expect that customers will
+limit the balance they carry in their digital wallet.  Ideally, the
+loss should be acceptable given that the customer gains the insight
+that their computer was compromised.
+
+Taler's contracts provide a degree of protection for customers,
+because they are signed by the merchant and retained by the wallet.
+While they mirror the paper receipts that customers receive in
+physical stores, Taler's cryptographically signed contracts ought to
+carry more weight in courts than typical paper receipts.  Customers
+can choose to discard the receipts, for example to avoid leaking their
+shopping history in case their computer is compromised.
+
+Point-of-sale systems providing printed receipts have been compromised
+in the past by merchants to embezzle sales
+taxes.~\cite{munichicecream} With Taler, the merchant still generates
+a receipt for the customer, however, the record for the tax
+authorities ultimately is anchored with the exchange's wire transfer
+to the merchant.  Using the subject of the wire transfer, the state
+can trace the payments and request the merchant provide
+cryptographically matching contracts.  Thus, this type of tax
+fraud is no longer possible, which is why we call Taler {\em
+taxable}.  The mere threat of the state sometimes tracing transactions
+and contracts back to the merchant also makes Taler unsuitable for
+illegal activities.
+
+The exchange operator is obviously crucial for risk management in
+Taler, as the exchange operator holds the customer's funds in a
+reserve in escrow until the respective deposit request
+arrives\footnote{As previously said, this {\it deposit request} is
+  aimed to exchange {\it coins} for bank money, and it is made by a
+  merchant after successfully receiving coins from a wallet during the
+  payment process.} To ensure that the exchange operator does not
+embezzle these funds, Taler expects exchange operators to be regularly
+audited by an independent auditor\footnote{Auditors are typically run
+  by financial regulatory bodies of states.}.  The auditor can then
+verify that the incoming and outgoing transactions, and the current
+balance of the exchange matches the logs with the cryptographically
+secured transaction records.
+
+
+% \smallskip
+\subsection{Failure modes}
+
+There are several failure modes which a customer using a Taler wallet may
+encounter:
+
+\begin{itemize}
+\item
+As Taler supports multiple exchanges, there is a chance that a
+merchant might not support any exchange where the customer withdrew
+coins from.  We mitigate this problem by allowing merchants to
+support all exchanges audited by a particular auditor.  We believe
+this a reasonable approach, because auditors and merchants must
+operate with a particular legal and financial framework anyways.  We
+note that a similar failure mode exists with credit cards where not
+all merchants accept all issuers, which is often the case internationally.
+
+\item
+Restoring the Taler wallet state from previous backups, or copying the
+wallet state to a new machine may cause honest users to attempt to
+double spend coins, as the wallet does not know when coins are spent
+between backup and recovery.  In this case, the exchange provides
+cryptographic proof to the wallet that the coins were previously spent so the
+wallet can verify that the exchange and the merchant are behaving honestly.
+
+% FIXME FIXME: the following paragraph seems to describe a scenario where the
+% wallet lost coins due to a restore from backup and then ask for refresh
+% of lost coins: but how does the wallet know lost coins' public keys?
+% CG: I don't understand the problem.
+%
+% Also in this paragraph: how can a payment end in-flight due to insufficient
+% funds? If the payment has been started by the wallet, then no 'insufficient
+% funds' may occur, otherwise the wallet would not have started the payment.
+%
+% CG: Yes, as I explain if the Wallet isn't aware that some coins were
+% already spent (I make a backup, spend coins, restore backup, try to
+% spend again), then this may happen.
+%
+% A way to fix that could be to better define 'internal invariants' ..
+%
+% CG: The internal invariant is exactly the one you fell upon:
+% That the wallet knows which coins have been spent!
+\item
+There could be insufficient funds in the Taler wallet when making a
+payment.  Usually the wallet can trivially check this before beginning
+a transaction, but when double-spending is detected this may also
+happen after the wallet already initiated the payment. This would
+usually only happen if the wallet is unaware of a backup operation
+voiding its internal invariant of knowing which coins have already
+been spent.  If a payment fails in-flight due to
+insufficient funds, the wallet can use Taler's refresh protocol to
+obtain a refund for those coins that were not actually double-spent,
+and then explain to the user that the balance was inaccurate due to
+inconsistencies, and insufficient for payment.
+For the user, this failure mode appears equivalent to an insufficient
+balance or credit line when paying with debit or credit cards.
+\end{itemize}
+
+In the future, we plan to make it easy for users to backup and
+synchronize wallets to reduce the probability of the later two failure
+modes.  A key issue in this context is that these processes will need
+to be designed carefully to avoid leaking information that might allow
+adversaries to link purchases via side channels opened up by the
+synchronization protocol.
+
+\subsection{Comparison}
+
+The different payment systems discussed make use of different security
+technologies, which has an impact on their usability and the
+assurances they can provide.  Except for Bitcoin, all payment systems
+described involve an authentication step.
+% FIXME alternative for the following sentence:
+% With Taler, the authentication is implicit when withdrawing, since
+% the user has to login into his bank's Web portal in the first place,
+% and no further authentication is required during the whole payment
+% experience.
+% CG: Not exactly, as the authentication to the bank is still
+% a very explicit authentication step. It's just more natural.
+With Taler, the authentication itself is straightforward, as the customer is
+at the time visiting the Web portal of the bank, and the authentication is
+with the bank (Figure~\ref{fig:taler-withdraw}).  With PayPal, the
+shop redirects the customer to the PayPal portal (step 5 in
+Figure~\ref{fig:paypal}) after the user selects PayPal as the payment
+method. The customer then provides the proof of payment to the
+merchant.  Again, this is reasonably natural.  The 3DS workflow
+(Figure~\ref{fig:cc3ds}) has to deal with a multitude of banks and
+their different implementations, and not just a single provider.
+Hence, the interactions are more complicated as the merchant needs to
+additionally perform a lookup in the card scheme directory and verify
+availability of the bank (steps 8 to 12).
+
+A key difference between Taler and 3DS or PayPal is that
+in Taler, authentication is done ahead of time.
+After authenticating once to withdraw digital coins, the customer can
+perform many micropayments without having to re-authenticate.  While
+this simplifies the process of the individual purchase, it shifts the
+mental overhead to an earlier time, and thus requires some planning,
+especially given that the digital wallet is likely to only contain a
+% FIXME line below: which 'funds'? Coins or real money? (If they are
+% coins, recall that the wallet withdraw all the coins from a fresh
+% reserve, so there is no 'fraction' of user's available funds; at
+% least in the current implementation)
+% I originally wrote ``wealth'' or ``net value'', but given that
+% most customers are in debt today, that makes little sense, so
+% I changed it to ``available funds'', but I meant _all_ the money
+% he has.
+small fraction of the customer's available funds.  As a result, Taler
+improves usability if the customer withdraws funds once to
+then perform many micropayments, while Taler is likely less usable
+if for each transaction the customer first visits the bank to withdraw
+funds.  This is {\em deliberate}, as Taler can only achieve reasonable
+privacy for customers if they keep a balance in their wallet, as
+this is necessary to break the association between withdrawal and deposit.
+% FIXME the sentence above can be in contrast with how the exchange
+% actually deposits funds to merchants, that is through 'aggregate
+% deposits' that may add unpredictable delays (but that doesn't affect
+% this article too much)
+% CG: I think mentioning aggregation here would distract.
+
+Bitcoin's payment process (Figure~\ref{fig:bitcoin}) resembles that of
+Taler in one interesting point, namely that the wallet is given
+details about the contract the user enters (steps 7 to 11).
+However, in contrast to Taler, Bitcoin wallets are expected
+to fetch the ``invoice'' from the merchant. In Taler, the browser
+can provide the proposed contract directly to the wallet.  In
+PayPal and 3DS, the user is left without a cryptographically secured
+receipt.
+
+Card-based payments (including 3DS) and PayPal also extensively rely
+on TLS for security.  The customer is expected to verify that their
+connections to the various Web sites are properly authenticated using
+X.509, and to know that it is fine to provide their bank account
+credentials to the legitimate
+\url{verifiedbyvisa.com}.\footnote{The search query
+``verifiedbyvisa.com legit'' is so common that, when we entered
+``verifiedbyvisa'' into a search engine, it was the suggested
+auto-completion.}  However, relying on users understanding their
+browser's indications of the security context is inherently
+problematic.  Taler addresses this challenge by ensuring that digital
+coins are only accessible from wallet-generated pages. As such
+there is no risk of Web pages mimicking the look of the respective
+page, as they would still not obtain access to the digital coins.
+
+Once the payment process nears its completion, merchants need to have
+some assurance that the contract is valid.  In Taler, merchants
+obtain a non-repudiable confirmation of the payment.  With 3DS and
+PayPal, the confirmation may be disputed later (e.g. in case of
+fraud), or accounts may be frozen arbitrarily~\cite{diaspora2011}.
+Payments in cash require the merchant to assume the risk of receiving
+counterfeit money.
+% FIXME what about (for the following sentence): merchants should care
+% about maintaining change and depositing the money earned
+% CG: No, it's not optional, ``should'' doesn't come into the equation
+% here. It's a mandatory business expense.
+Furthermore, with cash merchants have the cost of maintaining change
+and depositing the money earned.  The most extreme case for lack of
+assurances upon ``completion'' is Bitcoin, where there is no time
+until a payment can be said to be definitively confirmed (step 19,
+Figure~\ref{fig:bitcoin}), leaving merchants in a bit of a tricky
+situation.
+
+Finally, attempts to address the scalability hudles of Bitcoin using
+side-chains or schemes like BOLT introduce semi-centralized
+intermediaries, not wholly unlike Taler's use of exchanges.  Compared
+to BOLT, we would expect a Taler exchange operating in BTC to offer
+stronger security to all parties and stronger anonymity to customers,
+as well as being vastly cheaper to operate.
+
+
+\section{Future work}
+
+This paper has focused on how Taler would work for Web payments.
+However, the underlying cryptography should work just as well for
+other domains.  In particular, we plan to adapt Taler for NFC and
+peer-to-peer payments in the future.
+
+\subsection{NFC payments}
+
+We have so far focused on how Taler could be used for Web payments;
+however, Taler can in theory also be used over other protocols, such
+as near field communication (NFC).  Here, the user would hold his
+NFC-enabled device running a wallet application near an NFC terminal
+to obtain the contract and confirm the payment on his device, which
+would then transfer the coins and obtain a receipt.  A native NFC
+application would be less restricted in its interaction with the
+point-of-sale system compared to a browser extension, and the security
+of the communication channel is also comparable. Thus, running
+Taler over NFC is largely a simplification of the existing process.
+
+In particular, there are no significant new concerns arising from an
+NFC device possibly losing contact with a point-of-sale system, as for
+Web payments, Taler already only employs idempotent operations to
+ensure coins are never lost, and that transactions adequately persist
+even in the case of network or endpoint failures.  As a result, the
+NFC system can simply use the same transaction models to replay
+transmissions once contact with the point-of-sale system is
+reestablished.
+
+
+\subsection{Peer-to-peer payments}
+
+Peer-to-peer payments are in principle possible with Taler as well;
+however, we need to distinguish two types of peer-to-peer payments.
+
+First, there is the {\em sharing} of coins among entities that
+mutually trust each other, for example within a family.  Here, all
+users have to do is to export and import electronic coins over a
+secure channel, such as encrypted e-mail or via NFC.  For NFC, the
+situation is straightforward because we presumably do not have to worry
+about man-in-the-middle attacks, while secure communication over the
+Internet is likely to remain a significant usability challenge.  We
+note that sharing coins by copying the respective private keys across
+devices is not taxable: the exchange is not involved, no contracts are
+signed, and no records for taxation are created.  However, the
+involved entities must trust each other, because after copying a private
+key both parties could try to spend the coins, but only the first
+transaction will succeed.  Given this crucial limitation
+inherent in sharing keys, we consider it ethically acceptable that
+sharing is not taxable.
+
+Second, there is the {\em transactional} mutually exclusive transfer
+of ownership.  This requires the receiving party to have a {\em
+  reserve} with an exchange, and the sender's exchange would have to
+support wire transfers to the receiver's exchange.  If taxability is
+desired, the {\em reserve} would still need to be tied to a particular
+citizen's identity for tax purposes, and thus require similar
+identification protocols as commonly used for establishing a bank
+account.  As such, in terms of institutions, one would expect this
+setup to be offered most easily by traditional banks, effectively
+merging the technical concepts of a (traditional) bank accounts and
+Taler reserves into one service for the customer.
+
+In terms of usability, transactional
+transfers are just as easy as sharing when performed over NFC, but
+more user friendly when performed over the Internet as they do not
+require a secure communication channel: the Taler protocol is by
+design still safe to use even if the communication is made over an
+unencrypted channel. Only the authenticity of the proposed contract
+needs to be assured.
+
+
+
+\section{Conclusions}
+
+Customers and merchants should be able to easily adapt their existing
+mental models and technical infrastructure to Taler.  In contrast,
+Bitcoin's payment models fail to match common expectations be it in
+terms of performance, durability, security, or privacy.  Minimizing
+the need to authenticate to pay fundamentally improves security
+and usability.
+
+% FIXME (following paragraph): it's never said that the Taler wallet
+% keeps any 'receipt' of transaction -- maybe here we want to say 'contract'
+% instead of 'receipt'?
+% CG: I'd say on the customer side, the signed contract is a receipt.
+% That should be intuitive.
+We expect that electronic wallets that automatically collect digitally
+signed receipts for transactions will become commonplace.
+By providing a free software wallet, Taler gives the user full control
+over the usage of their
+transaction history, as opposed to giving control to big data corporations.
+
+\begin{center}
+  \bf
+We encourage readers to try our prototype for Taler
+at \url{https://demo.taler.net/}.
+\end{center}
+%and to ponder why the billion dollar
+%e-commerce industry still relies mostly on TLS for security given
+%that usability, security and privacy can clearly {\em all} be improved
+%simultaneously using a modern payment protocol.
+
+% These APIs are all RESTful in the modern sense because that greatly
+% simplify integrating Taler with web shops and browsers.
+
+\section*{Acknowledgements}
+
+This work benefits from the financial support of the Brittany Region
+(ARED 9178) and a grant from the Renewable Freedom Foundation.  We
+thank Bruno Haible for his financial support enabling us to
+participate with the W3C payment working group.  We thank the W3C
+payment working group for insightful discussions about Web payments.
+We thank Krista Grothoff and Neal Walfield for comments on an earlier
+draft of the paper.  We thank Gabor Toth for his help with the
+implementation.
+
+\bibliographystyle{splncs03}
+\bibliography{ui,btc,taler,rfc}
+
+
+
+\end{document}
+
+
+
+
+
+
+
+% \smallskip
+\subsection{Anonymity}
+
+We strongly recommend that the user use Tor Browser to protect their
+% FIXME wasn't the use of Tor discouraged to login into personal things?
+IP address, both initially when withdrawing coins and later during
+purchases.
+
+There are lingering risks that anonymous coins can be correlated to
+customers using additional information.
+
+After withdrawing coins, customer should usually wait before spending
+them, as spending them immediately ....
+% wallet determines coin denominations
+
+
+
+
+
+
+
+Wallet provides isolation
+  Near copy from EXIST proposal?
+- Limits user risk
+- Nearly eliminates risk for merchant and exchange
+  - lower transaction fees
+- Reserves simplify things
+
+Denomination choice
+- Anonymity refresh protocol
+- Withdraw automates like ATMs
+
+Browser extension
+- RESTful vs Bitcoin, OpenCoin, etc.
+  - Retrying RESTful transactions always works
+- minimizing dialog
+- see & pay ??
+- TBB integration
+  - Needed anyways
+- Other browser integration?
+  - Is it wise?  Ok if not worried about anonymity  Taler is still better
+  - Is tor2web worse?
+- W3C
+
+Autopay?  pat payment recognition?
+- dangerous?
+- high charges
+- good for funny money
+
+NFC
+
+
+
+
+
+
+
+
+
+
+
+
+
+% \smallskip
+\subsection{Risks}
+
+A Taler exchange's need not face significant financial risks beyond
+the risk of losing a denomination signing key.  Exchanges can limit that
+risk by carefully tracking how much they issue in each denomination.
+Taler merchant's risks are limited primarily by depositing coins
+quickly and stating contracts accurately.

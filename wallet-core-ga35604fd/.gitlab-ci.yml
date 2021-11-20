@@ -1,0 +1,41 @@
+image: "registry.gitlab.com/sebasjm/docker-taler-ci:latest"
+
+# before_script:
+#   - pg_ctlcluster 12 main start
+
+stages:
+  - test
+  - deploy
+
+# test:
+#   stage: test
+#   script:
+#     - ./bootstrap
+#     - ./configure
+#     - make install
+
+deploy-webext:
+  stage: deploy
+  script:
+    - ./bootstrap
+    - ./configure
+    - pnpm i
+    - pnpm run -r prepare
+    - make webextension
+    - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" 
+            --upload-file packages/taler-wallet-webextension/extension/taler-wallet-webextension-$(jq -r .version packages/taler-wallet-webextension/manifest.json).zip
+            "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/taler-wallet/$(jq -r .version packages/taler-wallet-webextension/manifest.json | cut -d . -f 1,2,3)/taler-wallet-$(jq -r .version packages/taler-wallet-webextension/manifest.json).zip"'
+
+deploy-npm:
+  stage: deploy
+  script:
+    - npm config set @gnu-taler:registry https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/npm/
+    - npm config set '//gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken' ${CI_JOB_TOKEN}
+    - ./bootstrap
+    - ./configure
+    - pnpm i
+    - pnpm run -r prepare
+    - make publish
+
+# after_script:
+#   - pg_ctlcluster 12 main stop

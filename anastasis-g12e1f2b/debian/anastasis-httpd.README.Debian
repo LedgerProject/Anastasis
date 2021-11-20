@@ -1,0 +1,10 @@
+anastasis
+--------------
+
+This package is a backend to operate an Anastasis provider.
+
+This package is integrated with Apache or Nginx, automatically
+deploying a configuration for the backend to the respective
+Web server at the "/anastasis/" endpoint.
+
+ -- Christian Grothoff <grothoff@gnu.org>  Fri 01 Apr 2021 11:37:14 AM CET

@@ -1,0 +1,40 @@
+/*
+     This file is part of GNU libmicrohttpd
+     Copyright (C) 2012-2020 GNUnet e.V.
+
+     GNU libmicrohttpd is free software: you can redistribute it and/or modify it
+     under the terms of the GNU Lesser General Public License as published
+     by the Free Software Foundation, either version 3 of the License,
+     or (at your option) any later version.
+
+     GNU libmicrohttpd is distributed in the hope that it will be useful, but
+     WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+     Lesser General Public License for more details.
+
+     You should have received a copy of the GNU Lesser General Public License
+     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+     SPDX-License-Identifier: LGPL3.0-or-later
+ */
+#ifndef GNU_LIBMICROHTTPD_HTTP_STATUS_CODES_H
+#define GNU_LIBMICROHTTPD_HTTP_STATUS_CODES_H
+
+#ifdef __cplusplus
+extern "C" {
+#if 0 /* keep Emacsens' auto-indent happy */
+}
+#endif
+#endif
+
+
+/**
+ * HTTP status codes as per RFC 7231 plus vendor extensions.
+ *
+ * 1xx: Informational - Request received, continuing process
+ * 2xx: Success - The action was successfully received, understood, and accepted
+ * 3xx: Redirection - Further action must be taken in order to complete the request
+ * 4xx: Client Error - The request contains bad syntax or cannot be fulfilled
+ * 5xx: Server Error - The server failed to fulfill an apparently valid request
+ */
+enum MHD_HTTP_StatusCode {

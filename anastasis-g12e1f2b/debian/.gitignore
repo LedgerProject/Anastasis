@@ -1,0 +1,13 @@
+.debhelper/
+*.substvars
+*.log
+libanastasis/
+libanastasis-dev/
+anastasis-httpd/
+anastasis-cli/
+*.debhelper
+autoreconf.after
+autoreconf.before
+debhelper-build-stamp
+files
+tmp/

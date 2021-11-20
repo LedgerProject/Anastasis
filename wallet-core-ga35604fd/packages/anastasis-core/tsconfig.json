@@ -1,0 +1,30 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "composite": true,
+    "target": "ES2018",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "lib": ["es6", "DOM"],
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "outDir": "lib",
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "rootDir": "src",
+    "baseUrl": "./src",
+    "typeRoots": ["./node_modules/@types"]
+  },
+  "include": ["src/**/*"],
+  "references": [
+    {
+      "path": "../taler-util/"
+    }
+  ]
+}

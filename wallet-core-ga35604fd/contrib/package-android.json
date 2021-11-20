@@ -1,0 +1,8 @@
+{
+  "name": "android-taler-wallet",
+  "version": "0.6.0",
+  "license": "AGPL3+",
+  "dependencies": {
+    "taler-wallet": "./taler-wallet.tar.gz"
+  }
+}

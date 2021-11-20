@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+try {
+  require('source-map-support').install();
+} catch (e) {
+  // Do nothing.
+}
+require('../dist/taler-wallet-cli.js').main();

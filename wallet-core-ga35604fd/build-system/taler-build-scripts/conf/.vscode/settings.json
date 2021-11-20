@@ -1,0 +1,40 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    // Use latest language servicesu
+    "typescript.tsdk": "./node_modules/typescript/lib",
+    // Defines space handling after a comma delimiter
+    "typescript.format.insertSpaceAfterCommaDelimiter": true,
+    //  Defines space handling after a semicolon in a for statement
+    "typescript.format.insertSpaceAfterSemicolonInForStatements": true,
+    // Defines space handling after a binary operator
+    "typescript.format.insertSpaceBeforeAndAfterBinaryOperators": true,
+    // Defines space handling after keywords in control flow statement
+    "typescript.format.insertSpaceAfterKeywordsInControlFlowStatements": true,
+    // Defines space handling after function keyword for anonymous functions
+    "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
+    // Defines space handling after opening and before closing non empty parenthesis
+    "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
+    // Defines space handling after opening and before closing non empty brackets
+    "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": false,
+    // Defines whether an open brace is put onto a new line for functions or not
+    "typescript.format.placeOpenBraceOnNewLineForFunctions": false,
+    // Defines whether an open brace is put onto a new line for control blocks or not
+    "typescript.format.placeOpenBraceOnNewLineForControlBlocks": false,
+    // Files hidden in the explorer
+    "files.exclude": {
+        // include the defaults from VS Code
+        "**/.git": true,
+        "**/.DS_Store": true,
+        // exclude .js and .js.map files, when in a TypeScript project
+        "**/*.js": {
+            "when": "$(basename).ts"
+        },
+        "**/*?.js": {
+            "when": "$(basename).tsx"
+        },
+        "**/*.js.map": true
+    },
+    "tslint.enable": true,
+    "editor.wrappingIndent": "same",
+    "editor.tabSize": 2
+}

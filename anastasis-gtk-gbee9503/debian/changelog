@@ -1,0 +1,74 @@
+anastasis-gtk (0.2.0) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Christian Grothoff <grothoff@gnu.org>  Thu, 30 Sep 2021 14:02:10 +0100
+
+anastasis-gtk (0.1.0-2) unstable; urgency=low
+
+  * Removed main menu. Final release for packaging.
+
+ -- Christian Grothoff <grothoff@gnu.org>  Wed, 09 Sep 2021 19:08:18 +0200
+
+anastasis-gtk (0.1.0-1) unstable; urgency=low
+
+  * Fix dependencies and downgrade debhelper-compat for Ubuntu.
+
+ -- Christian Grothoff <grothoff@gnu.org>  Mon, 06 Sep 2021 19:08:18 +0200
+
+anastasis-gtk (0.1.0) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Christian Grothoff <grothoff@gnu.org>  Fri, 27 Aug 2021 14:02:10 +0100
+
+anastasis-gtk (0.0.0-8) unstable; urgency=low
+
+  * Fix about dialog.
+
+ -- Christian Grothoff <grothoff@gnu.org>  Fri, 30 Jul 2021 14:02:10 +0100
+
+anastasis-gtk (0.0.0-7) unstable; urgency=low
+
+  * Fix visibility/layout issue.
+
+ -- Christian Grothoff <grothoff@gnu.org>  Wed, 21 Jul 2021 14:02:10 +0100
+
+anastasis-gtk (0.0.0-6) unstable; urgency=low
+
+  * Update to latest upstream code with minor design improvements.
+
+ -- Christian Grothoff <grothoff@gnu.org>  Tue, 20 Jul 2021 14:02:10 +0100
+
+anastasis-gtk (0.0.0-5) unstable; urgency=low
+
+  * Improved overall UX.
+  * Enabled policy editing.
+  * Enabled expiration date selection.
+  * Minimized image sizes to reduce package size.
+
+ -- Christian Grothoff <grothoff@gnu.org>  Wed, 14 Jul 2021 00:00:00 +0000
+
+anastasis-gtk (0.0.0-4) unstable; urgency=low
+
+  * Fix challenge selection in GUI.
+
+ -- Christian Grothoff <grothoff@gnu.org>  Sat, 26 Jun 2021 00:00:00 +0000
+
+anastasis-gtk (0.0.0-3) unstable; urgency=low
+
+  * Various fixes in packaging and code logic.
+
+ -- Christian Grothoff <grothoff@gnu.org>  Thu, 24 Jun 2021 00:00:00 +0000
+
+anastasis-gtk (0.0.0-2) unstable; urgency=low
+
+  * updating to reflect changes in gnunet-gtk package structure.
+
+ -- Christian Grothoff <grothoff@gnu.org>  Fri, 18 Jun 2021 21:41:01 +0200
+
+anastasis-gtk (0.0.0-1) unstable; urgency=low
+
+  * initial release.
+
+ -- Christian Grothoff <grothoff@gnu.org>  Fri, 18 Jun 2021 01:41:01 +0200

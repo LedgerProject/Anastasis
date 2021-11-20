@@ -1,0 +1,484 @@
+\section{Related work}
+
+This chapter explains some important cryptographic functions and which
+are used in Anastasis or related to our work. We also describe issues
+with existing solutions in this domain.
+
+\subsection{Cryptographic primitives}
+
+\subsubsection{Pseudo-randomness}
+
+A pseudo random generator (PRG) is an algorithm producing an infinite
+sequence of bits for which there is no efficient algorithm to
+distinguish it from a truly random sequence~\cite{vadhan2012}. The
+algorithm ``takes as input a short, perfectly random
+seed''~\cite{vadhan2012} which determines the output value.\\
+
+A pseudo random function (PRF) is a deterministic function which
+output is finite and indistinguishable from a true random
+function.~\cite{nielsen2002} PRFs can be constructed using
+PRGs.~\cite{GGM1986}
+
+\subsubsection{Hash function}
+
+Hash functions "compress a string of arbitrary length to a string of
+fixed length [...]"~\cite{Preneel1999}. The output of a hash function
+often is called a "hash".  Hash functions in general should be very
+fast to compute. Cryptographic hash functions need to fulfil
+additional security requirements which are
+
+\begin{itemize}
+ \item (first) pre-image resistance,
+ \item second pre-image resistance,
+ \item collision resistance,
+ \item pseudo randomness, and the
+ \item avalanche effect.
+\end{itemize}
+
+Pre-image resistance, also called the ``one way property'', means that
+for a given hash function $H$ and a hash value $H(x)$, it is
+computationally infeasible to find $x$.~\cite{SG2012} For example,
+since in Anastasis we derive the key to encrypt the personal details
+required for user authentication (e.g. the mobile phone number for
+authentication via SMS) using functions based on hash functions (see
+HKDF), it is very important that you cannot derive the corresponding
+input values from the key.
+
+The second pre-image resistance is described by following: For a given
+hash function $H$ and a hash value $H(x)$, it is computationally
+infeasible to find $x$ and $x'$ such that $H(x) = H(x')$ and $x \not=
+x'$.~\cite{SG2012} In Anastasis hash functions also are involved in
+signing our so called recovery document. Hence an attacker should not
+be able to create a malicious recovery document with the same hash
+value as the original one.
+
+The definition of collision resistance slightly differs from the
+second pre-image resistance: For a given hash function $H$, it is
+computationally infeasible to find a pair $x, y$ such that $H(x) =
+H(y)$ \cite{SG2012}.
+%CG: the text below does NOT related to collision resistance!
+%As we are using HKDFs for deriving keys in
+%Anastasis, an attacker should not be able to find some other input
+%values also leading to the same keys we use.
+Anastasis does not rely upon collision resistance in its use of hash
+functions. % CG: at least no case comes to mind for me right now...
+
+A cryptographic hash function should also behave as a pseudo random
+function. This means that although a hash function is purely
+deterministic, the output must not be predictable.
+
+The avalanche effect describes the property of an algorithm that
+causes a significant change of the output value, usually a bit
+flipping of more than half the output is desired, if the input is
+changed slightly (for example, flipping a single bit).~\cite{RK2011}
+The more bits are flipping in the output value the higher the entropy
+of the randomness of the hash function.
+
+There are many applications for cryptographic hash functions. For
+example, you can store the hash value of a passphrase instead of the
+passphrase itself in a computer to protect the passphrase. Another
+important application is verification of message integrity: Before and
+after transmission of a message one can calculate the hash values of
+it and compare hashes later to determine if the message changed during
+transmission.
+
+In Anastasis we use SHA-512~\cite{GJW2011} for fast hash functions.
+
+\subsubsection{HMAC}
+
+When it comes to integrity of messages during communication of two
+parties over an insecure channel Keyed-Hash Message Authentication
+Codes (HMAC) are used as check values. An HMAC function is based on a
+hash function and takes two arguments, a key $K$ and a message $M$:
+
+$HMAC_{K}(M) = H(K \oplus opad,H(K \oplus ipad, M))$ with "ipad" and
+"opad" being constants which fill up the key $K$ to the blocksize of
+the hash function~\cite{BCK1996}. The blocksize of a modern hash
+function like SHA-512 is 64 bytes.
+
+\subsubsection{HKDF}
+
+A HKDF is a key derivation function (KDF) based on HMAC. A KDF ``is a
+basic and essential component of cryptographic systems: Its goal is
+to take a source of initial keying material, usually containing some
+good amount of randomness, but not distributed uniformly or for which
+an attacker has some partial knowledge, and derive from it one or more
+cryptographically strong secret keys''~\cite{krawczyk2010}.
+
+Anastasis uses HKDFs based on SHA-512 to derive symmetric keys for
+encryption.
+
+\subsubsection{Argon2}
+
+Hash functions like SHA-512 are designed to be very fast. Therefore
+passwords being stored using this kind of hash are vulnerable to
+dictionary attacks with new hardware architectures like
+FPGAs~\cite{trimberger2012} and dedicated ASIC~\cite{madurawe2006}
+modules. But those architectures ``experience difficulties when
+operating on large amount of memory''~\cite{BDK2016}.
+
+In contrast to standard hash functions there are functions designed to
+be memory-hard. Argon2 is such a memory-hard function that won the
+Password Hashing Competition in 2015. It minimizes time-memory
+tradeoff~\cite{stamp2003} and thus maximizes the costs to implement an
+ASIC for given CPU computing time~\cite{BDK2016}. Aside from the fact
+that Argon2 makes dictionary attacks much harder, Argon2 can be used
+for another feature too: Memory-hard schemes like Argon2 are very
+useful for key derivation from low-entropy sources~\cite{BDK2016}.
+
+Argon2 is used in Anastasis to derive an identifier for the user from
+the user's attributes, which serve as low-entropy inputs.
+
+
+\subsection{Secret sharing}
+
+Secret splitting, also known as secret sharing, is a technique for
+distributing a secret amongst multiple recipients. This is achieved by
+assigning a share of the secret to each recipient. By combining a
+sufficient number of those shares, it is possible to reconstruct the
+secret.  In a secret sharing theme the recipients of a share often are
+called \textit{players}. The figure who gives a share of the secret to
+the players is called \textit{dealer}.
+
+In Anastasis the user is the trusted dealer who splits the secret and
+also reconstructs it.
+
+\subsubsection{Shamir's secret sharing} \label{sec:rel:shamir}
+
+The algorithm ``Shamir's secret sharing'' is probably the most well
+known secret sharing scheme. It ``divide[s] data D into n pieces in
+such a way that D is easily reconstructible from any k pieces, but
+even complete knowledge of $k - 1$ pieces reveals absolutely no
+information about D''~\cite{shamir_sharing}.
+
+Shamir’s simple secret sharing scheme has two key limitations. First,
+it requires a trusted dealer who initially generates the secret to be
+distributed, and second the shares are not verifiable during
+reconstruction. Therefore, malicious shareholders could submit corrupt
+shares to prevent the system from reconstructing the secret --- without
+these corrupt shareholders being detectable as malicious. Furthermore,
+the dealer distributing the shares could be corrupt and distribute
+some inconsistent shares to the others. Also, in some scenarios the
+dealer cannot be trusted with the knowledge of the original core
+secret.
+
+Additionally, Shamir's secret sharing is inflexible because it is a
+simple $k$-out-of-$n$ threshold scheme.  While this makes the scheme
+reasonably efficient even for big values of $n$, efficiency with
+respect to a large number of escrow providers and authorization
+procedures is not important for Anastasis: it is already difficult to
+conceive users providing more than a handful of authentication methods
+(Section~\ref{sec:rel:authentication} describes common choices.)
+
+For Anastasis, we thus decided to opt for more flexible approach that
+allows complex policies for recovery authorization, instead of only
+$k$-out-of-$n$. Each user of Anastasis is also able to decide which
+combinations of \textit{players}, which in case of Anastasis are the 
+escrow providers, shall be permitted.
+
+\subsubsection{Verifiable secret sharing}
+
+Verifiability can be achieved by using so called commitment schemes
+like the Pederson commitment. It allows ``to distribute a secret to n
+persons such that each person can verify that he has received correct
+information about the secret without talking with other
+persons''~\cite{pedersen_sharing_0}. In his paper ``A Practical Scheme
+for Non-interactive Verifiable Secret
+Sharing''~\cite{feldman_sharing}, Paul Feldman combines the two
+schemes Shamir Secret Sharing and Pederson commitment. His algorithm
+for verifiable secret sharing (VSS), allows each recipient to
+verify the correctness of their share. But like in the Shamir Secret
+Sharing scheme, the dealer in the VSS scheme
+also can't be trusted with the knowledge of the original core secret.
+
+Because in Anastasis each user can act as their own trusted dealer,
+the shares must not be verified and therefore Anastasis do not need
+any form of VSS.
+
+\subsubsection{Distributed key generation}
+
+Distributed key generation (DKG) algorithms solve the problem of
+needing a trustworthy dealer by instead relying on a threshold of
+honest persons for key generation. Contrary to the above-mentioned
+schemes, in distributed key generation algorithms every participant is
+involved in key generation.  The Pederson DKG is such ``a secret
+sharing scheme without a mutually trusted
+authority''~\cite{pedersen_sharing_5.2}. Basically, this DKG works as
+follows: First, each involved party generates a pre-secret and
+distributes it to all parties using the verifiable secret sharing
+scheme of Feldman.  Afterwards, each party recombines the received
+shares, including its own pre-secret, to a share of the main
+secret. The main secret can be reconstructed by summing up each
+recombination of the shared pre-secrets.
+
+Because in Anastasis each user can act as their own trusted dealer, we
+also do not worry about the dealer learning the user's key and hence
+Anastasis do not need any form of DKG.
+
+\subsection{Authentication} \label{sec:rel:authentication}
+
+To build a secure authentication procedure, today multi-factor
+authentication is the standard~\cite{multifactor_authentication}. A
+single authentication method by itself is usually vulnerable.
+Multi-factor authentication combines multiple authentication
+procedures to enhance the security of the system.
+
+During procedure of some authentication methods a so called token is 
+sent to the user. The user than has to provide the token to authorize.\\
+The token should be a randomly generated passphrase which has at 
+least 128 bits of entropy. It is best practice for a token to have an 
+expiration time, although this is not relevant for security of Anastasis.\\
+
+Anastasis is designed to use a wide range of authentication methods to
+authenticate its users. Even though the user in Anastasis is free to
+specify only one authentication method, we strongly recommend the use
+of multi-factor authentication, typically using different
+authentication methods at different providers.
+
+A short overview of common authentication methods and issues with
+each of them is presented here.
+
+\subsubsection{Password authentication}
+
+Password authentication is probably the most widely used
+authentication procedure. But as studies show the procedure has its
+drawbacks~\cite{authentication_methods_review}. For example the
+handling of the passwords, like storage or transmission, often is done
+poorly. Another problem is that the user must remember his
+password. Therefore the password is limited to the capabilities of the
+user to remember it. Thus people tend to use passwords with low
+entropy. Those passwords are vulnerable to brute force attacks or
+dictionary attacks. Another problem using passwords is the possibility
+of replay attacks: A password can be stolen by an eavesdropper during
+online transmission and used by the attacker.
+
+Because passwords can be forgotten, we do not recommend using this
+method for provider-authentication in Anastasis. Users could easily
+add a passwords into their set of ``invariant'' attributes used to
+derive the identity key, and then would automatically obtain all of
+the possible benefits (and drawbacks) from using a password.
+Specifically, they must make sure that the password cannot be
+forgotten, even if it means that the password has low entropy.
+
+\subsubsection{Secure question}
+
+Similar to password authentication the use of an authentication method
+based on a secure question requires the user to remember the correct
+answer to a specific question. The difference here is that the
+question provides a context that helps the user to remember the answer
+and the user does not necessarily need to memorize something
+new~\cite{just2004}.
+
+There are several variations to implement authentication using a
+secure question:
+
+\begin{itemize}
+ \item The questions and answers are predefined.
+ \item Just the questions are predefined.
+ \item The user is free to create custom questions and answers.
+\end{itemize}
+
+The first option is the easiest one. But predefining the answers has
+the disadvantage being impersonal and inflexible. The questions must
+inevitably be general, which may allow an attacker to obtain answers
+by collecting public information about the victim, or even simply
+solving the challenge by brute-forcing trying all possible choices.
+Therefore the first option is not ideal.
+
+The second option is more applicable but has some drawbacks, too. For
+example there may be questions whose answers have multiple syntactic
+representations (for example, ``St.'' versus
+``Street'')~\cite{just2004}. Another problem could be a question whose
+answer may change over time. Asking for the favourite actor for
+example could be problematic. In addition, there is a challenge to
+define questions for all kind of people. Some people for example could
+not answer to the question, what the name of their pet is, because
+they do not have one.
+
+In case of the third option, we have all of the issues of the second
+one, but additionally there is the difficulty for the user to ask
+creative questions. A good question should only be answerable by the
+user. Also, it would be perfect to have the attacker on the wrong
+track by using ambiguous questions with word plays the adversary
+cannot easily comprehend.
+
+Authentication using a secure question requires checking the validity
+of an answer that may include private personal information.
+Consequently, Anastasis does not store the answers of secure questions
+in cleartext. Instead, Anastasis only stores the hash value of a
+(salted) answer.  Thus the user only has to provide the hash value of
+the answer and not disclose the answer itself.
+
+\subsubsection{SMS authentication}
+
+Another way to authenticate users that have a mobile phone is to use
+SMS authentication. The most popular use case is the so called Mobile
+TAN used to authorize online banking transactions. A Mobile TAN is an
+SMS based One-Time Password (OTP), short SMS OTP. SMS OTPs ``were
+introduced to counter phishing and other attacks against
+authentication and authorization of Internet
+services''~\cite{MBSS2013}.
+
+However, SMS authentication is not very secure, as it relies on the
+security of the mobile network, which has various
+vulnerabilities~\cite{rieck_detection}. There are also specialized
+mobile trojans which are used to eavesdrop on these messages directly
+on the user's mobile device.
+
+While likely not as sensitive as answers to security questions, we
+still consider user's phone numbers as private information that
+deserves protection.  Naturally, a service authenticating the user
+needs the phone number to send a message to the user during SMS
+authentication.
+
+Hence, Anastasis providers have to learn the phone number during SMS
+authentication.  However, we can use cryptography to ensure that the
+provider only gets the keys to decrypt the phone number when the
+authentication process is started by the user as part of a recovery
+operation. Thus, a compromise of the provider's database would not
+directly reveal the phone numbers to the attacker.
+
+
+\subsubsection{E-mail authentication}
+
+Authentication by email is similar to SMS authentication. Here,
+the user receives a token by email and has to provide it during the
+authentication process.
+
+It is important that the email should not already contain the
+requested information, so in the case of Anastasis the keyshare.  This
+is because the SMTP protocol used for email offers no hard security
+assurances. In particular, the email is likely to be stored for a
+indefinite period in the user's mailbox, which could be easily
+compromised and read by a mailbox provider.~\cite{emailauthowasp}
+
+Like with SMS authentication, Anastasis also encrypts the email
+addresses when they are stored at the provider.  The user has to
+provide the corresponding decryption key to the server during
+the authentication process.
+
+
+\subsubsection{VideoIdent}
+
+VideoIdent uses a video chat to verify the identity of a user. The
+user needs to show their face using a camera to an employee of the
+VideoIdent service. The service then verifies the identity of the user
+by comparing the video stream to a picture of the
+user~\cite{pohlmann2017}.
+
+Prerequisites for error-free identification are a video camera with
+good video quality and a high-resolution image of the user on which
+the face can be clearly seen. The user should also not change their
+outward appearance too much over time. For example, growing or
+trimming a beard could lead to the VideoIdent-service employee not
+being able to recognise a user with sufficient confidence.
+
+For an attacker who looks similar to the user, there is a chance that
+the employee incorrectly confirms the identification.
+
+%CG: that's IMO then e-mail based verification, should not mix
+%    the two: this is basically multi-factor, so I'd leave it out here!
+%Therefore, some interaction of the user is needed like for example
+%telling the employee a short code which has been sent right before to
+%the user by mail.
+
+In Anastasis, pictures of users for VideoIdent authentication are
+considered private information stored encrypted at the providers.
+During the authentication process, the user has to provide the correct
+key for decryption to the service.
+
+\subsubsection{PostIdent}
+
+It is also possible to sent a verification code to the user by
+physical mail. A major drawback of this authentication method is
+that it has high latency, and there is also the possibility that
+physical mail gets intercepted or lost during transmission.
+
+Anastasis providers using PostIndent would not store the address of
+their users in cleartext. Instead the address is encrypted by the user
+and the provider would receive the key to decrypt the address only
+during the authentication process.
+
+\subsubsection{Biometric authentication}
+
+Another way of authenticating is the biometric
+approach~\cite{biometric_auth}. Biometric authentication is based on
+``something you are'', like your iris or your fingerprint.
+
+Biometric authentication is highly problematic because the attributes
+are invariant and frequently shared involuntarily.  Unlike passphrases
+or phone numbers, users cannot change their genome or fingerprint in
+case their private biometric information is exposed.  Furthermore,
+there are credible threats against biometric authentication, in
+paritcular there are documented inexpensive attacks against
+fingerprint and iris scan authentication. For example, a member of the
+German CCC e.V. was able to generate replicas from Angela Merkel's
+iris and Ursula von der Leyen's fingerprint~\cite{ccc_merkel}.
+
+
+
+\subsection{Existing solutions for key recovery}
+
+This section introduces some existing solutions for key recovery and
+why they are problematic.
+
+
+\subsubsection{Coinbase}
+
+Coinbase\footnote{\url{https://www.coinbase.com/}} is a global digital
+asset exchange company, providing a venue to buy and sell digital
+currencies. Coinbase also uses wallets secured with private keys. To
+recover this private key the user has to provide a 12 words recovery
+phrase.
+
+Coinbase offers a solution to securely deposit this recovery phrase
+onto the users Google Drive or iCloud.~\cite{coinbase} The security
+here lies within the Google or iCloud account and another password
+used to encrypt the security phrase. The problem here is that this
+approach undermines confidentiality, as encrypting a strong key with a
+weak key simply reduces the security to that of the weaker key.
+
+\subsubsection{MIDATA}
+
+MIDATA is a project that aims to give patients back control over their
+medical data and to enable them to share their data only with those
+they trust.\footnote{\url{https://www.midata.coop/}} In case a patient
+lost their device with the MIDATA-application and also forgot their
+MIDATA password, MIDATA provides a key recovery system using the
+Shamir Secret Sharing scheme (as described in
+Section~\ref{sec:rel:shamir}).
+
+In their case, a few ``persons working at MIDATA have generated a
+public-private key pair (Recovery key) on their own computer. They
+keep the private recovery key for themselves and never share it. The
+public keys are made public so that the apps can also access
+them''~\cite{midata}. Using Shamir's Secret Sharing the MIDATA
+application splits the user's app private key into 5 parts which are
+encrypted with one of the published recovery keys. The encrypted parts
+are then stored into the MIDATA server. During the recovery process at
+least two of the 5 parts need to be decrypted by the persons owning
+the private key part of the recovery key. ``The decrypted parts are
+sent to the server and {\em the server} may now reconstruct the app
+private key if enough parts of the key have been
+decrypted''~\cite{midata}. (Emphasis ours.)
+
+The security of MIDATA as described in ``Patient empowerment in IoT
+for eHealth - How to deal with lost keys?''~\cite{midata} is broken in
+three ways:
+
+\begin{enumerate}
+ \item The password is reconstructed at {\em the server}, not on the
+   patients device. An administrator of the server could thus
+   access the recovered password at that time.  It would be better
+   to reconstruct the password only on the patients device.
+ \item It is not clear which authentication methods the persons
+   working for MIDATA use for their decisions and activities regarding
+   the key recovery. The business process used here could be
+   vulnerable, and it is not clear whether multi-factor authentication
+   is used. As a result, we worry that it may be possible for an attacker
+   to successfully use social engineering via email (or other means)
+   to illegitimately trigger a recovery process.
+ \item The MIDATA system also does not offer any trust agility~\cite{marlinspike2011}.
+   The user is forced to accept the 2-out-of-5 rule with trustees
+   provided by MIDATA.
+\end{enumerate}

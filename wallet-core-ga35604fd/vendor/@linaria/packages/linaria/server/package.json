@@ -1,0 +1,5 @@
+{
+  "main": "../lib/server.js",
+  "module": "../esm/server.js",
+  "types": "../types/server.d.ts"
+}

@@ -1,0 +1,55 @@
+/*
+ This file is part of GNU Taler
+ (C) 2021 Taler Systems S.A.
+
+ GNU Taler is free software; you can redistribute it and/or modify it under the
+ terms of the GNU General Public License as published by the Free Software
+ Foundation; either version 3, or (at your option) any later version.
+
+ GNU Taler is distributed in the hope that it will be useful, but WITHOUT ANY
+ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License along with
+ GNU Taler; see the file COPYING.  If not, see <http://www.gnu.org/licenses/>
+ */
+
+/**
+ *
+ * @author Sebastian Javier Marchano (sebasjm)
+ */
+
+section.hero.is-hero-bar {
+  background-color: $hero-bar-background;
+  border-bottom: $light-border;
+
+  .hero-body {
+    padding: $default-padding;
+
+    .level-item {
+      &.is-hero-avatar-item {
+        margin-right: $default-padding;
+      }
+
+      > div > .level {
+        margin-bottom: $default-padding * 0.5;
+      }
+
+      .subtitle + p {
+        margin-top: $default-padding * 0.5;
+      }
+    }
+
+    .button {
+      &.is-hero-button {
+        background-color: rgba($white, 0.5);
+        font-weight: 300;
+        @include transition(background-color);
+
+        &:hover {
+          background-color: $white;
+        }
+      }
+    }
+  }
+}

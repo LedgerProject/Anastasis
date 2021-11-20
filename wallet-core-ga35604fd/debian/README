@@ -1,0 +1,7 @@
+For the moment, building the debian package needs
+a preliminary manual step to compile the taler-wallet-cli
+Node.JS package.  In the future, this will either be invoked
+by DH, or added as packaging instructions to Debian.
+
+$ pnpm run compile
+$ dpkg-buildpackage -rfakeroot -b -uc -us

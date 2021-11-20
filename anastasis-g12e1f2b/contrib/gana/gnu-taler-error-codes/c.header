@@ -1,0 +1,58 @@
+/*
+     This file is part of GNU Taler
+     Copyright (C) 2012-2020 Taler Systems SA
+
+     GNU Taler is free software: you can redistribute it and/or modify it
+     under the terms of the GNU Lesser General Public License as published
+     by the Free Software Foundation, either version 3 of the License,
+     or (at your option) any later version.
+
+     GNU Taler is distributed in the hope that it will be useful, but
+     WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+     Lesser General Public License for more details.
+
+     You should have received a copy of the GNU Lesser General Public License
+     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+     SPDX-License-Identifier: LGPL3.0-or-later
+
+     Note: the LGPL does not apply to all components of GNU Taler,
+     but it does apply to this file.
+ */
+#include "taler_error_codes.h"
+#include <stddef.h>
+#include <microhttpd.h>
+#include <gettext.h>
+
+/**
+ * MHD does not define our value for 0 (client-side generated code).
+ */
+#define MHD_HTTP_UNINITIALIZED 0
+
+/**
+ * A pair containing an error code and its hint.
+ */
+struct ErrorCodeAndHint
+{
+  /**
+   * The error code.
+   */
+  enum TALER_ErrorCode ec;
+
+  /**
+   * The hint.
+   */
+  const char *hint;
+
+  /**
+   * The HTTP status code.
+   */
+  unsigned int http_code;
+};
+
+
+/**
+ * The list of all error codes with their hints.
+ */
+static const struct ErrorCodeAndHint code_hint_pairs[] = {

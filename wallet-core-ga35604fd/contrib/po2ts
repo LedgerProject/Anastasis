@@ -1,0 +1,42 @@
+#!/usr/bin/env node
+/*
+ This file is part of GNU Taler
+ (C) 2020 Taler Systems S.A.
+
+ GNU Taler is free software; you can redistribute it and/or modify it under the
+ terms of the GNU General Public License as published by the Free Software
+ Foundation; either version 3, or (at your option) any later version.
+
+ GNU Taler is distributed in the hope that it will be useful, but WITHOUT ANY
+ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License along with
+ GNU Taler; see the file COPYING.  If not, see <http://www.gnu.org/licenses/>
+ */
+
+/**
+ * Convert a <lang>.po file into a JavaScript / TypeScript expression.
+ */
+
+const po2json = require("po2json");
+
+const filename = process.argv[2];
+
+if (!filename) {
+  console.error("error: missing filename");
+  process.exit(1);
+}
+
+const m = filename.match(/([a-zA-Z0-9-_]+).po/);
+
+if (!m) {
+  console.error("error: unexpected filename (expected <lang>.po)");
+  process.exit(1);
+}
+
+const lang = m[1];
+const pojson = po2json.parseFileSync(filename, { format: "jed1.x", fuzzy: true });
+const s =
+  "strings['" + lang + "'] = " + JSON.stringify(pojson, null, "  ") + ";\n";
+console.log(s);

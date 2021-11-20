@@ -1,0 +1,6 @@
+*.log
+anastasis-reducer
+test_reducer_home
+*.trs
+taler-bank.err
+wallet.err

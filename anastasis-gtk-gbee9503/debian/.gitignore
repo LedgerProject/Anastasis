@@ -1,0 +1,7 @@
+.debhelper/
+anastasis-gtk.substvars
+anastasis-gtk/
+autoreconf.after
+autoreconf.before
+debhelper-build-stamp
+files

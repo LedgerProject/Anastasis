@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "compile": "pnpm run --filter '{packages}' compile",
+    "clean": "pnpm run --filter '{packages}' clean",
+    "pretty": "pnpm run --filter '{packages}' pretty",
+    "check": "pnpm run --filter '{packages}' --if-present test"
+  },
+  "devDependencies": {
+    "@linaria/esbuild": "^3.0.0-beta.13",
+    "@linaria/shaker": "^3.0.0-beta.13",
+    "esbuild": "^0.12.29",
+    "prettier": "^2.4.1"
+  }
+}

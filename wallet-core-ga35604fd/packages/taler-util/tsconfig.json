@@ -1,0 +1,27 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "declarationMap": false,
+    "target": "ES6",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "lib": ["es6"],
+    "types": ["node"],
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "outDir": "lib",
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "rootDir": "./src",
+    "typeRoots": ["./node_modules/@types"]
+  },
+  "include": ["src/**/*"]
+}

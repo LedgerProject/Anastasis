@@ -1,0 +1,6 @@
+
+
+/**
+ * {{Comment}}
+ */
+#define GNUNET_GNSRECORD_TYPE_{{Name}} {{Number}}

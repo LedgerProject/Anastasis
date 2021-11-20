@@ -1,0 +1,9 @@
+<script src="taler-wallet-lib.js"></script>
+<script>
+  taler.onPresent(() => {
+    alert("Taler wallet is installed");
+  });
+  taler.onAbsent(() => {
+    alert("Taler wallet is not installed");
+  });
+</script>

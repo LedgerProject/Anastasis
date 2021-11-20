@@ -1,0 +1,50 @@
+{
+    "license": "GPLv3+",
+    "SPDX-License-Identifier": "GPL3.0-or-later",
+    "required_attributes": [
+	{
+	    "type": "string",
+	    "name": "full_name",
+	    "label": "Full name",
+	    "widget": "anastasis_gtk_ia_full_name",
+            "uuid" : "9e8f463f-575f-42cb-85f3-759559997331"
+	},
+	{
+	    "type": "date",
+	    "name": "birthdate",
+	    "label": "Birthdate",
+	    "widget": "anastasis_gtk_ia_birthdate",
+            "uuid" : "83d655c7-bdb6-484d-904e-80c1058c8854"
+	},
+	{
+	    "type": "string",
+	    "name": "birthplace",
+	    "label": "Birthplace",
+	    "widget": "anastasis_gtk_ia_birthplace",
+            "uuid" : "4c822e8e-89c6-11eb-95c4-8b077ad8489f"
+	},
+	{
+	    "type": "string",
+	    "name": "tax_number",
+	    "label": "Tax number",
+	    "label_i18n":{
+		"es_ES":"Número de Identificación Fiscal (DNI, NIE)",
+	    },
+	    "widget": "anastasis_gtk_ia_es_dni",
+            "uuid" : "ac8bd865-6be8-445c-b650-6a18eef16a49",
+	    "validation-regex": "^[0-9MXYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$",
+	    "validation-logic": "ES_DNI_check"
+	},
+	{
+	    "type": "string",
+	    "name": "ssn_number",
+	    "label": "Social security number",
+	    "label_i18n":{
+		"es_ES":"Número de Seguridad Social",
+	    },
+	    "widget": "anastasis_gtk_ia_es_ssn",
+            "uuid" : "22396a19-f3bb-497e-b63a-961fd639140e",
+	    "validation-regex": "^[0-9]{11}$"
+	}
+    ]
+}

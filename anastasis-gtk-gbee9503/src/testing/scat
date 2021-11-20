@@ -1,0 +1,2 @@
+#!/bin/bash
+exec cat - 2>&1 >$1

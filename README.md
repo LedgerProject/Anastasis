@@ -5,6 +5,7 @@ Password-less key recovery via multi-factor multi-party authentication.
 ## Table of contents
 
 * [Documentation](#docs)
+* [Upstream Repositories](#upstream-repositories)
 * [Built with](#built-with)
 * [Software used](#dependencies)
 * [Directory structure](#directory-structure)
@@ -18,21 +19,35 @@ Documentation about the system and for installing the Anastasis binaries
 can be found at
 https://docs.anastasis.lu/.
 
+## Upstream Repositories
+
+The canonical repositories are as follows:
+
+* [anastasis](https://git.taler.net/anastasis.git/)
+* [anastasis-gtk](https://git.taler.net/anastasis-gtk.git/)
+* [wallet-core](https://git.taler.net/wallet-core.git/)
+
 ## Built with
 
 * [GCC](https://gcc.gnu.org/)
+* TypeScript
+* preact-cli
 
 ## Software used
 
 * [GNUnet](https://gnunet.org/)
 * [GNU Taler](https://taler.net/)
 * [GNU libmicrohttpd](https://www.gnu.org/s/libmicrohttpd/)
-* and many other GNU packages (gcc, autoconf, gettext, gtk+, make, ...)
+* many other GNU packages (gcc, autoconf, gettext, gtk+, make, ...)
+* preact
 
 ## Directory structure
 
 * anastasis-$VERSION: core logic and backend
 * anastasis-gtk-$VERSION: Gtk+ graphical user interface
+* wallet-core-$VERSION: TypeScript implementation of the anastasis client (anastasis-core and anastasis-webui)
+ * Other packages in wallet-core, like taler-util and taler-wallet-cli were developed
+   before / independent of LEDGER and are used as dependencies.
 
 ## Installation instructions
 
@@ -67,6 +82,16 @@ Follow the build instructions in the
 
 subdirectories.
 
+To build the Web UI, run:
+
+```sh
+cd wallet-core
+pnpm run compile
+cd packages/anastasis-webui
+pnpm run build
+```
+
+The resulting Web application (static files) will be in ``build/``.
 
 ## Trying it out
 
@@ -80,3 +105,5 @@ a script ``src/testing/test_prepare.sh`` that can be used
 to start four Anastasis backends on localhost. In this case,
 you should claim to live in 'Testland' and you will need
 a square number (0, 1, 4, 9, 16, ...).
+
+A publicly deployed version of the anastasis-webui runs at https://webui.anastasis.lu/

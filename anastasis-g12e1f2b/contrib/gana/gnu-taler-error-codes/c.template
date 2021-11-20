@@ -1,0 +1,6 @@
+
+  {
+    .ec = TALER_EC_{{Name}},
+    .hint = gettext_noop ("{{Description}}"),
+    .http_code = MHD_HTTP_{{HttpStatus_Identifier}}
+  },

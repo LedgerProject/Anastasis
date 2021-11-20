@@ -1,0 +1,107 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-27 01:51+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: example/test.ts:3
+#, csharp-format
+msgid "Hello1, World"
+msgstr ""
+
+#: example/test.ts:4
+#, csharp-format
+msgid "Hello2, World"
+msgstr ""
+
+#: example/test.ts:5
+#, csharp-format
+msgid "Hello3, World"
+msgstr ""
+
+#. This is a comment and should be included 
+#: example/test.ts:9
+#, csharp-format
+msgid "Hello4, World"
+msgstr ""
+
+#: example/test.ts:12
+#, csharp-format
+msgid "Hello5, World"
+msgstr ""
+
+#: example/test.ts:13
+#, csharp-format
+msgid "Hello6,{0} World"
+msgstr ""
+
+#. This one has a multi line comment.
+#. It has multiple lines, and a trailing empty line.
+#. 
+#: example/test.ts:20
+#, csharp-format
+msgid "Hello7,{0} World{1}"
+msgstr ""
+
+#: example/test.ts:21
+#, csharp-format
+msgid "{0}Hello8,{1} World{2}"
+msgstr ""
+
+#. 
+#. This one has a multi line comment.
+#. It has multiple lines, and a leading empty line.
+#: example/test.ts:28
+#, csharp-format
+msgid "Hello9,\" '\" World"
+msgstr ""
+
+#: example/test.ts:32
+#, csharp-format
+msgid ""
+"Hello10\n"
+"            ,\" '\" Wo\n"
+"            rld"
+msgstr ""
+
+#: example/test.ts:37
+#, csharp-format
+msgid ""
+"Hello11 this is a long long string\n"
+"it will go over multiple lines and in the pofile\n"
+"it should be wrapped and stuff"
+msgstr ""
+
+#. This is a single line comment
+#: example/test.ts:42
+#, csharp-format
+msgid ""
+"Hello12 this is a long long string it will go over multiple lines and in the "
+"pofile it should be wrapped and stuff. asdf asdf asdf asdf asdf asdf asdf asdf "
+"adsf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf "
+"asdf"
+msgstr ""
+
+#: example/test.ts:42
+#, csharp-format
+msgid "This message appears twice"
+msgstr ""
+
+#: example/test.ts:45
+#, csharp-format
+msgid "This message appears twice"
+msgstr ""
+

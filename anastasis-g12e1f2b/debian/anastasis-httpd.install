@@ -1,0 +1,14 @@
+usr/bin/
+usr/lib/*/anastasis/
+usr/lib/*/libanastasisauthorization.*
+usr/lib/*/libanastasisdb.*
+usr/lib/*/libanastasiseufin.so.*
+usr/share/man/man5/*
+usr/share/man/man1/anastasis-httpd.1
+usr/share/man/man1/anastasis-helper-authorization-iban.1
+usr/share/man/man1/anastasis-config.1
+usr/share/anastasis/*
+usr/share/anastasis/sql/*
+usr/share/anastasis/config.d/*
+debian/etc/* /etc/
+debian/db/install/* usr/share/dbconfig-common/scripts/anastasis/install/

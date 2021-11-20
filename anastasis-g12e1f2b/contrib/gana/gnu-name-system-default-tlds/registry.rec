@@ -1,0 +1,22 @@
+# -*- mode: rec -*-
+#
+# Registry for GNU Name System default Top-Level-Domains
+#
+
+%rec: GnsTld
+%key: Name
+%typedef: Name_t regexp /^[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-][abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-]*$/
+%type: Name Name_t
+%typedef: Key_t regexp /^[ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]*$/
+%type: Key Key_t
+%unique: Name
+%mandatory: Name
+%mandatory: Key
+%mandatory: Comment
+%allowed: Contact
+%allowed: References
+%sort: Name Contact References
+
+Name: pin
+Key: 000G001MF6DVMZZ4Y8XRZQDXM1PB3D3VGEK29ZHXBA57EPSNW1QBPKT8J0
+Comment: The FCFS authority managed by GNUnet e.V.

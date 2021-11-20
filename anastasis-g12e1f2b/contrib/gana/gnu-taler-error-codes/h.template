@@ -1,0 +1,8 @@
+
+
+  /**
+   * {{Description}}
+   * Returned with an HTTP status code of #MHD_HTTP_{{HttpStatus_Identifier}} ({{HttpStatus_Value}}).
+   * (A value of 0 indicates that the error is generated client-side).
+   */
+  TALER_EC_{{Name}} = {{Value}},

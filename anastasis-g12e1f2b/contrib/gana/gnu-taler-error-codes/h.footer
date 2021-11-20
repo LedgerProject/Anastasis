@@ -1,0 +1,45 @@
+
+
+};
+
+
+/**
+ * Returns a hint for a given error code.
+ *
+ * @param ec the error code.
+ * @return the hint if it could be found, otherwise "<no hint found>"
+ */
+const char *
+TALER_ErrorCode_get_hint (enum TALER_ErrorCode ec);
+
+
+/**
+ * Return HTTP status for a given error code.
+ *
+ * @param ec the error code.
+ * @return the HTTP status code for the given @a ec, UINT_MAX if not found
+ */
+unsigned int
+TALER_ErrorCode_get_http_status (enum TALER_ErrorCode ec);
+
+
+/**
+ * Return HTTP status for a given error code that is guaranteed
+ * to work (no corner cases).
+ *
+ * @param ec the error code.
+ * @return the HTTP status code for the given @a ec, 500 if
+ *         the @a ec is not found or is a client-side code
+ */
+unsigned int
+TALER_ErrorCode_get_http_status_safe (enum TALER_ErrorCode ec);
+
+
+#if 0 /* keep Emacsens' auto-indent happy */
+{
+#endif
+#ifdef __cplusplus
+}
+#endif
+
+#endif

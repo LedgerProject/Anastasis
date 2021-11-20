@@ -1,0 +1,51 @@
+<!--
+	 This file is part of GNU Taler
+ (C) 2021 Taler Systems S.A.
+
+ GNU Taler is free software; you can redistribute it and/or modify it under the
+ terms of the GNU General Public License as published by the Free Software
+ Foundation; either version 3, or (at your option) any later version.
+
+ GNU Taler is distributed in the hope that it will be useful, but WITHOUT ANY
+ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License along with
+ GNU Taler; see the file COPYING.  If not, see <http://www.gnu.org/licenses/>
+
+ @author Sebastian Javier Marchano
+-->
+<!DOCTYPE html>
+<html
+  lang="en"
+  class="has-aside-left has-aside-mobile-transition has-navbar-fixed-top has-aside-expanded"
+>
+  <head>
+    <meta charset="utf-8" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <link
+      rel="icon"
+      href="data:;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABILAAASCwAAAAAAAAAAAAD///////////////////////////////////////////////////////////////////////////////////////////////////7//v38//78/P/+/fz//vz7///+/v/+/f3//vz7///+/v/+/fz//v38///////////////////////+/v3///7+/////////////////////////////////////////////////////////v3//v79///////+/v3///////r28v/ct5//06SG/9Gffv/Xqo7/7N/V/9e2nf/bsJb/6uDW/9Sskf/euKH/+/j2///////+/v3//////+3azv+/eE3/2rWd/9Kkhv/Vr5T/48i2/8J+VP/Qn3//3ryn/795Tf/WrpP/2LCW/8B6T//w4Nb///////Pn4P+/d0v/9u3n/+7d0v/EhV7//v///+HDr//fxLD/zph2/+TJt//8/Pv/woBX//Lm3f/y5dz/v3hN//bu6f/JjGn/4sW0///////Df1j/8OLZ//v6+P+/elH/+vj1//jy7f+/elL//////+zYzP/Eg13//////967p//MlHT/wn5X///////v4Nb/yY1s///////jw7H/06KG////////////z5t9/+fNvf//////x4pn//Pp4v/8+vn/w39X/8WEX///////5s/A/9CbfP//////27Oc/9y2n////////////9itlf/gu6f//////86Vdf/r2Mz//////8SCXP/Df1j//////+7d0v/KkG7//////+HBrf/VpYr////////////RnoH/5sq6///////Ii2n/8ubf//39/P/Cf1j/xohk/+bNvv//////wn5W//Tq4//58/D/wHxV//7+/f/59fH/v3xU//39/P/w4Nf/xIFb///////hw7H/yo9t/+/f1f/AeU3/+/n2/+nSxP/FhmD//////9qzm//Upon/4MSx/96+qf//////xINc/+3bz//48e3/v3hN//Pn3///////6M+//752S//gw6//06aK/8J+VP/kzLr/zZd1/8OCWv/q18r/17KZ/9Ooi//fv6r/v3dK/+vWyP///////v39///////27un/1aeK/9Opjv/m1cf/1KCC/9a0nP/n08T/0Jx8/82YdP/QnHz/16yR//jx7P///////v39///////+/f3///7+///////+//7//v7+///////+/v7//v/+/////////////////////////v7//v79///////////////////+/v/+/Pv//v39///+/v/+/Pv///7+//7+/f/+/Pv//v39//79/P/+/Pv///7+////////////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+    />
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon" />
+
+    <% if (htmlWebpackPlugin.options.manifest.theme_color) { %>
+    <meta
+      name="theme-color"
+      content="<%= htmlWebpackPlugin.options.manifest.theme_color %>"
+    />
+    <% } %>
+  </head>
+  <body>
+    <script>
+      <%= compilation.assets[htmlWebpackPlugin.files.chunks["polyfills"].entry.substr(htmlWebpackPlugin.files.publicPath.length)].source() %>
+    </script>
+    <script>
+      <%= compilation.assets[htmlWebpackPlugin.files.chunks["bundle"].entry.substr(htmlWebpackPlugin.files.publicPath.length)].source() %>
+    </script>
+  </body>
+</html>

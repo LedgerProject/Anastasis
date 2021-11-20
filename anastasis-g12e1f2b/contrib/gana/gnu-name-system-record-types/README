@@ -1,0 +1,9 @@
+This registry is for GNU Name System Record Types.
+
+GNU Name System Record types uniquely identify the different kinds
+of key-value pairs that can be in a GNU Name System record set.
+
+This registry is used to ensure that the names and numeric values
+used to identify record types are uniquely defined and to
+allow GNS resolvers implementors to find out details about the
+respective semantics and human-readable syntax.

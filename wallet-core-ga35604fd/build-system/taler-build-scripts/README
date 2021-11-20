@@ -1,0 +1,15 @@
+Shared build-system files for (some) parts of Taler.
+
+A repository using these build-system files should be structured as follows:
+
+<my-repository.git>
+- bootstrap (copied/adjusted from bootstrap.template)
+- build-system (directory containing build system "stuff")
+--| configure.py (copied/adjusted from configure.py.template)
+--| taler-build-scripts (git submodule of taler-build-scripts)
+
+Directory Structure:
+--------------------
+
+conf:
+- contains mixed configuration data, mostly for linters and editors

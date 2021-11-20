@@ -1,0 +1,10 @@
+__fixtures__/
+coverage/
+lib/
+esm/
+packages/*/types/
+dist/
+build/
+node_modules/
+vendor/
+examples/

@@ -1,0 +1,27 @@
+Source: anastasis-gtk
+Section: net
+Priority: optional
+Maintainer: Bertrand Marc <bmarc@debian.org>
+Build-Depends:
+ autopoint,
+ debhelper-compat (= 12),
+ libgnunetgtk-dev (>= 0.15.0),
+ libanastasis-dev (>= 0.1.0),
+ libgladeui-dev (>=3.10.0),
+ libgtk-3-dev (>=3.22.0),
+ libmagic-dev,
+ libqrencode-dev
+Standards-Version: 4.5.0
+Vcs-Git: https://salsa.debian.org/debian/anastasis-gtk.git
+Vcs-browser: https://salsa.debian.org/debian/anastasis-gtk
+Homepage: https://anastasis.lu/
+
+Package: anastasis-gtk
+Architecture: any
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends}
+Description: Anastasis is a distributed key recovery and backup service.
+ .
+ This package contains the graphical client, using the GTK+ toolkit. In order
+ use Anastasis, you may also need a Taler wallet to pay for the service.

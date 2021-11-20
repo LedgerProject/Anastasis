@@ -1,0 +1,66 @@
+# -*- mode: rec -*-
+#
+# Registry for Taler database event trigger types
+#
+%rec: TalerDatabaseEventTriggerTypes
+%key: Value
+%typedef: ValueRange_t range 0 65535
+%type: Value ValueRange_t
+%mandatory: Value
+%typedef: Description_t regexp |^[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-][abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_\(\)\.,;!"':#\/ -]*$|
+%type: Description Description_t
+%mandatory: Description
+%typedef: Name_t regexp /^[ABCDEFGHIJKLMNOPQRSTUVWXYZ_][ABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789]*$/
+%type: Name Name_t
+%unique: Name
+%mandatory: Name
+%sort: Value
+
+# 0 - 999: Reserved for GNUnet
+
+# 1000-1099: For Taler Exchange
+
+Value: 1000
+Name: EXCHANGE_RESERVE_INCOMING
+Description: Event triggered when a reserve is funded via a bank transfer.
+
+Value: 1001
+Name: EXCHANGE_KEYS_UPDATED
+Description: Event triggered when new online signing keys are activated via the management API.
+
+Value: 1002
+Name: EXCHANGE_WIRE_UPDATED
+Description: Event triggered when the wire response was changed via the management API.
+
+# 1100-1199: For Taler Merchant
+
+Value: 1100
+Name: MERCHANT_INSTANCE_SETTINGS
+Description: Some instance setting was changed (new instance, deleted instance, change options)
+
+Value: 1101
+Name: MERCHANT_ORDER_PAID
+Description: Event triggered when an order is paid by a customer.
+
+Value: 1102
+Name: MERCHANT_ORDER_REFUND
+Description: Event triggered when a refund is approved by the backoffice staff.
+
+Value: 1103
+Name: MERCHANT_SESSION_CAPTURED
+Description: Event triggered when a fulfillment URL becomes paid for a particular session.
+
+Value: 1104
+Name: MERCHANT_REFUND_OBTAINED
+Description: Event triggered when a refund is obtained by a wallet.
+
+Value: 1105
+Name: MERCHANT_ORDERS_CHANGE
+Description: Event triggered when the set of orders or their state changes.
+
+
+# 2000-2099: For Anastasis
+
+Value: 2000
+Name: ANASTASIS_AUTH_IBAN_TRANSFER
+Description: A wire transfer from the target account with the correct wire transfer subject was received.

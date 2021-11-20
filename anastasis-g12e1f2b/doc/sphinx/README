@@ -1,0 +1,10 @@
+This repository contains the documentation for all main GNU Taler components.
+
+Before building the documentation, make sure that you have the required
+dependencies installed using pip3:
+
+$ pip3 install --user --upgrade recommonmark sphinx
+
+Note by Buck: when setting up on VM, I also needed:
+
+# apt install texlive-latex-extra graphviz

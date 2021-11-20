@@ -1,0 +1,36 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "target": "ES6",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "lib": ["es6"],
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "outDir": "lib",
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "allowJs": true,
+    "checkJs": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "rootDir": "./src",
+    "typeRoots": ["./node_modules/@types"]
+  },
+  "include": ["src/**/*"],
+  "references": [
+    {
+      "path": "../taler-wallet-core/"
+    },
+    {
+      "path": "../taler-util/"
+    }
+  ]
+}

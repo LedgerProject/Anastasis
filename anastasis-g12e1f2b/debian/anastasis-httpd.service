@@ -1,0 +1,11 @@
+[Unit]
+Description=Anastasis key recovery backend
+
+[Service]
+User=anastasis-httpd
+Type=simple
+Restart=on-failure
+ExecStart=/usr/bin/anastasis-httpd -c /etc/anastasis/anastasis.conf
+
+[Install]
+WantedBy=multi-user.target

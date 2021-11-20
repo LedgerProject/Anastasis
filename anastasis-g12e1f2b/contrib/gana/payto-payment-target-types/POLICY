@@ -1,0 +1,16 @@
+Each registry entry should contain three values: the "Name" of the
+payment method, an optional "Contact" for the payment method, and
+a "Reference" with links to further information about the payment
+method.
+
+The "Name" must be unique in the entire registry.  The value must be a
+case insensitive ASCII string and is restricted to alphanumeric
+characters, dots and dashes.
+
+Adding records is possible after expert review, using a
+first-come-first-served policy for unique "Name" allocation.
+Experts are responsible to ensure that the chosen "Name" is
+appropriate for the payment method.
+
+The current contact(s) for expert review are reachable at
+payto-registry@taler.net.

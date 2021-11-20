@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# We prevent a few questions from being asked
+# upon installation by specifying defaults.  Namely,
+# we want the database to be accessed via Unix domain
+# sockets and password-less.
+
+set -e
+
+# When purging this package after the selections in the preinst have been made,
+# the debconf database is left in an inconsistent state and the package cannot
+# be installed again.  This happens because dbconf-common will create a
+# template for these questions with a shared owner.  Purging will only delete
+# one of the two templates, leading to a DB state where debconf-set-selections
+# fails.  We work around this by manually fixing up the debconf database.
+#
+# Unfortunately we can't do this in "postrm", because during "postrm"
+# the configuration database is locked (even after db_stop).
+#
+# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=487300
+if [ -x /usr/share/debconf/fix_db.pl ]; then
+  /usr/share/debconf/fix_db.pl || true
+fi
+
+echo anastasis-httpd anastasis-httpd/pgsql/method select Unix socket | debconf-set-selections
+echo anastasis-httpd anastasis-httpd/pgsql/authmethod-user select ident | debconf-set-selections
+echo anastasis-httpd anastasis-httpd/pgsql/app-pass password | debconf-set-selections
+
+exit 0

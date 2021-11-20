@@ -1,0 +1,101 @@
+\documentclass[letterpaper,12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{url}
+
+\begin{document}
+
+
+theme : Privacy increases usability
+title?
+
+outline : 
+
+
+Describe workflow in existing payment systems
+- Cash
+  - authentication at ATM
+  - transaction authenticated by the cash
+  - worries : counterfeit bills, wrong currency, etc.
+  - refunds
+- CC authentication 
+  - online vs offline
+  - extended verification
+  - credential theft
+  "this reversal of authentication vs shoping slows shopping"
+    - worse because exposing yourself to a merchant
+    - can choose not to use a particular ATM
+    - 40 million stolen at target
+  - refunds, annoys banks
+  - swipe vs chip vs NFC
+- Bitcoin
+  - external application
+    - p2p not prowser friendly
+  - 5+ or 10 minute transactions mean designing new shopping carts
+  - minning suck0rs, 
+    - massive transaction fees : blockchain.info 
+      - hits you 2-3 times
+  - conversion sucks
+  - DDoS : wired article?
+
+
+Taler overview
+  copy from proposals?
+- bank, mint
+- wallet
+- merchant
+- auditor
+
+Taler payment process from customers prospective
+- similar to cash 
+  - ATM
+  - merchant
+- contract 
+  - digitally signed is better than paper receipt
+- failure modes
+  - insufficient funds
+  - restoring from backups causes double spending
+    - mint gives proof
+  - restoring from backups can lose coins
+  - mint not accepted by merchant
+    - F
+- change
+- refunds
+  vs CC
+  vs Cash
+
+
+Wallet provides isolation
+  Near copy from EXIST protosal?
+- Limits user risk
+- Nearly eliminates risk for merchant and mint
+  - lower transaction fees
+- Reserves simplify things 
+
+Denomination choice
+- Anonymity refresh protocol
+- Withdraw automates like ATMs
+
+Browser extension
+- RESTful vs Bitcoin, OpenCoin, etc.
+  - Retrying RESTful transactions always works
+- minimizing dialog
+- see & pay ??
+- TBB integration
+  - Needed anyways
+- Other browser integration?
+  - Is it wise?  Ok if not worried about anonymity  Taler is still better
+  - Is tor2web worse? 
+- W3C
+
+Autopay?  pat payment recognision?
+- dangerous?
+- high charges
+- good for funny money
+
+NFC
+
+
+\end{document}
+
+
+

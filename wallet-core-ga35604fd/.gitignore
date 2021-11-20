@@ -1,0 +1,35 @@
+# JS stuff
+.nyc_output/
+dist/
+lib/
+node_modules/
+tsconfig.tsbuildinfo
+.pnpm-store/
+build/
+
+# GNU-style build system
+/configure
+/build-system/config.mk
+/Makefile
+
+# Editor files
+\#*\#
+*~
+*.swp
+.idea/
+
+# old folder
+build-scripts/
+
+# Git worktree of pre-built wallet files
+prebuilt/
+
+
+taler-wallet-*.tar.gz
+
+# debian packaging leftovers
+packages/taler-wallet-cli/debian/.debhelper
+packages/taler-wallet-cli/debian/taler-wallet-cli
+packages/taler-wallet-cli_*.deb
+packages/taler-wallet-cli_*.buildinfo
+packages/taler-wallet-cli_*.changes

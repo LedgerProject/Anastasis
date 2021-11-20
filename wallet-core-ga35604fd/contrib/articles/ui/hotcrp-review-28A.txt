@@ -1,0 +1,71 @@
+===========================================================================
+                           SOUPS '16 Review #28A
+---------------------------------------------------------------------------
+     Paper #28: Taler: Usable, privacy-preserving payments for the Web
+---------------------------------------------------------------------------
+
+
+                      Overall merit: 1. Reject
+                 Reviewer expertise: 2. Some familiarity
+
+                         ===== Paper summary =====
+
+This paper presents Taler, an alternative electronic payment architecture leveraging blind signature [7] that provide anonymity and privacy. The paper describes various workflows of how Taler is used by consumers, merchants, exchanges, and auditors. There are several advantages to Taler over current crypto-currencies, such as Bitcoin.
+
+                    ===== Comments for author(s) =====
+
+Unfortunately, this paper is not ready for publication at SOUPS, for the following reasons:
+
+1. While the paper makes significant claims about Taler's usability, there is no usability testing done whatsoever. Thus, all claims of Taler's usability are completely unsubstantiated. Until there is some usability testing performed for evaluating Taler's usability, SOUPS is not an appropriate venue for publication of this work.
+
+2. There are several points made throughout the paper that are insufficiently clear, some of which include:
+
+  * "there have been many incidents where such parties then embezzled [Bitcoin] funds from their customers." Then surely citations can be provided as examples?
+
+  * The text in Figures 1, 2, 3, 5, and 7 is far too small to read and make sense of.
+
+  * "The use of an external payment application makes wallet-based payments significantly less browser-friendly than ordinary card payments..." This is not self-evident, and requires a citation or further explanation. Otherwise, couldn't a browser extension be able to provide Bitcoin transaction functionality?
+
+  * "As a result, the network must expend considerable computational resources to keep this value high. In fact, 'a single Bitcoin transaction uses roughly enough electricity to power 1.57 American households for a day'. [22] These costs are largely hidden by speculation in BTC..." This last phrase requires additional explanation, which may be out of scope for a usable privacy and security paper (rather than an economics paper). Still, something should be fixed here.
+
+  * "Mixnets afford protection against this..." What is a "mixnet"? At the very least, a citation should be provided.
+
+  * "...making Bitcoin highly amenable to tax evasion, money laundering, and sales of contraband. As a result, anonymity tools like mixnets do not enjoy particularly widespread support in the Bitcoin community where many participants seek to make the currency appear more legitimate." This doesn't quite seem to make sense; wouldn't anonymity advocates who support Bitcoin also support anonymity tools (such as mixnets)?
+
+  * "Naturally, this is exactly the kind of interaction we would like to avoid for usability." So how do you propose to resolve this usability challenge? Banks are typically slow to adopt new technology, so Taler must be usable without banks' cooperation (and with smaller banks that do not have the resources to support diverse payment systems).
+
+  * The description in Section 3.1 "Withdrawing coins" does not clearly explain how the customer's funds move from the exchange to the customer's wallet. It is also not explicitly clear how anonymity is preserved throughout the coin withdraw process.
+
+  * While it is sufficiently clear who the customers and merchants are, it is not clear in Section 3 who would run the exchanges, and why users should trust the exchanges with their money in transit from their bank account to their wallet. It is also not clear who the auditors would be.
+
+  * "Merchants can also set a ceiling for the maximum amount of transaction fees they are willing to cover. Usually these details should not matter for the customer, as we expect most merchants to allow most accredited exchange providers, and for exchanges to operate with transaction fees acceptable to most merchants." This expectation seems insufficiently substantiated, thus requiring additional explanation. Why do you expect this of merchants and exchanges? How will this be enforced?
+
+  * Since much of the customer-merchant transaction occurs on the client machine, it should be made more explicitly clear why a customer cannot (i.e., what prevents a customer from) simply add(ing) coins to their own wallet to generate currency from thin air.
+
+  * "In Taler, customers incur the risk of wallet loss or theft. We believe customers can manage this risk effectively because they manage similar risks of losing cash in a physical wallet. Unlike physical wallets, Taler's wallet could be backed up to secure against loss of a device." This confidence in users' ability to secure their computers seems unfounded, given past research that shows users are often tricked into installing malware:
+    ** N. Christin et al. It's all about the Benjamins: An empirical study on incentivizing users to ignore security advice. Financial Cryptography and Data Security. Springer, 2011.
+    ** H. Asghari et al. Post-mortem of a zombie: conficker cleanup after six years. USENIX Security Symposium. USENIX, 2015.
+    ** K. Aytes, and T. Connolly. Computer security and risky computing practices: A rational choice perspective. Advanced topics in end user computing 4, 2005.
+    ** P. Bryant, S. Furnell, and A. Phippen. Improving protection and security awareness amongst home users. Advances in Networks, Computing and Communications 4. April 2008.
+
+
+Some other comments the authors may which to take into consideration include:
+
+* "The future Internet needs a secure, usable and privacy preserving micropayment system that is not backed by a 'crypto currency'." This is a very strong and controversial statement to make, especially without having first provided evidence to support it. I'd advise putting this sentence at the end of the paragraph, after the references have been cited.
+
+* The second paragraph in the Introduction is difficult to follow and seems a lot more controversial than a motivating paragraph needs to be.
+
+* "These institutions also provide detailed instructions for how to validate the authenticity of the coins or bills..." Are there any citations on how difficult and seldom currency authenticity verification is performed? These may be useful lessons for developing new currencies, whereby currency authenticity needs of be an easy, quick, and straightforward task if users are expected to perform it.
+
+* Section 2 is an interesting and appropriate framing for the paper, but it is surprising this hasn't been done before. Has no other published work ever compared the different forms of currency? For example, a similar comparison of electronic payment systems was performed by H.C. Yu et al. Electronic payment systems: an analysis and comparison of types. Technology in Society 24(3), 2002, but is not cited by this paper.
+
+* While Bitcoin is probably the most popular, it is not the only crypto-currency. At least a brief comparison (or at least a reference to a paper discussing them) between Bitcoin and other crypto-currencies in Section 2 is warranted. Even better would be for Section 2.3 to address crypto-currencies in general, and use Bitcoin as an example.
+
+* Referencing a PhD thesis [14] is a bit uncommon, especially for such a strong and impactful statement as "Given numerous TLS protocol and implementation flaws as well as X.509 key management incidents in recent years [14], the security provided by TLS is at best questionable." Is there no peer-reviewed conference or journal citation that can be used instead?
+
+* "Taler achieves anonymity for buyers using blind signatures [7]. Ever since their discovery thirty years ago, cryptographers have viewed blind signatures as the optimal cryptographic primitive for consumer level transaction systems." If so, then why do you suppose it's taken 30 years for someone to propose a blind crypto transaction system?
+
+* "Exchanges perform online detection of double spending," these concepts should be defined somewhere, for readers unfamiliar with them.
+
+* "For a traditional store, an NFC protocol..." An acronym must be defined before or at the time it is first used.
+

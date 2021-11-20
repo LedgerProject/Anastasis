@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Bootstrap the repository.  Used when the repository is checked out from git.
+# When using the source tarball, running this script is not necessary.
+
+set -eu
+
+if ! git --version >/dev/null; then
+  echo "git not installed"
+  exit 1
+fi
+
+git submodule sync
+git submodule update --init
+rm -f ./configure
+cp build-system/taler-build-scripts/configure ./configure

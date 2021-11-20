@@ -1,0 +1,27 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "composite": true
+  },
+  "references": [
+    {
+      "path": "packages/idb-bridge/"
+    },
+    {
+      "path": "packages/taler-wallet-core/"
+    },
+    {
+      "path": "packages/taler-wallet-cli/"
+    },
+    {
+      "path": "packages/taler-wallet-android/"
+    },
+    {
+      "path": "packages/taler-util/"
+    },
+    {
+      "path": "packages/taler-wallet-webextension//"
+    }
+  ],
+  "files": []
+}

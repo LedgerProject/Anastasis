@@ -1,0 +1,10 @@
+This registry is the payment target type registry for payto:// URIs.
+
+payto:// URIs include the necessary information for making wire
+payments to a recipient. As there are many banking standards globally
+with different address formats (such as UPI in India, ACH in USA, IBAN
+in Europe), a payto:// URI begins with a string describing the method
+used to identify the recipient.  This registry is used to ensure that
+the strings used in payment target types are well-defined and to
+ideally allow payto:// implementors to find out details about the
+respective payment system.

@@ -1,0 +1,234 @@
+/*
+ This file is part of GNU Taler
+ (C) 2021 Taler Systems S.A.
+
+ GNU Taler is free software; you can redistribute it and/or modify it under the
+ terms of the GNU General Public License as published by the Free Software
+ Foundation; either version 3, or (at your option) any later version.
+ 
+ GNU Taler is distributed in the hope that it will be useful, but WITHOUT ANY
+ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License along with
+ GNU Taler; see the file COPYING.  If not, see <http://www.gnu.org/licenses/>
+ */
+
+/**
+ *
+ * @author Sebastian Javier Marchano (sebasjm)
+ */
+
+/* Theme style (colors & sizes) */
+@import "theme-default";
+
+/* Core Libs & Lib configs */
+@import "libs/all";
+
+/* Mixins */
+@import "mixins";
+
+/* Theme components */
+@import "nav-bar";
+@import "aside";
+@import "title-bar";
+@import "hero-bar";
+@import "card";
+@import "table";
+@import "tiles";
+@import "form";
+@import "main-section";
+@import "modal";
+@import "footer";
+@import "misc";
+@import "custom-calendar";
+@import "loading";
+
+@import "fonts/nunito.css";
+@import "icons/materialdesignicons-4.9.95.min.css";
+
+$tooltip-color: red;
+
+@import "../../node_modules/@creativebulma/bulma-tooltip/dist/bulma-tooltip.min.css";
+// @import "../../node_modules/bulma-timeline/dist/css/bulma-timeline.min.css";
+
+.notification {
+  background-color: transparent;
+}
+
+.timeline .timeline-item .timeline-content {
+  padding-top: 0;
+}
+
+.timeline .timeline-item:last-child::before {
+  display: none;
+}
+
+.timeline .timeline-item .timeline-marker {
+  top: 0;
+}
+
+.toast {
+  position: absolute;
+  width: 60%;
+  margin-left: 10%;
+  margin-right: 10%;
+  z-index: 999;
+
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.toast > .message {
+  white-space: pre-wrap;
+  opacity: 80%;
+}
+
+div {
+  &.is-loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.5;
+    &:after {
+      // @include loader;
+      position: absolute;
+      top: calc(50% - 2.5em);
+      left: calc(50% - 2.5em);
+      width: 5em;
+      height: 5em;
+      border-width: 0.25em;
+    }
+  }
+}
+
+input[type="checkbox"]:indeterminate + .check {
+  background: red !important;
+}
+
+.right-sticky {
+  position: sticky;
+  right: 0px;
+  background-color: $white;
+}
+
+.right-sticky .buttons {
+  flex-wrap: nowrap;
+}
+
+.table.is-striped tbody tr:not(.is-selected):nth-child(even) .right-sticky {
+  background-color: #fafafa;
+}
+
+tr:hover .right-sticky {
+  background-color: hsl(0, 0%, 80%);
+}
+.table.is-striped tbody tr:nth-child(even):hover .right-sticky {
+  background-color: hsl(0, 0%, 95%);
+}
+
+.content-full-size {
+  height: calc(100% - 3rem);
+  position: absolute;
+  width: calc(100% - 14rem);
+  display: flex;
+}
+
+.content-full-size .column .card {
+  min-width: 200px;
+}
+
+@include touch {
+  .content-full-size {
+    height: 100%;
+    position: absolute;
+    width: 100%;
+  }
+}
+
+.column.is-half {
+  flex: none;
+  width: 50%;
+}
+
+input:read-only {
+  cursor: initial;
+}
+
+[data-tooltip]:before {
+  max-width: 15rem;
+  width: max-content;
+  text-align: left;
+  transition: opacity 0.1s linear 1s;
+  // transform: inherit !important;
+  white-space: pre-wrap !important;
+  font-weight: normal;
+  // position: relative;
+}
+
+.icon[data-tooltip]:before {
+  transition: none;
+  z-index: 5;
+}
+
+span[data-tooltip] {
+  border-bottom: none;
+}
+
+div[data-tooltip]::before {
+  position: absolute;
+}
+
+.modal-card-body > p {
+  padding: 1em;
+}
+
+.modal-card-body > p.warning {
+  background-color: #fffbdd;
+  border: solid 1px #f2e9bf;
+}
+
+.home {
+  padding: 1em 1em;
+  min-height: 100%;
+  width: 100%;
+  // max-width: 40em;
+}
+
+// .home div {
+//   margin-top: 0.5em;
+//   margin-bottom: 0.5em;
+// }
+
+.policy {
+  padding: 0.5em;
+  border: 1px solid black;
+  border-radius: 0.5em;
+  border-radius: 0.5em;
+}
+
+.home > #error {
+  padding: 0.5em;
+  border: 1px solid black;
+  background-color: rgb(228, 189, 197);
+  border-radius: 0.5em;
+}
+
+.profile {
+  padding: 56px 20px;
+  min-height: 100%;
+  width: 100%;
+}
+
+.notfound {
+  padding: 0 5%;
+  margin: 100px 0;
+}
+
+h1 {
+  font-size: 1.5em;
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}

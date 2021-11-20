@@ -1,0 +1,47 @@
+{
+  "name": "@gnu-taler/taler-wallet-embedded",
+  "version": "0.8.1",
+  "description": "",
+  "engines": {
+    "node": ">=0.12.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://git.taler.net/wallet-core.git"
+  },
+  "main": "dist/taler-wallet-embedded.js",
+  "author": "Florian Dold",
+  "license": "GPL-3.0",
+  "scripts": {
+    "compile": "tsc && rollup -c",
+    "pretty": "prettier --write src",
+    "coverage": "tsc && nyc ava",
+    "clean": "rimraf lib dist tsconfig.tsbuildinfo"
+  },
+  "files": [
+    "AUTHORS",
+    "README",
+    "COPYING",
+    "bin/",
+    "dist/node",
+    "src/"
+  ],
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^11.1.0",
+    "@rollup/plugin-replace": "^2.3.4",
+    "@types/node": "^14.14.22",
+    "prettier": "^2.2.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.43.0",
+    "rollup-plugin-sourcemaps": "^0.6.3",
+    "rollup-plugin-terser": "^7.0.2",
+    "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "@gnu-taler/taler-wallet-core": "workspace:*",
+    "@gnu-taler/taler-util": "workspace:*",
+    "tslib": "^2.1.0"
+  }
+}

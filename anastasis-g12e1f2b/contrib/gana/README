@@ -1,0 +1,54 @@
+            GNUnet Assigned Numbers Authority (GANA)
+            ========================================
+
+
+This Git repository contains various registries we maintain, for
+GNUnet other projects that need names and numbers for use in network
+protocols.  If you need to open a new registry, please feel free
+to contact us at gana@gnunet.org.
+
+
+History
+=======
+
+Barry Leiba wrote on April 4th 2020 that "Neither IANA nor
+participants in the IETF will have any necessary expertise to evaluate
+registration requests in the sort of registry described, and no one
+will be well served by the creation of such a registry at IANA.  It
+would be far better to have a registration process be described in
+this document involving experts from the industry as reviewers and
+maintenance of the registrations by an industry organization, rather
+than by IANA."
+
+So here we are. As IETF/IANA "lack the necessary expertise to operate
+a registry" for names and numbers used in network protocols, the
+GNUnet project is happy to step up.
+
+
+License
+=======
+
+The GANA database is licensed under the GPL. See COPYING.
+
+
+Design
+======
+
+Each registry must have a unique name and all associated information
+lives in a directory under that unique name in this Git repository.
+
+Each registry must include at least the following files:
+
+* README[.*]:
+    document describing the purpose of the registry in English
+* POLICY[.*]:
+    registration policy, explaining required fields and
+    the procedure for adding, updating and deleting entries
+* registry.rec:
+    GNU recutils data file with all of the current entries in
+    the registry
+* Makefile:
+    GNU make makefile with a 'make check' target to run the validation logic.
+    Ideally, the registry.rec should be written such that the 'check' target
+    is simply invoking "recfix --check registry.rec".
+    Additional targets to convert data.rec to various formats may be defined.

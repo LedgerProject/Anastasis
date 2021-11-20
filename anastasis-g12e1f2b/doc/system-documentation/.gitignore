@@ -1,0 +1,7 @@
+thesis.toc
+*.aux
+*.log
+*.out
+*.lof
+*.bcf
+*.xml

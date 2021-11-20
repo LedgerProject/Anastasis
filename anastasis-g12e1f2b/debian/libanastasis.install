@@ -1,0 +1,7 @@
+usr/lib/*/libanastasis.so.*
+usr/lib/*/libanastasisredux.so.*
+usr/lib/*/libanastasisrest.so.*
+usr/lib/*/libanastasisutil.so.*
+usr/share/anastasis/redux.*
+usr/share/anastasis/provider-list.json
+usr/share/info/anastasis*

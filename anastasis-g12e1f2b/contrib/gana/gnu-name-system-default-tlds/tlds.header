@@ -1,0 +1,7 @@
+# WARNING:
+# This header is generated!
+# In order to add TLDs, you must register
+# them in GANA, and then use the header generation script
+# to create an update of this file. You may then replace this
+# file with the update.
+[gns]

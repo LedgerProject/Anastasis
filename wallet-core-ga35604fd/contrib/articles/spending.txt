@@ -1,0 +1,147 @@
+
+
+Just to answer Marcello's question from this evening about optimal coin spending:
+
+We have:
+  a set D of denominations,
+  a value function v : D -> R,
+  a deposit fee function f : D -> R,
+  a maximum deposit fee m>=0,
+  a refresh/melt fee function r : D -> R,
+  a wallet function w : D -> Z,
+  an unknown constant c>0 but very small,
+  and a price>0
+where f, r, and w are non-negative.  And R and Z denote the reals and integers, respectively.
+
+We want to select two functions
+  spend total t : D -> Z,
+  spend partial p : D -> Z, and
+  partial value v' : D -> R
+so as to minimize the function :
+  max(0, -m + sum_x f[x]*d[x])
+  + sum_x r[x]*p[x]
+  + c * sum_x (d+p)[x]
+subject to the constraints
+  t[x] >= 0
+  p[x] >= 0
+  (t+p)[x] <= w[x]
+  sum_x v[x]*d[x] >= price
+  sum_x (v[x]*t[x] + v'[x]) <= price
+  v'[x] <= v[x]
+  p[x] <= 1
+where d = t+p is a convenient notation.
+
+We assume these last two because if p[x] > 1 then you could refresh one less coin.  In fact, you should never refresh more than one coin, so that's sum_x p[x] <= 1, but not sure we need that much.
+
+
+1.  Dynamic Programming
+
+There is a solution using dynamic programming because the problem has the optimal substructure property :
+
+If the above parameters have an optimal assignment, then replacing
+  price := price - v[x]*t[x] - v'[x],  
+  t[x] := 0,  
+  p[x] := 0,  and  
+  v'[x] := 0
+gives another optimal solution, as otherwise we'd get a better one for the first situation.  
+
+There is however no assurence that t[x] = price mod v[x] for some x in D, so nievely such solutions give you running times like O(price * |D|), which kinda sucks actually.  Just one simplified example :
+ http://www.codeproject.com/Articles/31002/Coin-Change-Problem-Using-Dynamic-Programming
+
+
+2.  Greedy Algorithm
+
+There is a greedy algorithm that runs linear time for the usual change problem, but it assumes a sane coin systems.  I have not read the reference
+ http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=5254395
+but presumably it assumes v[x] divides v[y] whenever v[y]>v[x] or something similar.
+
+There are crazy coin systems that violate this assumption, which impacts Taler in two ways :
+
+First, an obnoxious mint could make insane denominations that forced customers and merchants to spend slightly more, while nominally claiming fees competitive with other mints.  We can ignore this as it's rather obvious manipulation and an obnoxious mint cannot charge much more.  I think an approximation result says the mint cannot even double the fees.  
+
+Second, there could be two mints whose denominations together formed an insane set that caused bad coin usage.  Again the results should not be too bad, but one could combat this by processing mints individually before considering them together.  
+
+Now there are some additional complexities related to giving change and not knowing how to order the denominations, so maybe worth a bit more formalism first.
+
+
+3.  Integer linear programming
+(It helps with understanding the greedy algorithm too)
+
+We almost have an integer linear program because all these functions parameterized by D are simply vectors.  We just need to eliminate that annoying max(0, ), which we do by introducing a variable z.  I'm going to switch from t[x] to d[x] = t[x] + p[x] and suppress the indexes [x] here since only m, c, and z lack indexes.
+
+Select d : D -> Z and p : D -> Z so as to minimize the function
+  z + sum_x ( r*p + c*(d+p) )
+subject to the constraints
+  d <= w  for all x
+  sum_x v*(d-p) <= price
+  sum_x v*d >= price
+  z >= - m + sum_x f*(t+p)
+and
+  z >= 0
+  d >= 0  for all x
+  p >= 0  for all x
+
+We should introduce slack variables so that row operations cannot lose information:
+
+Select d and p so as to minimize the function
+  z + sum_x ( r*p + c*(d+p) )
+subject to the constraints
+  d(x) = w - w'  for all x
+  sum_x v*(d-p) = price - price1
+  sum_x v*d = price + price2
+  z - sum_x f*d = -m + m'
+and
+  w' >= 0  for all x
+  m' >= 0
+  price1 >= 0
+  price2 >= 0
+  z >= 0
+  d >= 0  for all x
+  p >= 0  for all x
+
+We can eliminate z with a row operation and then drop -m + m' from the objective, so that price is the only constraint set by the merchant.
+
+Select d and p so as to minimize the function
+  sum_x ( r*p + c*(d+p) + f*d ) = sum_x ( (r+c)*p + (f+c)*d )
+subject to the constraints
+  d = w-w'  for all x
+  sum_x v*(d-p) = price - price1
+  sum_x v*d = price + price2
+and  ...
+
+And those constraints could again be written as
+  d <= w
+  sum_x v*(d-p) <= price
+  sum_x v*d >= price
+
+It's maybe now easier to visualize the greedy algorithm working when you think about that sum_x v*d together with this simple objective function.  As a bonus, we observe that c got folded into r and f, which simplifies implementing stuff.
+
+
+4.  Smarter Greed
+
+If we're only allowed to spend one denomination at some price, then we shown the minimum is achieved when that denomination x in D is chosen to minimize
+	(f[x]+c)/v[x] + (r[x]+c)/(v[x]*d[x])*p[x]
+where p[x] = max(1,price mod v[x]).  We could approximate this by (f[x]+c)/v[x] under several reasonable hypotheses, not unfortunately r >> f, but price >> v[x] still helps.  In any case, there are many situations where minimizing (f[x]+c)/v[x] handles this single denomination spend.
+
+We know from our optimal substructure property that, for an optimal allocation, there is a denomination x such that zeroing out t[y], p[y], and v'[y] for y not x, and adjusting the price accordingly, gives an optimal allocation.  It follows that a greedy algorithm that uses D sorted by increasing (f[x]+c)/v[x] frequently works, although not when mints charge too much for refreshes
+
+Roughly this algorithm looks like:
+
+FindCoinsGreedily(price,D,v,f,m,r,w,c)
+  set cost = 0
+      t = empty_array
+      done_cost = infinite
+      done_denom = null
+      done_t = empty_array
+  sort D by increasing (f[x]+c)/v[x]
+  for x in D do
+    let t[x] = price mod v[x]
+    set price = price - v[x]*t[x]
+    set cost = cost + (f[x]+c)*v[x]*t[x]
+    if cost + r[z]+c < done_cost then
+      set done_cost = cost + r[z]+c
+      set done_denom = x
+      set done_t to be a copy of t
+  return (done_t,done_denom)
+
+

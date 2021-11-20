@@ -1,0 +1,7 @@
+HTTP status code registry.
+
+Based on CSV export of
+https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+
+Extended with vendor-specific status codes (see extras.rec) and C-style
+identifiers suitable for code generation based on the descriptions.

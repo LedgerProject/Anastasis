@@ -1,0 +1,6 @@
+
+
+  /**
+   * {{Description}} ({{Subsystem}})
+   */
+  GNUNET_SIGNATURE_PURPOSE_{{Identifier}} = {{Value}},

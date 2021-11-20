@@ -1,0 +1,70 @@
+.rdp-picker {
+  display: flex;
+  height: 175px;
+}
+
+@media (max-width: 400px) {
+  .rdp-picker {
+    width: 250px;
+  }
+}
+
+.rdp-masked-div {
+  overflow: hidden;
+  height: 175px;
+  position: relative;
+}
+
+.rdp-column-container {
+  flex-grow: 1;
+  display: inline-block;
+}
+
+.rdp-column {
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+}
+
+.rdp-reticule {
+  border: 0;
+  border-top: 2px solid rgba(109, 202, 236, 1);
+  height: 2px;
+  position: absolute;
+  width: 80%;
+  margin: 0;
+  z-index: 100;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+.rdp-text-overlay {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 35px;
+  font-size: 20px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+.rdp-cell div {
+  font-size: 17px;
+  color: gray;
+  font-style: italic;
+}
+
+.rdp-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 35px;
+  font-size: 18px;
+}
+
+.rdp-center {
+  font-size: 25px;
+}

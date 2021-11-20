@@ -1,0 +1,421 @@
+\section{Implementation}
+
+The Anastasis is written in C. We decided to use C because of the
+various dependencies, including cryptographic libraries.  Especially,
+GNU Taler and Sync, which are working in concert with Anastasis, are
+also written in C. Using the same language makes integration and
+testing of Anastasis much easier.
+
+The whole Anastasis application consists of multiple components.
+Figure~\ref{fig:secret_split:overview} gives an overview over all the
+components.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[scale=0.5]{images/system-architecture.png}
+	\caption{System architecture overview}
+	\label{fig:system_arch:overview}
+\end{figure}
+
+\noindent In the center is the core implementation of Anastasis.
+On the left are some of the planned authentication methods from the
+application. On the right side of the box are the core parts which are
+necessary to operate Anastasis commercially. These parts are
+anticipated for a production deployment, but not part of the
+implementation for this thesis.
+
+At the bottom section are the external libraries used for the project.
+These libraries are presented in Section~\ref{sec:libraries}.
+\newpage
+
+
+\subsection{System architecture}
+
+This graphic shows the basic architecture of the Anastasis
+application. It shows a simplified flow of the application. The
+details of each component are explained later.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[scale=0.4]{images/system_design.png}
+	\caption{System design overview}
+	\label{fig:system_design}
+\end{figure}
+
+\begin{enumerate}
+\item The Anastasis CLI interacts with the Anastasis API. The
+  Anastasis API is responsible for triggering interactions with the
+  user, and also manages the interactions between the
+  various client-side components.
+\item After the user provided their unforgettable secret, the
+  Crypto API derives the needed key material for the further
+  communication. This is simplified, in reality the client would first
+  need to download the server salt to generate the user keys.  The
+  crypto API is later also responsible for the decryption and
+  encryption of the data, sent or received from the server.
+\item The Service API is responsible for the communication with the
+  Anastasis server. The Anastasis API sends the previously generated
+  data and the user selected request to the service.
+  The Service API is also responsible to handle
+  the server's response to the request.
+\item The central webserver logic handles HTTP requests sent to it by the
+  clients. It will dispatch requests to the corresponding handler. The
+  webserver's core logic also returns the response and the status code
+  of the operation to the client application.
+\item Each REST endpoint of the Anastasis server is implemented by
+  a specific handler. The handler processes the requests, typically
+  by storing or looking up the requested
+  data with the database. When the request is finished, the handler will
+  send back the data or the status code to the webserver's core logic.
+\end{enumerate}
+
+
+\input{server_architecture}
+
+\input{client_architecture}
+
+\newpage
+\subsection{Application flow}
+
+This section describes a happy flow of the two protocols of Anastasis,
+secret splitting and secret recovery.
+
+\subsubsection{Secret splitting}
+
+Figure~\ref{fig:secret_split} illustrates the secret splitting
+process.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[scale=0.5]{images/secret_split.png}
+	\caption{Secret split process}
+	\label{fig:secret_split}
+\end{figure}
+\newpage
+\begin{enumerate}
+\item The user selects a new escrow provider on which per wants to
+  store a truth object.
+\item The client software downloads the terms of service for this
+  provider (GET /terms). This is also a check if the server is
+  available if this command doesn't respond the client will abort the
+  process.
+\item Next the client requests the server configuration (GET
+  /configuration). The configuration lists the available
+  authentication methods and the protocol version of the server.
+\item The client downloads the server salt (GET /salt). The salt is
+  used to generate the server specific account public key, which
+  identifies the user.
+\item After the user has generated the public key, per will create a
+  truth object on the client. The truth object contains all the needed
+  information for the recovery for this key share. This truth object
+  is sent encrypted to the server and stored under the TRUTH\_PUB the client
+  generated (POST /truth/\$TRUTH\_PUB).
+\item In this scenario the client has not jet paid for the
+  upload. This means the server will respond with the HTTP status code
+  \texttt{402 Payment required}. The client first must do a payment with our
+  payment provider --- GNU Taler. After the successful payment the client
+  will receive a payment identifier. With this payment identifier he
+  can resend the previously failed request.
+\item The user will now repeat the steps 1-6 until per thinks that they
+  have setup a sufficient amount of authentication methods. The user
+  can now combine these providers to create policies. For example per
+  may have stored three truth objects at three different providers.
+  This means per can now define combinations with these providers,
+  for example A+B, A+C and B+C. This means the user has three ways to
+  recover their secret.
+\item After the user has generated the policies the client will
+  generate a recovery document. The recovery document contains a list
+  of all truth\_seed's used, a list of the policies and the encrypted core
+  secret of the user. The client will now send a encrypted recovery
+  document to each provider used in the recovery document (POST
+  /policy/\$ACCOUNT\_PUB). Through this, the recovery document is
+  replicated and recovery can proceed without a single point of
+  failure.
+\end{enumerate}
+\newpage
+\subsubsection{Secret recovery}
+
+Figure~\ref{fig:recovery_process} illustrates the recovery process.
+\begin{figure}[H]
+	\centering
+		\includegraphics[scale=0.5]{images/recovery_process.png}
+	\caption{Secret recovery process}
+	\label{fig:recovery_process}
+\end{figure}
+\begin{enumerate}
+\item The user selects a server on which per previously stored a
+  recovery document.
+\item Next the client downloads the server salt to compute the server
+  specific account public key (GET /salt).
+\item After the user generated the public key, per will download the
+  recovery document. At this point per can define a
+  specific version or the latest version of the recovery document. In
+  the illustration the client downloads the latest version (GET
+  /policy/\$ACCOUNT\_PUB).
+\item The client will now decrypt the recovery document and list all
+  policies and authentication methods. The user now has to solve these
+  challenges. In this example the user has to answer a secure question
+  which was sent to them in the recovery document. (GET
+  /truth/\$TRUTH\_PUB?response=\$RESPONSE) \\
+\item Note the server can define that a challenge has a certain cost,
+  in this scenario the server rejects the first request because the
+  user has not yet paid for recovery.  After the payment the user can
+  resend the request.  After each successfully solved challenge the
+  client will check if one of the policies is completely satisfied.
+  If all shares needed for one of the policies have been recovered,
+  the client will decrypt the core secret and provide it to the user.
+\end{enumerate}
+
+Figure~\ref{fig:recovery_process} shows the flow using a secure
+question for the authentication challenge. If the user would have
+chosen a complex authentication method like SMS or E-Mail, the client
+would first need to start the challenge with the request (GET
+/truth/\$TRUTH\_PUB). The server would then notify the user that per will
+receive some token out of bounds. After that, the user would have to
+provide for example the PIN sent to them via SMS with the same request
+as before (GET /truth/\$TRUTH\_PUB?response=\$RESPONSE).
+
+
+\subsection{Client Application Command Line Interface (CLI)}
+
+There are two client applications which interact with the user. First
+the Anastasis {\em splitter} and second the Anastasis {\em
+  assembler}. The splitter application is responsible for the backup
+of the core secret. The assembler is then responsible for the recovery
+of the core secret.
+
+Both commands are started with a configuration option ``--me=FILE''
+that gives the name of a file with the user's identity attributes.
+
+\subsubsection{Anastasis splitter}
+
+The user starts the assembler by passing a JSON document with their
+unforgettable identity attributes (name, social security number, ...).
+
+The following commands are available:
+
+\begin{itemize}
+\item server add \$URL: this command lets the user add escrow
+  providers. The command will check if a supported escrow service is
+  available under the provided URL. Afterwards it will download its
+  terms and salt. The server needs to be added before the user can do
+  any uploads on it.
+\item truth add \$server \$method \$truth: with this command the user
+  can upload a truth on a previously added server. The user needs to
+  specify the authorization method used and the truth for the
+  authorization process, for example the phone number for SMS
+  authentication.  The application will check if the server supports the
+  provided method before uploading.
+\item policy add \$truth1 \$truth2...: after a user has added all the
+  truths, per can start to create policies. Per can combine the truths
+  in any way they wish. It is also possible to just store one truth in
+  a policy, but this is not recommended since it defies the design of
+  the application.
+\item policy: shows all created policies.
+\item truth: shows all created truths.
+\item server: shows all added servers.
+\item publish \$secret: if the user is finished per can publish the
+  configuration. The application will then generate the recovery
+  document with the provided information and secret. Afterwards, it
+  will upload the recovery document on every server that was used. For
+  recovery, the user only needs to remember any one of the servers.
+\end{itemize}
+
+Below is an example transcript of an interaction with the splitter:
+
+\begin{lstlisting}
+$ anastasis-splitter --me=identity.json
+anastasis-splitter> server add $URL1
+version: 1.0
+annual fee: 4.99 KUDOS,
+available policy methods: sms
+Server #1 available
+anastasis-splitter> server add $URL2
+version: 1.0
+annual fee: 3.99 KUDOS,
+available policy methods: sms, question
+Server #2 available
+anastasis-splitter> truth add server#1 sms +492452526
+Truth #1 added for server #1
+anastasis-splitter> truth add server#2 mail "hoehenweg 80, Biel"
+Sorry, server #2 does not support 'mail'
+anastasis-splitter> truth add question "favorite color" "red"
+Truth #2 added
+anastasis-splitter> policy add truth#1 truth#2
+Policy #1 defined
+anastasis-splitter> policy
+Policy#1: #truth#1 #truth2
+anastasis-splitter> truth
+truth#1: server#1 sms  +492452526
+truth#2: server#2 question "favorite color" <OMITTED>
+anastasis-splitter> truth --secrets
+truth#1: sms  +492452526
+truth#2: question "favorite color" "red"
+anastasis-splitter> server
+server#1: http://anastasis.example.com/ methods: sms,
+insured up to: 420 KUDOS, cost: 0.4 KUDOS
+anastasis-splitter> publish
+Server#1 failure: 402 payment required:
+payto://pay/ABALSASDFA KUDOS:0.3
+Server#2 failure: 402 payment required:
+payto://pay/ABALSAADAS KUDOS:0.5
+Total: 0.8 KUDOS
+# Here: taler-wallet-cli payto://pay/ABALASDFA used to pay!
+anastasis-splitter> publish
+Server#2 failure: 402 payment required
+# Here: taler-wallet-cli payto://pay/ABASDFASDF used to pay!
+anastasis-splitter> publish "my super secret"
+Thank you for using Anastasis.
+$
+\end{lstlisting}
+
+\subsubsection{Anastasis assembler}
+
+The user starts the assembler by passing a JSON document with their
+unforgettable identity attributes (name, social security number, ...).
+They also must pass the URL of an escrow provider which stores their
+recovery document, as well as the requested version of the recovery
+document. The assembler will then download and decrypt the recovery
+document and begin the recovery process.
+
+
+The following commands are available:
+\begin{itemize}
+\item truth: shows all available authorization challenges
+  from the recovery document and their status (``(-)'' not solved, ``(+)'' solved)
+\item policies: shows all available policies in the recovery document and
+  the respective status of the truths used in each policy.
+\item try \$truth: this command starts an authorization process which
+  needs interaction with external services like SMS or email. It shows
+  the instructions to follow to authorize release of the share.
+\item answer \$truth \$answer: this command tries to answer the
+  selected challenge with the provided answer. The application will
+  check the answer and give a feedback to the user. Every time a
+  challenge is solved, the client API will check if as a result any of
+  the policies is completely satisfied.  If any policy was completely
+  satisfied, the assembler will print out the recovered core secret
+  and exit.
+\end{itemize}
+
+Below is an example transcript of an interaction with the assembler:
+
+\begin{lstlisting}
+$ anastasis-assembler --import https://anastasis.example.com/
+--policy-version=42 --me=identity.json
+anastasis-assembler> truth
+truth#1(-): KUDOS 0.0 question "favorite color"
+truth#2(-): KUDOS 0.4 sms
+truth#3(-): KUDOS 2.6 post
+anastasis-assembler> policies
+policy#1: KUDOS 0.4 truth#1 truth#2 missing
+policy#2: KUDOS 3.0 truth#1 truth#2 truth#3 missing
+anastasis-assembler> try truth#2
+payto://pay/BASDFASD
+# SMS arrives asynchronously
+anastasis-assembler> answer truth#2 1234
+Success truth#2
+anastasis-assembler> answer truth#1 "blue"
+Failed truth#1
+anastasis-assembler> truth
+truth#1(-): KUDOS 0.0 question "favorite color"
+truth#2(+): KUDOS 0.4 sms
+truth#3(-): KUDOS 2.6 post
+anastasis-assembler> policies
+policy#1: KUDOS 0.0 truth#1 missing
+policy#2: KUDOS 2.6 truth#1 truth#3 missing
+anastasis-assembler> answer truth#2 "red"
+Success truth#2
+//One of the policies was solved successfully and the secret is recovered.
+Secret was: "my super secret"
+$
+\end{lstlisting}
+
+
+
+\subsection{Libraries} \label{sec:libraries}
+
+In this section the libraries used by Anastasis are presented.
+
+\subsubsection{GNU Taler}
+
+GNU Taler is one of the main reasons why we started to implement
+Anastasis, since the application needs a system to back up the private
+keys of their users.  ``GNU Taler is a privacy-preserving payment
+system. Customers can stay anonymous, but merchants can not hide their
+income through payments with GNU Taler. This helps to avoid tax
+evasion and money laundering.''~\cite{gnu_taler}
+
+To operate GNU Taler the user needs to install an electronic
+wallet. Backups of the wallet are secured with a secret key. Here
+comes Anastasis into play, Anastasis will secure this secret key for
+the user.
+
+In our implementation GNU Taler is also our payment system. We decided
+to use GNU Taler because both Anastasis and GNU Taler are privacy
+preserving applications. If we for example used credit cards for
+payments the user would no longer be anonymous which is helpful for
+the security of Anastasis as it allows us to use the user's name in
+the user's identity attributes.  GNU Taler is also a GNU package
+and Free Software.~\cite{gnu_taler}
+\newpage
+\subsubsection{PostgreSQL}
+
+PostgreSQL is a Free/Libre Open Source object-relational
+database. PostgreSQL has over 30 years of active development which
+makes it a stable and reliable software.
+
+We use PostgreSQL as our database on the Anastasis server. We decided
+to use PostgreSQL because it is an open source and lightweight
+software which has a big community.  This means there are a lot of
+helpful documentations and forums.~\cite{postgresql}
+
+\subsubsection{Libcurl}
+
+Libcurl is a libre URL transfer library. Libcurl supports a wide range
+of protocols and a C API. Libcurl is also ready for IPv6 and SSL
+certificates.
+
+For Anastasis we use Libcurl to generate the client-side HTTP
+requests. We decided to use Libcurl because it is also written in C
+and free software. The software is also well supported and has a good
+documentation.  This makes the integration in our application
+easy.~\cite{libcurl}
+
+\subsubsection{GNU Libmicrohttpd}
+
+GNU libmicrottpd is a small C library which provides an easy way to
+run a HTTP server.  We use GNU Libmicrohttpd in Anastasis to provide a
+simple webserver. The main reason why we did not use apache or nginx
+is that we do not need a standalone webserver. The Anastasis webserver
+just must handle some API requests, a standalone webserver is not
+needed for that and would make the infrastructure more complex to
+maintain and develop.  GNU Libmicrohttpd is also a GNU package
+and Free Software.~\cite{libmicrohttpd}
+
+\subsection{Testing}
+
+To test our application, we used the GNU Taler testing library as our
+foundation for t of our testings.  This library allows you to create testing instances of
+both the Anastasis application and the GNU Taler payment system. We
+implemented unit tests for the crypto functions and the database operations.
+The following four tests are independently performed.
+
+\begin{itemize}
+\item The first test is the database test. The Anastasis testing library first connects to a test database, this database is only used for the testing, we never test on the live database. The test first deletes and recreates the database. After that it will perform several unit tests to check if the database queries of the application are working as intended.
+\item Next we test the Anastasis crypto API, it tests all the
+cryptographic functions used in the API with unit tests.
+The most important part is  that the recreation of the keys
+and decryption works as intended.
+\item After the basic parts of the application are tested the client
+will test every request in the Anastasis server API. For this we need the
+Taler Testing library. The Taler testing library will start an instance
+of the Anastasis webserver and a GNU Taler merchant service. The merchant
+service is needed to process the payment operations. The testing library
+will now send a request to every end point of the Anastasis REST API. It will
+check if every response of the REST API is as intended.
+\item At the end the whole application flow is tested. For this
+we need to start a Anastasis server, Taler merchant and Taler exchange instance.
+The library will now perform a full secret split and secret recovery.
+This test is successful if the provided core secret at the begin, matches the
+recovered core secret.
+\end{itemize}

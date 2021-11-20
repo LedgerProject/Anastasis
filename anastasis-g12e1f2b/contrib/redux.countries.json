@@ -1,0 +1,177 @@
+{
+    "license": "GPLv3+",
+    "SPDX-License-Identifier": "GPL3.0-or-later",
+    "countries": [
+	{
+		"code" : "al",
+		"name" : "Albania",
+		"continent" : "Europe",
+		"name_i18n" : {
+		        "de_DE": "Albanien",
+		        "en_UK": "Albania"
+		},
+	        "currency": "ALL",
+	        "call_code" : "+355"
+	},
+	{
+		"code" : "be",
+		"name" : "Belgium",
+		"continent" : "Europe",
+		"name_i18n" : {
+		        "de_DE": "Belgien",
+		        "en_UK": "Belgium"
+		},
+	        "currency": "EUR",
+	        "call_code" : "+32"
+	},
+	{
+		"code" : "ch",
+		"name" : "Switzerland",
+		"continent" : "Europe",
+		"name_i18n" : {
+			"de_DE": "Schweiz",
+			"de_CH": "Schwiiz",
+			"fr_FR": "Suisse",
+			"en_UK": "Swiss"
+		},
+	        "currency": "CHF",
+	        "call_code" : "+41"
+	},
+	{
+		"code" : "cz",
+		"name" : "Czech Republic",
+		"continent" : "Europe",
+		"name_i18n" : {
+		        "en_UK": "Czech Republic"
+		},
+	        "currency": "CZK",
+	        "call_code" : "+420"
+	},
+	{
+		"code" : "de",
+		"name" : "Germany",
+		"continent" : "Europe",
+		"continent_i18n" : { "de_DE" : "Europa" },
+	        "name_i18n" : {
+                        "de_DE": "Deutschland",
+			"de_CH": "Deutschland",
+		        "fr_FR": "Allemagne",
+		        "en_UK": "Germany"
+                },
+	        "currency": "EUR",
+	        "call_code" : "+49"
+	},
+	{
+		"code" : "dk",
+		"name" : "Denmark",
+		"continent" : "Europe",
+		"continent_i18n" : { "de_DE" : "Europa" },
+	        "name_i18n" : {
+		        "en_UK": "Denmark"
+                },
+	        "currency": "DKK",
+	        "call_code" : "+45"
+	},
+	{
+		"code" : "es",
+		"name" : "Spain",
+		"continent" : "Europe",
+		"continent_i18n" : { "es_ES" : "Europa" },
+	        "name_i18n" : {
+		        "es_ES": "España"
+                },
+	        "currency": "EUR",
+	        "call_code" : "+44"
+	},
+	{
+		"code" : "in",
+		"name" : "India",
+		"continent" : "India",
+		"continent_i18n" : { "en_EN" : "India" },
+	        "name_i18n" : {
+                        "de_DE": "Indien",
+			"de_CH": "Indien",
+		        "fr_FR": "l'Inde",
+		        "en_UK": "India"
+                },
+	        "currency": "INR",
+	        "call_code" : "+91"
+	},
+	{
+		"code" : "it",
+		"name" : "Italy",
+		"continent" : "Europe",
+		"name_i18n" : {
+		        "de_DE": "Italien",
+		        "en_UK": "Italy"
+		},
+	        "currency": "EUR",
+	        "call_code" : "+39"
+	},
+	{
+		"code" : "jp",
+		"name" : "Japan",
+		"continent" : "Asia",
+		"continent_i18n" : { "en_EN" : "Japan" },
+	        "name_i18n" : {
+                        "de_DE": "Japan",
+			"de_CH": "Japan",
+		        "en_UK": "Japan"
+                },
+	        "currency": "JPY",
+	    	"call_code" : "+81"
+	},
+	{
+		"code" : "sl",
+		"name" : "Slovakia",
+		"continent" : "Europe",
+		"name_i18n" : {
+		        "en_UK": "Slovakia"
+		},
+	        "currency": "EUR",
+	        "call_code" : "+421"
+	},
+	{
+		"code" : "us",
+		"name" : "United States of America (USA)",
+		"continent" : "North America",
+		"continent_i18n" : { "de_DE" : "Nordamerika" },
+  	        "name_i18n" : {
+                        "de_DE": "Vereinigte Staaten von Amerika (USA)",
+			"de_CH": "Vereinigte Staaten von Amerika (USA)",
+			"fr_FR": "États-Unis d'Amérique (USA)",
+		        "en_UK": "United States of America (USA)"
+                },
+	        "currency": "USD",
+	        "call_code" : "+1"
+	},
+	{
+		"code" : "xx",
+		"name" : "Testland",
+		"continent" : "Testcontinent",
+		"continent_i18n" : { "de_DE" : "Testkontinent" },
+ 	        "name_i18n" : {
+                        "de_DE": "Testlandt",
+			"de_CH": "Testlandi",
+			"fr_FR": "Testpais",
+		        "en_UK": "Testland"
+                },
+	        "currency": "TESTKUDOS",
+	        "call_code" : "+00"
+	},
+	{
+		"code" : "xy",
+		"name" : "Demoland",
+		"continent" : "Testcontinent",
+		"continent_i18n" : { "de_DE" : "Testkontinent" },
+  	        "name_i18n" : {
+                        "de_DE":"Demolandt",
+			"de_CH":"Demolandi",
+			"fr_FR": "Demopais",
+		        "en_UK": "Demoland"
+                },
+  	        "currency": "KUDOS",
+	        "call_code" : "+01"
+	}
+    ]
+}

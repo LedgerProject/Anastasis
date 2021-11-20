@@ -1,0 +1,19 @@
+\section*{Glossary}
+\label{sec:glossary}
+\addcontentsline{toc}{section}{\nameref{sec:glossary}}
+\begin{description}
+	 \item[account key] {A public-private key pair used to sign and authenticate the encrypted policy document upload.}
+	 \item[authentication method] {An authentication method specifies how the user should convince the escrow provider that he is authorized to get a key share.}
+	 \item[challenge] {A challenge is a data structure which holds information about a user authentication for a escrow provider.}
+ 	\item[core secret] {The core secret is the data which the user wants to protect with Anastasis.}
+ 	\item[escrow provider] {An escrow provider is referred  to servers which operate Anastasis.}
+ 	\item[kdf id] {The kdf id is an Argon2 hash over the user's unforgettable password.}
+ 	\item[key share] {A key share is a random byte sequence which is combined with other key shares to create a policy key.}
+ 	\item[master key] {The master key is a randomly generated key which is used to encrypt the user's core secret.}
+ 	\item[policy] {A policy is a list of challenges which need to be solved to recover the core secret.}
+ 	\item[policy key] {Every policy holds a separate policy key which is built through the combination of the key shares. The policy key is used to encrypt the master key.}
+	\item[recovery document] {A data structure which contains a set of policies and challenges.}
+	\item[truth] {A truth is a data structure which defines how a user authentication is performed, it also contains the key share which is released upon successful authentication.}
+	\item[truth key] {A public-private key pair used to sign and authenticate the truth upload.}
+    \item[truth seed] {A nonce used to generate the key material to sign the truth upload.}
+\end{description}

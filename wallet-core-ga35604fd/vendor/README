@@ -1,0 +1,22 @@
+The packages in this repository are managed with git subtree.
+
+git subtree -P fflate add --squash https://github.com/101arrowz/fflate v0.7.1
+git subtree -P cancellationtoken add --squash https://github.com/conradreuter/cancellationtoken v2.3.0-rc1
+git subtree -P axios add --squash https://github.com/axios/axios v0.21.1
+git subtree -P big-integer add --squash https://github.com/peterolson/BigInteger.js 67a715c917bd0eb0c106c45935b889269a24dcef #v1.6.48
+git subtree -P jed add --squash https://github.com/messageformat/Jed 1.1.1
+git subtree -P follow-redirects add --squash https://github.com/follow-redirects/follow-redirects v1.14.2
+
+#webextension dependencies
+git subtree -P preact add --squash https://github.com/preactjs/preact 10.5.14
+git subtree -P @linaria add --squash https://github.com/callstack/linaria v3.0.0-beta.11
+git subtree -P history add --squash https://github.com/remix-run/history v4.10.1
+git subtree -P preact-router add --squash https://github.com/preactjs/preact-router 3.2.1
+git subtree -P date-fns add --squash https://github.com/date-fns/date-fns v2.22.1
+
+#history dependencies
+git subtree -P tiny-invariant add --squash https://github.com/alexreardon/tiny-invariant v1.0.2
+git subtree -P tiny-warning add --squash https://github.com/alexreardon/tiny-warning v1.0.0
+git subtree -P value-equal add --squash https://github.com/mjackson/value-equal v1.0.1
+git subtree -P resolve-pathname add --squash https://github.com/mjackson/resolve-pathname v3.0.0
+

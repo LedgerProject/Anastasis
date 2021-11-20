@@ -1,0 +1,18 @@
+
+
+# Record types defined outside of IANA (and supported by GNU libmicrohttpd)
+#
+Value: 449
+Description: Retry with
+Reference: [MS IIS extension]
+Identifier: RETRY_WITH
+
+Value: 509
+Description: Bandwidth Limit Exceeded
+Reference: [Apache extension]
+Identifier: BANDWIDTH_LIMIT_EXCEEDED
+
+Value: 0
+Description: No status code, used if no HTTP status is available (uninitialized)
+Reference: [None]
+Identifier: UNINITIALIZED

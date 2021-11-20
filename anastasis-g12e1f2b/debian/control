@@ -1,0 +1,78 @@
+Source: anastasis
+Section: net
+Priority: optional
+Maintainer: Christian Grothoff <grothoff@gnu.org>
+Build-Depends:
+ autoconf (>=2.59),
+ automake (>=1.11.1),
+ autopoint,
+ debhelper-compat (= 12),
+ gettext,
+ libgnunet-dev,
+ libtalerexchange-dev (>= 0.8.5),
+ libtalermerchant-dev (>= 0.8.4),
+ libpq-dev (>=9.5),
+ libsqlite3-dev (>=3.8),
+ pkg-config,
+ po-debconf,
+ libqrencode-dev,
+ uuid-dev,
+ zlib1g-dev
+Build-Conflicts:
+ autoconf2.13,
+ automake1.4
+Standards-Version: 4.5.0
+Vcs-Git: https://salsa.debian.org/debian/anastasis.git
+Vcs-browser: https://salsa.debian.org/debian/anastasis
+Homepage: https://anastasis.lu/
+
+Package: libanastasis
+Architecture: any
+Pre-Depends:
+ ${misc:Pre-Depends}
+Depends:
+ lsb-base,
+ netbase,
+ ${misc:Depends},
+ ${shlibs:Depends}
+Description: libraries to talk to an Anastasis provider.
+
+Package: anastasis-httpd
+Architecture: any
+Pre-Depends:
+ ${misc:Pre-Depends}
+Depends:
+ libtalerexchange (>= 0.8.5),
+ libgnutls30 (>= 3.7.1),
+ adduser,
+ lsb-base,
+ netbase,
+ apache2 | nginx | httpd,
+ postgresql,
+ dbconfig-pgsql | dbconfig-no-thanks,
+ ${misc:Depends},
+ ${shlibs:Depends}
+Description: GNU's key escrow provider.
+
+Package: anastasis-cli
+Architecture: any
+Pre-Depends:
+ ${misc:Pre-Depends}
+Depends:
+ libanastasis (>= 0.0.0),
+ ${misc:Depends},
+ ${shlibs:Depends}
+Description: Command-line interface for the Anastasis key escrow provider service.
+
+Package: libanastasis-dev
+Section: libdevel
+Architecture: any
+Depends:
+ libtalermerchant-dev (>= 0.8.3),
+ libtalerexchange-dev (>= 0.8.5),
+ libgnunet-dev (>=0.15.3),
+ ${misc:Depends},
+ ${shlibs:Depends}
+Description: libraries to talk to a GNU Anastasis provider (development)
+ .
+ This package contains the development files.

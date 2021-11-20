@@ -1,0 +1,133 @@
+# GNU Taler Wallet
+
+This repository contains the implementation of a wallet for GNU Taler written
+in TypeScript.
+
+
+## Dependencies
+
+The following dependencies are required to build the wallet:
+
+* python>=3.8
+* nodejs>=12
+* jq
+* npm
+* pnpm
+* zip
+
+
+## Installation
+
+The CLI version of the wallet supports the normal GNU installation process.
+
+```shell
+./configure [ --prefix=$PREFIX ] && make install
+```
+
+### Compiling from Git
+
+If you are compiling the code from git, you have to run `./bootstrap` before
+running `./configure`.
+
+### Building the WebExtension
+
+The WebExtension can be built via the 'webextension' make target:
+
+```shell
+./configure && make webextension
+```
+
+This will create the zip file with the WebExtension in the directory
+
+```
+packages/taler-wallet-webextension/extension/
+```
+
+We also provide a `Dockerfile` for a container that can build the
+WebExtension.  After you install docker, make sure the user is in group
+`docker` and (re-)start the docker daemon:
+
+```shell
+# Make sure there is a docker group.
+$ grep docker: /etc/group
+$ sudo groupadd docker
+
+# Make sure USER is defined and is in the docker group.
+$ echo $USER
+$ sudo usermod -aG docker $USER
+
+# Restart the docker daemon.
+# (This command is OS-specific.)
+
+# Obtain a new shell.  Make sure it includes the `docker` group.
+$ newgrp docker
+$ id
+```
+
+Then, you can proceed with these instructions:
+
+```shell
+# Download wallet source code and unpack it
+(host)$ tar -xf wallet-core-$version.tar.gz
+
+# Build the image
+(host)$ docker build --tag walletbuilder wallet-core-$version/contrib/wallet-docker
+
+# Start the container
+(host)$ docker run -dti --name walletcontainer walletbuilder /bin/bash
+
+# Copy wallet source to container
+(host)$ docker cp ./wallet-core-$version/ walletcontainer:/
+
+# Attach to container
+(host)$ docker attach walletcontainer
+
+# Run build inside container
+(container)$ cd wallet-core-$version
+(container)$ ./configure && make webextension
+(container)$ exit
+
+# Copy build artefact(s) to host
+(host)$ docker cp walletcontainer:/wallet-core-$version/packages/taler-wallet-webextension/extension extension
+```
+
+### Reviewing WebExtension UI examples
+
+The WebExtension can be tested using Storybook. Using live server or building 
+static html files to deploy into nginx.
+
+To run a live server use the 'dev-view' target
+
+```shell
+make webextension-dev-view
+```
+
+A server will start, usually at http://localhost:6006/.
+On the left it will have a navigation panel with examples organized in a tree view.
+
+Stories are defined with a *.stories.tsx file [1], you are free to create new or edit
+some and commit them in order to create a more complete set of examples.
+
+[1] look for them at packages/taler-wallet-webextension/src/**/*.stories.tsx
+
+# Integration Tests
+
+This repository comes with integration tests for GNU Taler.  To run them,
+install the wallet first.  Then use the test runner from the
+taler-integrationtests package:
+
+```shell
+cd packages/taler-integrationtests/
+./testrunner '*'
+```
+
+The test runner accepts a bash glob pattern as parameter.  Individual tests can
+be run by specifying their name.
+
+To check coverage, use nyc from the root of the repository and make sure that the taler-wallet-cli
+from the source tree is executed, and not the globally installed one:
+
+```
+PATH="$PWD/packages/taler-wallet-cli/bin:$PATH" \
+  nyc ./packages/taler-integrationtests/testrunner '*'
+```

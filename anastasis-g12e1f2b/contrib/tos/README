@@ -1,0 +1,58 @@
+This directory contains the terms of service (template) for exchange
+operators.
+
+
+Dependencies
+============
+
+Generating new Terms of Service requires Sphinx, LaTeX with babel
+packages for all supported languages.  On Debian, you should
+at least install:
+
+$ apt install python3-sphinx sphinx-intl texlive-lang-german texlive-lang-english
+
+(NOTE: List may be incomplete.)
+
+
+Updating the Terms of Service
+=============================
+
+The master file with the Terms of service is 'tos.rst'.
+
+If you make substantial changes, you MUST change the "TOS_VERSION"
+in contrib/Makefile.am to the new Etag.
+
+To begin the translation into other languages after editing the master
+file, run
+
+$ make gettext
+
+to generate the master PO file. Then, run
+
+$ sphinx-intl update -p _build/locale/ -l de -l fr -l it
+
+to update the PO files for the various languages (extend the list of
+languages as necessary). The PO files for the translators are kept
+at locale/$LANG/LC_MESSAGES/tos.po for the language $LANG.
+
+Once all PO files have been updated with new translations, run
+
+$ make update-tos
+
+in the "contrib/" directory to generate all of the formats.  The
+respective make rule calls the '../update-tos.sh' script in the
+contrib/ directory, which calls the 'Makefile' in the tos/
+directory for the various supported languages and file formats
+and then moves the generated files to the target directory
+('contrib/tos/$LANG/$VERSION.$FORMAT')
+
+
+Adding a new language
+=====================
+
+To add a new language $LANG, add $LANG to "TOS_LANGUAGES" in
+'contrib/Makefile.am' and run
+
+$ sphinx-intl update -p _build/gettext -l $LANG
+
+to generate the PO template.

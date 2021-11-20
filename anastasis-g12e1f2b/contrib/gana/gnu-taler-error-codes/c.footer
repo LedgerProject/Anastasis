@@ -1,0 +1,66 @@
+
+
+
+const char *
+TALER_ErrorCode_get_hint (enum TALER_ErrorCode ec)
+{
+  unsigned int lower = 0;
+  unsigned int upper = code_hint_pairs_length - 1;
+  unsigned int mid = upper / 2;
+  while (lower <= upper)
+  {
+    mid = (upper + lower) / 2;
+    if (code_hint_pairs[mid].ec < ec)
+    {
+      lower = mid + 1;
+    }
+    else if (code_hint_pairs[mid].ec > ec)
+    {
+      upper = mid - 1;
+    }
+    else
+    {
+      return code_hint_pairs[mid].hint;
+    }
+  }
+  return "<no hint found>";
+}
+
+
+unsigned int
+TALER_ErrorCode_get_http_status (enum TALER_ErrorCode ec)
+{
+  unsigned int lower = 0;
+  unsigned int upper = code_hint_pairs_length - 1;
+  unsigned int mid = upper / 2;
+  while (lower <= upper)
+  {
+    mid = (upper + lower) / 2;
+    if (code_hint_pairs[mid].ec < ec)
+    {
+      lower = mid + 1;
+    }
+    else if (code_hint_pairs[mid].ec > ec)
+    {
+      upper = mid - 1;
+    }
+    else
+    {
+      return code_hint_pairs[mid].http_code;
+    }
+  }
+  return UINT_MAX;
+}
+
+
+unsigned int
+TALER_ErrorCode_get_http_status_safe (enum TALER_ErrorCode ec)
+{
+  unsigned int hc;
+
+  hc = TALER_ErrorCode_get_http_status (ec);
+  if ( (0 == hc) ||
+       (UINT_MAX == hc) )
+    return MHD_HTTP_INTERNAL_SERVER_ERROR;
+  return hc;
+}

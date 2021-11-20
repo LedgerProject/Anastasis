@@ -1,0 +1,35 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "declarationMap": false,
+    "target": "ES2017",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "lib": ["es6"],
+    "types": ["node"],
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "outDir": "lib",
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "rootDir": "./src",
+    "typeRoots": ["./node_modules/@types"],
+  },
+  "references": [
+    {
+      "path": "../idb-bridge/"
+    },
+    {
+      "path": "../taler-util/"
+    }
+  ],
+  "include": ["src/**/*"]
+}

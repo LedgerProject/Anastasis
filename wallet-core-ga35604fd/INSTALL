@@ -1,0 +1,2 @@
+Run `./configure && make' to create an archive
+containing the extension in ./build/taler-wallet-$VERSION.zip

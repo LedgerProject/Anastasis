@@ -1,0 +1,290 @@
+# This file is part of TALER
+# (C) 2016 GNUnet e.V.
+#
+# TALER is free software; you can redistribute it and/or modify it under the
+# terms of the GNU General Public License as published by the Free Software
+# Foundation; either version 3, or (at your option) any later version.
+#
+# TALER is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# TALER; see the file COPYING.  If not, see <http://www.gnu.org/licenses/>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Taler Wallet\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-23 00:00+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/util/wire.ts:37
+#, c-format
+msgid "Invalid Wire"
+msgstr ""
+
+#: src/util/wire.ts:42 src/util/wire.ts:45
+#, c-format
+msgid "Invalid Test Wire Detail"
+msgstr ""
+
+#: src/util/wire.ts:47
+#, c-format
+msgid "Test Wire Acct #%1$s on %2$s"
+msgstr ""
+
+#: src/util/wire.ts:49
+#, c-format
+msgid "Unknown Wire Detail"
+msgstr ""
+
+#: src/webex/pages/benchmark.tsx:52
+#, c-format
+msgid "Operation"
+msgstr ""
+
+#: src/webex/pages/benchmark.tsx:53
+#, c-format
+msgid "time (ms/op)"
+msgstr ""
+
+#: src/webex/pages/pay.tsx:130
+#, c-format
+msgid "The merchant %1$s offers you to purchase:"
+msgstr ""
+
+#: src/webex/pages/pay.tsx:136
+#, c-format
+msgid "The total price is %1$s (plus %2$s fees)."
+msgstr ""
+
+#: src/webex/pages/pay.tsx:141
+#, c-format
+msgid "The total price is %1$s."
+msgstr ""
+
+#: src/webex/pages/pay.tsx:163
+#, c-format
+msgid "Retry"
+msgstr ""
+
+#: src/webex/pages/pay.tsx:173
+#, c-format
+msgid "Confirm payment"
+msgstr ""
+
+#: src/webex/pages/popup.tsx:153
+#, c-format
+msgid "Balance"
+msgstr ""
+
+#: src/webex/pages/popup.tsx:154
+#, c-format
+msgid "History"
+msgstr ""
+
+#: src/webex/pages/popup.tsx:155
+#, c-format
+msgid "Debug"
+msgstr ""
+
+#: src/webex/pages/popup.tsx:175
+#, c-format
+msgid "You have no balance to show. Need some %1$s getting started?"
+msgstr ""
+
+#: src/webex/pages/popup.tsx:238
+#, c-format
+msgid "%1$s incoming"
+msgstr ""
+
+#: src/webex/pages/popup.tsx:250
+#, c-format
+msgid "%1$s being spent"
+msgstr ""
+
+#: src/webex/pages/popup.tsx:281
+#, c-format
+msgid "Error: could not retrieve balance information."
+msgstr ""
+
+#: src/webex/pages/popup.tsx:390
+#, c-format
+msgid "Invalid "
+msgstr ""
+
+#: src/webex/pages/popup.tsx:396
+#, c-format
+msgid "Fees "
+msgstr ""
+
+#: src/webex/pages/popup.tsx:434
+#, c-format
+msgid "Refresh sessions has completed"
+msgstr ""
+
+#: src/webex/pages/popup.tsx:451
+#, c-format
+msgid "Order Refused"
+msgstr ""
+
+#: src/webex/pages/popup.tsx:465
+#, c-format
+msgid "Order redirected"
+msgstr ""
+
+#: src/webex/pages/popup.tsx:482
+#, c-format
+msgid "Payment aborted"
+msgstr ""
+
+#: src/webex/pages/popup.tsx:512
+#, c-format
+msgid "Payment Sent"
+msgstr ""
+
+#: src/webex/pages/popup.tsx:536
+#, c-format
+msgid "Order accepted"
+msgstr ""
+
+#: src/webex/pages/popup.tsx:547
+#, c-format
+msgid "Reserve balance updated"
+msgstr ""
+
+#: src/webex/pages/popup.tsx:559
+#, c-format
+msgid "Payment refund"
+msgstr ""
+
+#: src/webex/pages/popup.tsx:584
+#, c-format
+msgid "Withdrawn"
+msgstr ""
+
+#: src/webex/pages/popup.tsx:596
+#, c-format
+msgid "Tip Accepted"
+msgstr ""
+
+#: src/webex/pages/popup.tsx:606
+#, c-format
+msgid "Tip Declined"
+msgstr ""
+
+#: src/webex/pages/popup.tsx:615
+#, c-format
+msgid "%1$s"
+msgstr ""
+
+#: src/webex/pages/popup.tsx:707
+#, c-format
+msgid "Your wallet has no events recorded."
+msgstr ""
+
+#: src/webex/pages/return-coins.tsx:124
+#, c-format
+msgid "Wire to bank account"
+msgstr ""
+
+#: src/webex/pages/return-coins.tsx:206
+#, c-format
+msgid "Confirm"
+msgstr ""
+
+#: src/webex/pages/return-coins.tsx:209
+#, c-format
+msgid "Cancel"
+msgstr ""
+
+#: src/webex/pages/withdraw.tsx:73
+#, c-format
+msgid "Could not get details for withdraw operation:"
+msgstr ""
+
+#: src/webex/pages/withdraw.tsx:89 src/webex/pages/withdraw.tsx:183
+#, c-format
+msgid "Chose different exchange provider"
+msgstr ""
+
+#: src/webex/pages/withdraw.tsx:109
+#, c-format
+msgid ""
+"Please select an exchange.  You can review the details before after your "
+"selection."
+msgstr ""
+
+#: src/webex/pages/withdraw.tsx:121
+#, c-format
+msgid "Select %1$s"
+msgstr ""
+
+#: src/webex/pages/withdraw.tsx:143
+#, c-format
+msgid "Select custom exchange"
+msgstr ""
+
+#: src/webex/pages/withdraw.tsx:163
+#, c-format
+msgid "You are about to withdraw %1$s from your bank account into your wallet."
+msgstr ""
+
+#: src/webex/pages/withdraw.tsx:174
+#, c-format
+msgid "Accept fees and withdraw"
+msgstr ""
+
+#: src/webex/pages/withdraw.tsx:192
+#, c-format
+msgid "Cancel withdraw operation"
+msgstr ""
+
+#: src/webex/renderHtml.tsx:249
+#, c-format
+msgid "Withdrawal fees:"
+msgstr ""
+
+#: src/webex/renderHtml.tsx:252
+#, c-format
+msgid "Rounding loss:"
+msgstr ""
+
+#: src/webex/renderHtml.tsx:254
+#, c-format
+msgid "Earliest expiration (for deposit): %1$s"
+msgstr ""
+
+#: src/webex/renderHtml.tsx:262
+#, c-format
+msgid "# Coins"
+msgstr ""
+
+#: src/webex/renderHtml.tsx:263
+#, c-format
+msgid "Value"
+msgstr ""
+
+#: src/webex/renderHtml.tsx:264
+#, c-format
+msgid "Withdraw Fee"
+msgstr ""
+
+#: src/webex/renderHtml.tsx:265
+#, c-format
+msgid "Refresh Fee"
+msgstr ""
+
+#: src/webex/renderHtml.tsx:266
+#, c-format
+msgid "Deposit Fee"
+msgstr ""

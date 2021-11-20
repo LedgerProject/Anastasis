@@ -1,0 +1,16 @@
+Source: taler-wallet-cli
+Section: networking
+Priority: optional
+Maintainer: Taler Systems SA <deb@taler.net>
+Uploaders: Christian Grothoff <grothoff@gnu.org>, Florian Dold <dold@taler.net>
+Build-Depends: debhelper-compat (= 12),
+Standards-Version: 4.1.0
+Vcs-Git: https://git.taler.net/wallet-core.git
+Homepage: https://taler.net/
+
+Package: taler-wallet-cli
+Architecture: all
+Depends: nodejs,
+         ${misc:Depends}
+Recommends:
+Description: Software package to test Taler installations.

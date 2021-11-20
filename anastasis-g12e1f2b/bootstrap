@@ -1,0 +1,35 @@
+#!/bin/sh
+
+if ! git --version >/dev/null; then
+  echo "git not installed"
+  exit 1
+fi
+
+echo "$0: Updating submodules"
+echo | git submodule update --init
+
+git submodule update --init
+
+./contrib/gana-update.sh
+
+# This is more portable than `which' but comes with
+# the caveat of not(?) properly working on busybox's ash:
+existence()
+{
+    command -v "$1" >/dev/null 2>&1
+}
+
+
+if existence uncrustify; then
+    echo "Installing uncrustify hook and configuration"
+    # Install uncrustify format symlink (if possible)
+    ln -s contrib/uncrustify.cfg uncrustify.cfg 2> /dev/null
+    # Install pre-commit hook (if possible)
+    ln -s ../../contrib/uncrustify_precommit .git/hooks/pre-commit 2> /dev/null
+else
+    echo "Uncrustify not detected, hook not installed. Please install uncrustify if you plan on doing development"
+fi
+
+
+echo "$0: Running autoreconf"
+autoreconf -if

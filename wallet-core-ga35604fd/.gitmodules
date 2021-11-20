@@ -1,0 +1,6 @@
+[submodule "build-scripts"]
+	path = build-system/taler-build-scripts
+	url = git://taler.net/build-common
+[submodule "vendor"]
+	path = vendor
+	url = https://git.taler.net/node-vendor.git

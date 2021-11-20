@@ -1,0 +1,24 @@
+#!/bin/sh
+# This file is in the public domain.
+echo "Removing folder 'libltdl'..."
+rm -rf libltdl
+
+# Install clang format symlink (if possible)
+ln -s contrib/clang-format .clang-format 2> /dev/null
+
+echo "checking for libtoolize / libtool... "
+
+# This is more portable than `which' but comes with
+# the caveat of not(?) properly working on busybox's ash:
+existence()
+{
+    command -v "$1" >/dev/null 2>&1
+}
+
+if existence libtool || existence libtoolize || existence glibtoolize; then
+    autoreconf -if
+    . "contrib/pogen.sh"
+else
+    echo "*** No libtoolize (libtool) or libtool found, please install it ***" >&2;
+    exit 1
+fi

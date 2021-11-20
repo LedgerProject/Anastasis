@@ -1,0 +1,71 @@
+/*
+ This file is part of GNU Taler
+ (C) 2021 Taler Systems S.A.
+
+ GNU Taler is free software; you can redistribute it and/or modify it under the
+ terms of the GNU General Public License as published by the Free Software
+ Foundation; either version 3, or (at your option) any later version.
+
+ GNU Taler is distributed in the hope that it will be useful, but WITHOUT ANY
+ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License along with
+ GNU Taler; see the file COPYING.  If not, see <http://www.gnu.org/licenses/>
+ */
+
+/**
+ *
+ * @author Sebastian Javier Marchano (sebasjm)
+ */
+
+.field {
+  &.has-check {
+    .field-body {
+      margin-top: $default-padding * 0.125;
+    }
+  }
+  .control {
+    .mdi-24px.mdi-set,
+    .mdi-24px.mdi:before {
+      font-size: inherit;
+    }
+  }
+}
+.upload {
+  .upload-draggable {
+    display: block;
+  }
+}
+
+.input,
+.textarea,
+select {
+  box-shadow: none;
+
+  &:focus,
+  &:active {
+    box-shadow: none !important;
+  }
+}
+
+.switch input[type="checkbox"] + .check:before {
+  box-shadow: none;
+}
+
+.switch,
+.b-checkbox.checkbox {
+  input[type="checkbox"] {
+    &:focus + .check,
+    &:focus:checked + .check {
+      box-shadow: none !important;
+    }
+  }
+}
+
+.b-checkbox.checkbox input[type="checkbox"],
+.b-radio.radio input[type="radio"] {
+  & + .check {
+    border: $checkbox-border;
+  }
+}

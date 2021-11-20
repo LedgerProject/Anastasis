@@ -1,0 +1,6 @@
+
+
+  /**
+   * {{Description}}
+   */
+  TALER_DBEVENT_{{Name}} = {{Value}},

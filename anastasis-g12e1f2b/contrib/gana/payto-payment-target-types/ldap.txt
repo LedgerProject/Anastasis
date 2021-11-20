@@ -1,0 +1,75 @@
+# Payto Payment Target Type for LDAP addressing
+
+## Target Type "ldap"
+
+Name: ldap
+
+Description:  Lightweight Directory Access Protocol (LDAP)
+
+  The path consists of two components: The routing server and the
+  Distinguished Name.
+
+  This is used for transfers within the SWIFT network or likewise
+  networks. Limitations on the length and character set of option
+  values are defined by the implementation of the handler. Language
+  tagging and internationalization of options are not supported.
+
+  The client MAY choose a different connection method than ldap for
+  passing the request to the routing server. If no routing server is
+  explicitly referenced, the request is routed to a server of the
+  client's choice.
+
+
+Syntax:
+
+     payto-ldap-URI = "payto://ldap/" [host] "/" dn [ "?" opts ]
+
+  'host' is defined in
+  [Section 5 of RFC 1738](https://tools.ietf.org/html/rfc1738#section-5).
+
+  'dn' is an LDAP Distinguished Name using the string format
+  described in
+  [Section 3 of RFC 2253](https://tools.ietf.org/html/rfc2253#section-3)
+
+  'opts' is defined in
+  [Section 2 of RFC 8905](https://tools.ietf.org/html/rfc8905#section-2).
+
+
+Examples:
+
+      payto://ldap//cn=enitest,o=saaabebb,o=swift
+      payto://ldap//cn=the-nichname?amount=EUR:50
+      payto://ldap/ldap.swift.com/cn=mx01,o=pqvbusda,o=swift
+
+
+Motivation - not normative
+
+Thy syntax is modeled after the LDAP URL Format
+[RFC 2255](https://tools.ietf.org/html/rfc2255).
+
+SWIFT uses several addressing methods in the message formats they define:
+* Business Identifier Code (BIC), which is already defined in RFC 8905,
+* Distinguished Name (DN) and
+* Nickname - which can be an arbitrary string.
+
+
+Contact:  <mailto:ietf@pep.security>
+
+
+Normative References
+
+* [RFC 2253]  Lightweight Directory Access Protocol (v3): UTF-8 String
+  Representation of Distinguished Names
+  <https://tools.ietf.org/html/rfc2253>
+
+* [RFC 2255] The LDAP URL Format
+  <https://tools.ietf.org/html/rfc2255>
+
+* [RFC 8905] The 'payto' URI Scheme for Payments
+  <https://tools.ietf.org/html/rfc8905>
+
+Informative References
+
+* Alliance Access 7.5 Configuration Guide.
+  Appendix A.2 "Message Formats", esp. A.2.6.3.9. "AddressInfo"
+  <https://www2.swift.com/knowledgecentre/publications/aa_7_5_conf_guid/1.0>

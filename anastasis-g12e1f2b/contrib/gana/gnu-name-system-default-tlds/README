@@ -1,0 +1,4 @@
+This registry is the default Top-Level-Domains (TLDs) for the GNU Name System.
+
+This registry is used to ensure that GNS resolvers ship with a default
+configuration of TLDs in order to ease transition and enable instant use.

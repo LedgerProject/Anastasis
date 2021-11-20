@@ -1,0 +1,47 @@
+#!/bin/sh
+
+# This file is part of GNU Taler.
+# (C) 2020 Taler Systems S.A.
+#
+# Permission to use, copy, modify, and/or distribute this software for any
+# purpose with or without fee is hereby granted.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE
+# LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES
+# OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+# WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+# ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
+# THIS SOFTWARE.
+#
+# SPDX-License-Identifier: 0BSD
+
+# This script checks if a suitable python3 executable is installed and then
+# executes the actual configure logic written in Python.
+
+scriptpath=build-system/taler-build-scripts
+
+if ! test -d "$scriptpath"; then
+  echo "fatal error: taler-build-scripts not found at $scriptpath" >&2
+  echo "hint: did you run './bootstrap'?" >&2
+  exit 1
+fi
+
+# Check that the python3 executable is on the PATH.
+# This follows PEP 394 (https://www.python.org/dev/peps/pep-0394/).
+if ! python3 --version >/dev/null 2>&1; then
+  echo "error: python3 not found" >&2
+  exit 1
+fi
+
+# Let python3 check that its own version is okay for us.
+python3 "$scriptpath/pyvercheck.py" || exit $?
+
+# Allow Python to find libraries that are checked into the build system git.
+export PYTHONPATH="$scriptpath:${PYTHONPATH:-}"
+
+export TALERBUILDSYSTEMDIR=./build-system
+
+# Call configure.py, assuming all went well.
+python3 $TALERBUILDSYSTEMDIR/configure.py "$@"

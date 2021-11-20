@@ -1,0 +1,69 @@
+/*
+ This file is part of GNU Taler
+ (C) 2021 Taler Systems S.A.
+
+ GNU Taler is free software; you can redistribute it and/or modify it under the
+ terms of the GNU General Public License as published by the Free Software
+ Foundation; either version 3, or (at your option) any later version.
+
+ GNU Taler is distributed in the hope that it will be useful, but WITHOUT ANY
+ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License along with
+ GNU Taler; see the file COPYING.  If not, see <http://www.gnu.org/licenses/>
+ */
+
+/**
+ *
+ * @author Sebastian Javier Marchano (sebasjm)
+ */
+
+.card:not(:last-child) {
+  margin-bottom: $default-padding;
+}
+
+.card {
+  border-radius: $radius-large;
+  border: $card-border;
+
+  &.has-table {
+    .card-content {
+      padding: 0;
+    }
+    .b-table {
+      border-radius: $radius-large;
+      overflow: hidden;
+    }
+  }
+
+  &.is-card-widget {
+    .card-content {
+      padding: $default-padding * 0.5;
+    }
+  }
+
+  .card-header {
+    border-bottom: 1px solid $base-color-light;
+  }
+
+  .card-content {
+    hr {
+      margin-left: $card-content-padding * -1;
+      margin-right: $card-content-padding * -1;
+    }
+  }
+
+  .is-widget-icon {
+    .icon {
+      width: 5rem;
+      height: 5rem;
+    }
+  }
+
+  .is-widget-label {
+    .subtitle {
+      color: $grey;
+    }
+  }
+}

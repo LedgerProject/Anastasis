@@ -1,0 +1,36 @@
+#!/usr/bin/make -f
+include /usr/share/dpkg/default.mk
+
+TALER_WALLET_HOME = /usr/share/taler-wallet-cli
+
+cli_dir=packages/taler-wallet-cli
+
+
+build: build-arch build-indep
+build-arch:
+	true
+build-indep:
+	true
+override_dh_auto_install:
+	dh_install $(cli_dir)/bin/taler-wallet-cli $(TALER_WALLET_HOME)/node_modules/taler-wallet-cli/bin
+	dh_install $(cli_dir)/dist/taler-wallet-cli.js $(TALER_WALLET_HOME)/node_modules/taler-wallet-cli/dist
+	dh_install $(cli_dir)/dist/taler-wallet-cli.js.map $(TALER_WALLET_HOME)/node_modules/taler-wallet-cli/dist
+	dh_link $(TALER_WALLET_HOME)/node_modules/taler-wallet-cli/bin/taler-wallet-cli /usr/bin/taler-wallet-cli
+
+binary:
+	dh $@
+binary-arch:
+	dh $@
+binary-indep:
+	dh $@
+
+clean:
+	true
+
+# Override this step because it's very slow and likely
+# unnecessary for us.
+override_dh_strip_nondeterminism:
+	true
+
+get-orig-source:
+	uscan --force-download --rename

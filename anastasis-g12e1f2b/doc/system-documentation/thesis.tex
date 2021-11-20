@@ -1,0 +1,64 @@
+\documentclass{scrartcl}
+\usepackage{lipsum}
+%%\usepackage[french]{babel}
+%%\usepackage[ngerman]{babel}
+
+%% Choose default font for the document
+%% Warning : only ONE of the following should be enabled
+\usepackage{kpfonts}
+%%\usepackage{libertine}
+\usepackage[table]{xcolor}
+%% The following chose the default language for the document and
+%% use the default typography rules for the chosen language.
+\usepackage{polyglossia}
+\setdefaultlanguage{english}
+%% \setdefaultlanguage{german}
+%%\setdefaultlanguage{french}
+\usepackage{float}
+\usepackage[toc,page]{appendix}
+\usepackage[backend=biber, style=ieee]{biblatex}
+\addbibresource{bibliothek.bib}
+\usepackage[export]{adjustbox}
+\usepackage{menukeys}
+\usepackage{abstract}
+\usepackage{pdfpages}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{listings}
+\lstset{language=C,
+    basicstyle=\ttfamily,
+    keywordstyle=\bfseries,
+    showstringspaces=false,
+    morekeywords={include, printf, interface}
+}
+\title{Anastais Project Documentation}
+\date{September 2, 2020}
+\author{Dominik Meister, Dennis Neufeld}
+
+\begin{document}
+\maketitle
+
+\pagenumbering{gobble}
+
+\clearpage
+\pagenumbering{roman}
+\tableofcontents
+\listoffigures
+\clearpage
+\pagenumbering{arabic}
+\include{introduction}
+
+\include{related_work}
+
+\include{design}
+
+\include{implementation}
+
+\clearpage
+\include{glossary}
+\clearpage
+
+%% Print the bibibliography and add the section to th table of content
+\printbibliography[heading=bibintoc]
+
+\end{document}

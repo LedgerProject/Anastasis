@@ -1,0 +1,402 @@
+{
+  "history": [
+    {
+      "type": "exchange-added",
+      "builtIn": false,
+      "eventId": "exchange-added;https%3A%2F%2Fexchange.demo.taler.net%2F",
+      "exchangeBaseUrl": "https://exchange.demo.taler.net/",
+      "timestamp": {
+        "t_ms": 1578334008633
+      }
+    },
+    {
+      "type": "exchange-updated",
+      "eventId": "exchange-updated;https%3A%2F%2Fexchange.demo.taler.net%2F",
+      "exchangeBaseUrl": "https://exchange.demo.taler.net/",
+      "timestamp": {
+        "t_ms": 1578334009266
+      }
+    },
+    {
+      "type": "reserve-balance-updated",
+      "eventId": "reserve-balance-updated;HHG1KBFSW4PM8J43D14GVJYB8F5J56RDHANY1EQSW6RTYDAQJC6G",
+      "amountExpected": "KUDOS:5",
+      "amountReserveBalance": "KUDOS:5",
+      "timestamp": {
+        "t_ms": 1578334039291
+      },
+      "newHistoryTransactions": [
+        {
+          "amount": "KUDOS:5",
+          "sender_account_url": "payto://x-taler-bank/bank.demo.taler.net/65",
+          "timestamp": {
+            "t_ms": 1578334028000
+          },
+          "wire_reference": "000000000038Y",
+          "type": "DEPOSIT"
+        }
+      ],
+      "reserveShortInfo": {
+        "exchangeBaseUrl": "https://exchange.demo.taler.net/",
+        "reserveCreationDetail": {
+          "type": "taler-bank-withdraw",
+          "bankUrl": "https://bank.demo.taler.net/api/withdraw-operation/6fd6a78f-3d12-4c91-b5e4-c6fc31f44e8d"
+        },
+        "reservePub": "JPE7VR8R985WQ7ZX3EEYRTEGJQ1FAFE7P3JK1J7WFJEP7AGNTJD0"
+      }
+    },
+    {
+      "type": "withdrawn",
+      "withdrawSessionId": "SFW3JS0JV0GZQQ1W07TNQEAGBD84X2QMH38PJ2CCTTKSDKQFCBY0",
+      "eventId": "withdrawn;SFW3JS0JV0GZQQ1W07TNQEAGBD84X2QMH38PJ2CCTTKSDKQFCBY0",
+      "amountWithdrawnEffective": "KUDOS:4.8",
+      "amountWithdrawnRaw": "KUDOS:5",
+      "exchangeBaseUrl": "https://exchange.demo.taler.net/",
+      "timestamp": {
+        "t_ms": 1578334039853
+      },
+      "withdrawalSource": {
+        "type": "reserve",
+        "reservePub": "JPE7VR8R985WQ7ZX3EEYRTEGJQ1FAFE7P3JK1J7WFJEP7AGNTJD0"
+      }
+    },
+    {
+      "type": "order-accepted",
+      "eventId": "order-accepted;RNFEQ2FHF6NPM5M58HJH635TD4CE9S2SRNK3VN9SCMH3H7H0REBG",
+      "orderShortInfo": {
+        "amount": "KUDOS:0.5",
+        "orderId": "2020.006-G1NT65XRPQ8GP",
+        "merchantBaseUrl": "https://backend.demo.taler.net/public/instances/FSF/",
+        "proposalId": "RNFEQ2FHF6NPM5M58HJH635TD4CE9S2SRNK3VN9SCMH3H7H0REBG",
+        "summary": "Essay: 2. The GNU Project"
+      },
+      "timestamp": {
+        "t_ms": 1578334078823
+      }
+    },
+    {
+      "type": "order-redirected",
+      "eventId": "order-redirected;0W4EBHQJ90XX4TSQ9C0M6K9MBFJ1ENKTWH4R3CXFT986A2QHCESG",
+      "alreadyPaidOrderShortInfo": {
+        "amount": "KUDOS:0.5",
+        "orderId": "2020.006-G1NT65XRPQ8GP",
+        "merchantBaseUrl": "https://backend.demo.taler.net/public/instances/FSF/",
+        "proposalId": "RNFEQ2FHF6NPM5M58HJH635TD4CE9S2SRNK3VN9SCMH3H7H0REBG",
+        "summary": "Essay: 2. The GNU Project"
+      },
+      "newOrderShortInfo": {
+        "amount": "KUDOS:0.5",
+        "orderId": "2020.006-00W4ANVVKAHAP",
+        "merchantBaseUrl": "https://backend.demo.taler.net/public/instances/FSF/",
+        "proposalId": "0W4EBHQJ90XX4TSQ9C0M6K9MBFJ1ENKTWH4R3CXFT986A2QHCESG",
+        "summary": "Essay: 2. The GNU Project"
+      },
+      "timestamp": {
+        "t_ms": 1578334108380
+      }
+    },
+    {
+      "type": "payment-sent",
+      "eventId": "payment-sent;RNFEQ2FHF6NPM5M58HJH635TD4CE9S2SRNK3VN9SCMH3H7H0REBG",
+      "orderShortInfo": {
+        "amount": "KUDOS:0.5",
+        "orderId": "2020.006-G1NT65XRPQ8GP",
+        "merchantBaseUrl": "https://backend.demo.taler.net/public/instances/FSF/",
+        "proposalId": "RNFEQ2FHF6NPM5M58HJH635TD4CE9S2SRNK3VN9SCMH3H7H0REBG",
+        "summary": "Essay: 2. The GNU Project"
+      },
+      "replay": true,
+      "sessionId": "ab48396f-3aa1-4e1f-bfb5-30852d1e0d5e",
+      "timestamp": {
+        "t_ms": 1578334108677
+      },
+      "numCoins": 6,
+      "amountPaidWithFees": "KUDOS:0.54"
+    },
+    {
+      "type": "exchange-added",
+      "builtIn": false,
+      "eventId": "exchange-added;https%3A%2F%2Fexchange.test.taler.net%2F",
+      "exchangeBaseUrl": "https://exchange.test.taler.net/",
+      "timestamp": {
+        "t_ms": 1578334134741
+      }
+    },
+    {
+      "type": "exchange-updated",
+      "eventId": "exchange-updated;https%3A%2F%2Fexchange.test.taler.net%2F",
+      "exchangeBaseUrl": "https://exchange.test.taler.net/",
+      "timestamp": {
+        "t_ms": 1578334135451
+      }
+    },
+    {
+      "type": "reserve-balance-updated",
+      "eventId": "reserve-balance-updated;498DDH4ZB41QX45FH38T4Y8JM14WX8Q2J1VKKZTE0CMS6TCPYZAG",
+      "amountExpected": "TESTKUDOS:5",
+      "amountReserveBalance": "TESTKUDOS:5",
+      "timestamp": {
+        "t_ms": 1578334141843
+      },
+      "newHistoryTransactions": [
+        {
+          "amount": "TESTKUDOS:5",
+          "sender_account_url": "payto://x-taler-bank/bank.test.taler.net/9",
+          "timestamp": {
+            "t_ms": 1578334138000
+          },
+          "wire_reference": "0000000000184",
+          "type": "DEPOSIT"
+        }
+      ],
+      "reserveShortInfo": {
+        "exchangeBaseUrl": "https://exchange.test.taler.net/",
+        "reserveCreationDetail": {
+          "type": "taler-bank-withdraw",
+          "bankUrl": "https://bank.test.taler.net/api/withdraw-operation/e6210f62-d27b-4f58-815c-c5160de8804c"
+        },
+        "reservePub": "ZQ2N7V8M035HAD1HTW7ZX22NM9GAXDCGX6GSJECD2KEY9TN3C0V0"
+      }
+    },
+    {
+      "type": "withdrawn",
+      "withdrawSessionId": "AAVX0GVZ8GRPYX2RWANQ9J279ABA7KNFYEQ3A0C63TW7NMV0GAT0",
+      "eventId": "withdrawn;AAVX0GVZ8GRPYX2RWANQ9J279ABA7KNFYEQ3A0C63TW7NMV0GAT0",
+      "amountWithdrawnEffective": "TESTKUDOS:5",
+      "amountWithdrawnRaw": "TESTKUDOS:5",
+      "exchangeBaseUrl": "https://exchange.test.taler.net/",
+      "timestamp": {
+        "t_ms": 1578334142432
+      },
+      "withdrawalSource": {
+        "type": "reserve",
+        "reservePub": "ZQ2N7V8M035HAD1HTW7ZX22NM9GAXDCGX6GSJECD2KEY9TN3C0V0"
+      }
+    },
+    {
+      "type": "refreshed",
+      "refreshGroupId": "2TARBASBNCE0X7F0D89Z3TJGPXKRARFSBH3HKZ5JFQRKPV9CA5C0",
+      "eventId": "refreshed;2TARBASBNCE0X7F0D89Z3TJGPXKRARFSBH3HKZ5JFQRKPV9CA5C0",
+      "timestamp": {
+        "t_ms": 1578334142528
+      },
+      "refreshReason": "pay",
+      "amountRefreshedEffective": "KUDOS:0",
+      "amountRefreshedRaw": "KUDOS:0.06",
+      "numInputCoins": 6,
+      "numOutputCoins": 0,
+      "numRefreshedInputCoins": 0
+    },
+    {
+      "type": "order-accepted",
+      "eventId": "order-accepted;W39MQT31M1ZY3NPF9ZSGXM8Q1K5XS5D5R1J10ZSHBREC6EZ570F0",
+      "orderShortInfo": {
+        "amount": "TESTKUDOS:1",
+        "orderId": "2020.006-00GBW7AD1VFRW",
+        "merchantBaseUrl": "https://backend.test.taler.net/public/instances/GNUnet/",
+        "proposalId": "W39MQT31M1ZY3NPF9ZSGXM8Q1K5XS5D5R1J10ZSHBREC6EZ570F0",
+        "summary": "Donation to GNUnet"
+      },
+      "timestamp": {
+        "t_ms": 1578334230099
+      }
+    },
+    {
+      "type": "payment-sent",
+      "eventId": "payment-sent;W39MQT31M1ZY3NPF9ZSGXM8Q1K5XS5D5R1J10ZSHBREC6EZ570F0",
+      "orderShortInfo": {
+        "amount": "TESTKUDOS:1",
+        "orderId": "2020.006-00GBW7AD1VFRW",
+        "merchantBaseUrl": "https://backend.test.taler.net/public/instances/GNUnet/",
+        "proposalId": "W39MQT31M1ZY3NPF9ZSGXM8Q1K5XS5D5R1J10ZSHBREC6EZ570F0",
+        "summary": "Donation to GNUnet"
+      },
+      "replay": false,
+      "timestamp": {
+        "t_ms": 1578334232527
+      },
+      "numCoins": 4,
+      "amountPaidWithFees": "TESTKUDOS:1"
+    },
+    {
+      "type": "order-accepted",
+      "eventId": "order-accepted;Y8230SR6DP52J61CHEAPM5NHRVK408YP5KJP6VRBGZ3QZ0TBZQ90",
+      "orderShortInfo": {
+        "amount": "TESTKUDOS:0.1",
+        "orderId": "2020.006-02RFGFSSAZY9Y",
+        "merchantBaseUrl": "https://backend.test.taler.net/public/instances/Taler/",
+        "proposalId": "Y8230SR6DP52J61CHEAPM5NHRVK408YP5KJP6VRBGZ3QZ0TBZQ90",
+        "summary": "Donation to Taler"
+      },
+      "timestamp": {
+        "t_ms": 1578334258703
+      }
+    },
+    {
+      "type": "payment-sent",
+      "eventId": "payment-sent;Y8230SR6DP52J61CHEAPM5NHRVK408YP5KJP6VRBGZ3QZ0TBZQ90",
+      "orderShortInfo": {
+        "amount": "TESTKUDOS:0.1",
+        "orderId": "2020.006-02RFGFSSAZY9Y",
+        "merchantBaseUrl": "https://backend.test.taler.net/public/instances/Taler/",
+        "proposalId": "Y8230SR6DP52J61CHEAPM5NHRVK408YP5KJP6VRBGZ3QZ0TBZQ90",
+        "summary": "Donation to Taler"
+      },
+      "replay": false,
+      "timestamp": {
+        "t_ms": 1578334260497
+      },
+      "numCoins": 1,
+      "amountPaidWithFees": "TESTKUDOS:0.1"
+    },
+    {
+      "type": "reserve-balance-updated",
+      "eventId": "reserve-balance-updated;NBZX24YB4GEHFXFXD5NJAC84ZZD63DFAD6Q7YFJQGX8WX9YQ7B90",
+      "amountExpected": "TESTKUDOS:15",
+      "amountReserveBalance": "TESTKUDOS:15",
+      "timestamp": {
+        "t_ms": 1578334530519
+      },
+      "newHistoryTransactions": [
+        {
+          "amount": "TESTKUDOS:15",
+          "sender_account_url": "payto://x-taler-bank/bank.test.taler.net/9",
+          "timestamp": {
+            "t_ms": 1578334522000
+          },
+          "wire_reference": "000000000018C",
+          "type": "DEPOSIT"
+        }
+      ],
+      "reserveShortInfo": {
+        "exchangeBaseUrl": "https://exchange.test.taler.net/",
+        "reserveCreationDetail": {
+          "type": "taler-bank-withdraw",
+          "bankUrl": "https://bank.test.taler.net/api/withdraw-operation/6b5fae55-3634-4e6b-a877-2f8bd76dfaf9"
+        },
+        "reservePub": "5XZC4DQMNR3482443727Q2RNKRVEBEW7SFJ8N9TYV5AZ74AZJB4G"
+      }
+    },
+    {
+      "type": "withdrawn",
+      "withdrawSessionId": "312AKNY5BGF08PY1ZK0Z2QBEZ3481NFP9BN36Z08FHJQQZW80EZG",
+      "eventId": "withdrawn;312AKNY5BGF08PY1ZK0Z2QBEZ3481NFP9BN36Z08FHJQQZW80EZG",
+      "amountWithdrawnEffective": "TESTKUDOS:15",
+      "amountWithdrawnRaw": "TESTKUDOS:15",
+      "exchangeBaseUrl": "https://exchange.test.taler.net/",
+      "timestamp": {
+        "t_ms": 1578334531085
+      },
+      "withdrawalSource": {
+        "type": "reserve",
+        "reservePub": "5XZC4DQMNR3482443727Q2RNKRVEBEW7SFJ8N9TYV5AZ74AZJB4G"
+      }
+    },
+    {
+      "type": "refreshed",
+      "refreshGroupId": "3FN9PFD2JCPS3FDHZDPRS50VQT4G7SE54JDTG2ZW2HV1R3PJ9KBG",
+      "eventId": "refreshed;3FN9PFD2JCPS3FDHZDPRS50VQT4G7SE54JDTG2ZW2HV1R3PJ9KBG",
+      "timestamp": {
+        "t_ms": 1578334532478
+      },
+      "refreshReason": "pay",
+      "amountRefreshedEffective": "TESTKUDOS:2.46",
+      "amountRefreshedRaw": "TESTKUDOS:2.46",
+      "numInputCoins": 1,
+      "numOutputCoins": 6,
+      "numRefreshedInputCoins": 1
+    },
+    {
+      "type": "refreshed",
+      "refreshGroupId": "DF0DQ6MGJ39R0891B0P86MY2QTMPF9FPDJN30PRBMXBZ8XEVHZE0",
+      "eventId": "refreshed;DF0DQ6MGJ39R0891B0P86MY2QTMPF9FPDJN30PRBMXBZ8XEVHZE0",
+      "timestamp": {
+        "t_ms": 1578334533177
+      },
+      "refreshReason": "pay",
+      "amountRefreshedEffective": "TESTKUDOS:1.12",
+      "amountRefreshedRaw": "TESTKUDOS:1.12",
+      "numInputCoins": 4,
+      "numOutputCoins": 3,
+      "numRefreshedInputCoins": 1
+    },
+    {
+      "type": "order-accepted",
+      "eventId": "order-accepted;KYSVHAENJFQB308KF6ENPM46VJRFAXFRDGW856P7MM90AW60REZ0",
+      "orderShortInfo": {
+        "amount": "TESTKUDOS:0.5",
+        "orderId": "2020.006-03WSPCDEZK6HG",
+        "merchantBaseUrl": "https://backend.test.taler.net/public/instances/FSF/",
+        "proposalId": "KYSVHAENJFQB308KF6ENPM46VJRFAXFRDGW856P7MM90AW60REZ0",
+        "summary": "Essay: 6. Why Software Should Be Free"
+      },
+      "timestamp": {
+        "t_ms": 1578334554161
+      }
+    },
+    {
+      "type": "payment-sent",
+      "eventId": "payment-sent;KYSVHAENJFQB308KF6ENPM46VJRFAXFRDGW856P7MM90AW60REZ0",
+      "orderShortInfo": {
+        "amount": "TESTKUDOS:0.5",
+        "orderId": "2020.006-03WSPCDEZK6HG",
+        "merchantBaseUrl": "https://backend.test.taler.net/public/instances/FSF/",
+        "proposalId": "KYSVHAENJFQB308KF6ENPM46VJRFAXFRDGW856P7MM90AW60REZ0",
+        "summary": "Essay: 6. Why Software Should Be Free"
+      },
+      "replay": false,
+      "sessionId": "489c048b-7702-49e8-b66f-2de5e33f0008",
+      "timestamp": {
+        "t_ms": 1578334556292
+      },
+      "numCoins": 5,
+      "amountPaidWithFees": "TESTKUDOS:0.5"
+    },
+    {
+      "type": "refreshed",
+      "refreshGroupId": "NG8Z05Q8CM7KCC98PDNDQR0G920J2SGYM15ACBV0PMBE6XA8Q87G",
+      "eventId": "refreshed;NG8Z05Q8CM7KCC98PDNDQR0G920J2SGYM15ACBV0PMBE6XA8Q87G",
+      "timestamp": {
+        "t_ms": 1578334568850
+      },
+      "refreshReason": "pay",
+      "amountRefreshedEffective": "TESTKUDOS:0.06",
+      "amountRefreshedRaw": "TESTKUDOS:0.06",
+      "numInputCoins": 5,
+      "numOutputCoins": 2,
+      "numRefreshedInputCoins": 1
+    },
+    {
+      "type": "refund",
+      "eventId": "refund;FRW9DGXKPFS9HZEGFYMABDF6FRXDYNMFHH23FT71AAKN8FHGV2EG",
+      "refundGroupId": "FRW9DGXKPFS9HZEGFYMABDF6FRXDYNMFHH23FT71AAKN8FHGV2EG",
+      "orderShortInfo": {
+        "amount": "TESTKUDOS:0.5",
+        "orderId": "2020.006-03WSPCDEZK6HG",
+        "merchantBaseUrl": "https://backend.test.taler.net/public/instances/FSF/",
+        "proposalId": "KYSVHAENJFQB308KF6ENPM46VJRFAXFRDGW856P7MM90AW60REZ0",
+        "summary": "Essay: 6. Why Software Should Be Free"
+      },
+      "timestamp": {
+        "t_ms": 1578334581129
+      },
+      "amountRefundedEffective": "TESTKUDOS:0.5",
+      "amountRefundedRaw": "TESTKUDOS:0.5",
+      "amountRefundedInvalid": "TESTKUDOS:0"
+    },
+    {
+      "type": "refreshed",
+      "refreshGroupId": "TY8G0FDE83YJY3CWBYKMV891CADG06X8MTBZHE42XNQV2B2C95RG",
+      "eventId": "refreshed;TY8G0FDE83YJY3CWBYKMV891CADG06X8MTBZHE42XNQV2B2C95RG",
+      "timestamp": {
+        "t_ms": 1578334585583
+      },
+      "refreshReason": "refund",
+      "amountRefreshedEffective": "TESTKUDOS:0.5",
+      "amountRefreshedRaw": "TESTKUDOS:0.5",
+      "numInputCoins": 5,
+      "numOutputCoins": 6,
+      "numRefreshedInputCoins": 5
+    }
+  ]
+}

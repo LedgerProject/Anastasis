@@ -1,0 +1,7 @@
+GNUnet signature purpose registry.
+
+Every time a signature is created or verified with libgnunetutil's
+signature functions, the signer must provide a "purpose" that provides
+the context for the signature.  By signing over the "purpose", it is
+not possible for an adversary to use a signature made in one context
+in another context.

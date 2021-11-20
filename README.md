@@ -46,8 +46,8 @@ The canonical repositories are as follows:
 * anastasis-$VERSION: core logic and backend
 * anastasis-gtk-$VERSION: Gtk+ graphical user interface
 * wallet-core-$VERSION: TypeScript implementation of the anastasis client (anastasis-core and anastasis-webui)
- * Other packages in wallet-core, like taler-util and taler-wallet-cli were developed
-   before / independent of LEDGER and are used as dependencies.
+  * Other packages in wallet-core, like taler-util and taler-wallet-cli were developed
+  before / independent of LEDGER and are used as dependencies.
 
 ## Installation instructions
 

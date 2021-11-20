@@ -92,6 +92,7 @@ pnpm run build
 ```
 
 The resulting Web application (static files) will be in ``build/``.
+These files need to be served via HTTP (to serve locally, use e.g. ``python3 -m http.server``).
 
 ## Trying it out
 
